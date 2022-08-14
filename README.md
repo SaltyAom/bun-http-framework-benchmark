@@ -41,13 +41,13 @@ Tested at 14 Aug 21:30 (GMT+7)
 ## Results
 This results are in req/s:
 
-| Framework Name | Get (/) | Named params & set header | Post JSON |
-|----------------|---------|---------------------------------------|
-| Baojs | 39298.72 | 37325.27 | 45915.79 |
-| Bun Bakery | 41279.78 | 34687.51 | 46328.78
-| Hono | 55211.26 | 48159.49 | 55556.72
-| KingWorld | 173102.23 | 128737.63 | 58687.61
-| nbit | 56635.13 | 49760.46 | 50045.43
+| Framework Name | Get (/)   | Named params & set header | Post JSON |
+|----------------|-----------|---------------------------------------|
+| Baojs          | 39298.72  | 37325.27                   | 45915.79 |
+| Bun Bakery     | 41279.78  | 34687.51                   | 46328.78 |
+| Hono           | 55211.26  | 48159.49                   | 55556.72 |
+| KingWorld      | 173102.23 | 128737.63                  | 58687.61 |
+| nbit           | 56635.13  | 49760.46                   | 50045.43 |
 
 ## FAQ
 - Why does KingWorld performance drop on JSON?
