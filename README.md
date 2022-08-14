@@ -4,6 +4,7 @@ Compare throughput benchmark from various Bun HTTP framework
 Library / framework:
 - Bun Bakery
 - Baojs
+- Bunrest (named parameter isn't implemented)
 - Colston (not working at the moment, need help)
 - Hono
 - KingWorld
@@ -41,13 +42,13 @@ Tested at 14 Aug 21:30 (GMT+7)
 ## Results
 These results are measure in req/s:
 
-|  Framework       |  Get (/)    |  Named params & set header | Post JSON  |
-| ---------------- | ----------- | -------------------------- | ---------- |
-|  Baojs           |  39,298.72  |  37,325.27                 | 45,915.79  |
-|  Bun Bakery      |  41,279.78  |  34,687.51                 | 46,328.78  |
-|  Hono            |  55,211.26  |  48,159.49                 | 55,556.72  |
-|  KingWorld       |  173,102.23 |  128,737.63                | 58,687.61  |
-|  nbit            |  56,635.13  |  49,760.46                 | 50,045.43  |
+|  Framework       |  Get (/)    |  Params, query & header | Post JSON  |
+| ---------------- | ----------- | ----------------------- | ---------- |
+| baojs | 40,884.31 | 40,007.58 | 49,989.9 |
+| bun-bakery | 42,223.04 | 35,604.68 | 52,311.96 |
+| hono | 54,624.27 | 47,902.83 | 57,572.24 |
+| kingworld | 171,500.73 | 124,720.2 | 59,550.05 |
+| nbit | 53,584.71 | 48,932.89 | 53,352.55 |
 
 ## FAQ
 - Why does KingWorld performance drop on JSON?
