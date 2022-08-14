@@ -27,7 +27,7 @@ Test is written in Node.js but spawn process is bun.
 npm run benchmark
 ```
 
-Dump result will be avilable at `scripts/[benchmark-name].txt`
+Dump result will be avilable at `results/[benchmark-name].txt`
 
 ## Benchmark Condition
 This benchmark is tested under the following condition:
@@ -39,7 +39,7 @@ This benchmark is tested under the following condition:
 Tested at 14 Aug 21:30 (GMT+7)
 
 ## Results
-This results are measure in req/s:
+These results are measure in req/s:
 
 |  Framework       |  Get (/)    |  Named params & set header | Post JSON  |
 | ---------------- | ----------- | -------------------------- | ---------- |
@@ -51,5 +51,5 @@ This results are measure in req/s:
 
 ## FAQ
 - Why does KingWorld performance drop on JSON?
-    - As the creator of KingWorld, I can admit that KingWorld cheat a bit. Bun currently has [async-await performance issue](https://github.com/oven-sh/bun/issues/567#issuecomment-1204756323), KingWorld try its best to avoid it, but parsing request's body absolutely required to use await otherwise it's required to compile to es5 (which isn't a good trade-off), so the performance drop there.
+    - As the creator of KingWorld, I can admit that KingWorld cheat a bit. Bun currently has [async-await performance issue](https://github.com/oven-sh/bun/issues/567#issuecomment-1204756323),and KingWorld try its best to avoid it. But parsing request's body need to use await otherwise it's you need to compile to es5 (which isn't a good trade-off), so the performance drop there.
     - So in the future, once the issue is solved, you can expected to see all the framework performance improvement by a lot.
