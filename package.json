@@ -1,0 +1,20 @@
+{
+  "name": "bun-http-framework-benchmark",
+  "module": "index.ts",
+  "type": "module",
+  "scripts": {
+    "benchmark": "node bench.js"
+  },
+  "devDependencies": {
+    "bun-types": "^0.1.0",
+    "zx": "^7.0.8"
+  },
+  "dependencies": {
+    "@kapsonfire/bun-bakery": "^0.2.0",
+    "@nbit/bun": "^0.7.0",
+    "baojs": "^0.1.3",
+    "colstonjs": "latest",
+    "hono": "^2.0.8",
+    "kingworld": "^0.0.0-experimental.21"
+  }
+}
