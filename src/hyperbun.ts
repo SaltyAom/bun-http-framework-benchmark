@@ -1,24 +1,22 @@
-import {createServer} from "hyperbun";
+import { createServer } from 'hyperbun'
 
-const app = createServer();
+const app = createServer()
 
-app.get('/', () => 'Hi');
+app.get('/', () => 'Hi')
 
-app.post('/json',
-  async (request) => await request.json()
-)
+app.post('/json', async (request) => await request.json())
 
 app.get('/id/:id', (_, context) => {
-  const id = context.params.id;
-  const name = context.query.name;
+    const id = context.params.id
+    const name = context.query.name
 
-  return new Response(`${id} ${name}`, {
-    headers: {
-      'x-powered-by': 'benchmark',
-    },
-  });
-});
+    return new Response(`${id} ${name}`, {
+        headers: {
+            'x-powered-by': 'benchmark'
+        }
+    })
+})
 
 app.listen({
-  port: 3000
-});
+    port: 3000
+})

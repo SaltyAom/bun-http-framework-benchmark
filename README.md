@@ -13,9 +13,20 @@ Library / framework:
 
 Test method:
 Throughput
-1. Get `/` and return plain/text 'hi'
-2. Get `/id/:id` as `id/1?framework=bun`, set `x-powered-by` to `benchmark`, and return **"1 bun"** (`${id} ${query}`)
-3. POST `/json` and return body of request, for this benchmark, expected to return `{ hello: "world" }`
+1. Get (/)
+    - [GET] `/`
+    - Return `hi` in plain text
+2. Params, query & header
+    - [GET] `/id/:id`
+    - Extract path params, query and header.
+    - For this benchmark, request url will be send as: `/id/1?name=bun`
+    - Set `x-powered-by` to `benchmark`
+    - Expected response: **"1 bun"** (`${id} ${query}`)
+3. Post JSON
+    - [POST] `/json`
+    - Mirror body to response
+    - For the benchmark, request body will be send as: `{ "hello": "world" }`
+    - Expected response: `{ "hello": "world" }`
 
 # Prerequistes
 - [wrk](https://github.com/wg/wrk)
@@ -45,11 +56,12 @@ These results are measure in req/s:
 
 |  Framework       |  Get (/)    |  Params, query & header | Post JSON  |
 | ---------------- | ----------- | ----------------------- | ---------- |
-| baojs | 40,884.31 | 40,007.58 | 49,989.9 |
-| bun-bakery | 42,223.04 | 35,604.68 | 52,311.96 |
-| hono | 54,624.27 | 47,902.83 | 57,572.24 |
-| kingworld | 171,500.73 | 124,720.2 | 59,550.05 |
-| nbit | 53,584.71 | 48,932.89 | 53,352.55 |
+| baojs | 66,424.55 | 54,127.05 | 53,687.18 |
+| bun-bakery | 61,187.81 | 51,031.74 | 53,565.63 |
+| hono | 75,722.56 | 60,065.82 | 59,024.78 |
+| hyperbun | 68,397.27 | 55,832.92 | 53,499.66 |
+| kingworld | 173,653.22 | 153,832.96 | 70,095.04 |
+| nbit | 63,838.51 | 53,545.44 | 50,620.68 |
 
 ## FAQ
 - Why does KingWorld performance drop on JSON?
