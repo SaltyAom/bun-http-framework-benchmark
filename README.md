@@ -7,11 +7,12 @@ Library / framework:
 - Bunrest (named parameter isn't implemented)
 - Colston (not working at the moment, need help)
 - Hono
+- Hyperbun
 - KingWorld
 - nbit
 
 Test method:
-Throughput 
+Throughput
 1. Get `/` and return plain/text 'hi'
 2. Get `/id/:id` as `id/1?framework=bun`, set `x-powered-by` to `benchmark`, and return **"1 bun"** (`${id} ${query}`)
 3. POST `/json` and return body of request, for this benchmark, expected to return `{ hello: "world" }`
