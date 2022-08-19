@@ -1,6 +1,7 @@
 import { Hono } from 'hono'
+import { RegExpRouter } from 'hono/router/reg-exp-router'
 
-const app = new Hono()
+const app = new Hono({ router: new RegExpRouter() })
 
 const xPoweredBy = 'benchmark'
 
