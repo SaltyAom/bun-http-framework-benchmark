@@ -11,13 +11,13 @@
     "zx": "^7.0.8"
   },
   "dependencies": {
-    "@kapsonfire/bun-bakery": "^0.2.0",
+    "@kapsonfire/bun-bakery": "^0.3.1",
     "@nbit/bun": "^0.7.0",
     "baojs": "^0.1.3",
-    "bunrest": "^1.0.5",
+    "bunrest": "^1.1.0",
     "colstonjs": "latest",
-    "hono": "^2.0.9",
-    "hyperbun": "^0.4.4",
-    "kingworld": "0.0.0-experimental.22"
+    "hono": "^2.1.2",
+    "hyperbun": "^0.4.6",
+    "kingworld": "0.0.0-experimental.24"
   }
 }
