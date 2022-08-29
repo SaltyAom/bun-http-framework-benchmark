@@ -6,7 +6,7 @@
     "benchmark": "node bench.js"
   },
   "devDependencies": {
-    "bun-types": "^0.1.0",
+    "bun-types": "^0.1.10",
     "rimraf": "^3.0.2",
     "zx": "^7.0.8"
   },
