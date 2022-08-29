@@ -5,7 +5,7 @@ const app = new KingWorld()
 const xPoweredBy = 'benchmark'
 
 app.get('/', () => 'Hi')
-    .post('/json', async ({ request }) => await request.json())
+    .post('/json', ({ body }) => body)
     .get('/id/:id', ({ params: { id }, query: { name }, responseHeaders }) => {
         responseHeaders.set('x-powered-by', xPoweredBy)
 
