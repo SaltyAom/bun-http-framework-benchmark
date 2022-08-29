@@ -13,7 +13,7 @@ Bun.serve({
         if (method === 'GET' && pathname === '/') return new Response('Hi')
         if (method === 'POST' && pathname === '/json')
             return new Response(
-                JSON.stringify(JSON.stringify(await request.json())),
+                JSON.stringify(await request.json()),
                 jsonHeader
             )
 
