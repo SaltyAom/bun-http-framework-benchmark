@@ -5,7 +5,8 @@ Library / framework:
 - Bun Bakery
 - Baojs
 - Bunrest (named parameter isn't implemented)
-- Colston (not working at the moment, need help)
+- Colston
+- Express
 - Hono
 - Hyperbun
 - KingWorld
@@ -29,7 +30,7 @@ Throughput
     - Expected response: `{ "hello": "world" }`
 
 # Prerequistes
-- [wrk](https://github.com/wg/wrk)
+- [bombardier](https://github.com/codesenberg/bombardier)
 - Nodejs
 - Bun
 
@@ -46,24 +47,29 @@ Dump result will be avilable at `results/[benchmark-name].txt`
 This benchmark is tested under the following condition:
 - MacBook Pro 14' M1 Max 10 CPU Core, 32 GPU Core, 64GB of RAM
 - MacOS 12.5
-- Bun 0.1.8
+- Bun 0.1.11
 - Node 16.16.0
 
-Tested at 14 Aug 21:30 (GMT+7)
+Tested at 8 Sep 21:30 (GMT+7)
 
 ## Results
 These results are measure in req/s:
 
 |  Framework       |  Get (/)    |  Params, query & header | Post JSON  |
 | ---------------- | ----------- | ----------------------- | ---------- |
-| baojs | 66,424.55 | 54,127.05 | 53,687.18 |
-| bun-bakery | 61,187.81 | 51,031.74 | 53,565.63 |
-| hono | 75,722.56 | 60,065.82 | 59,024.78 |
-| hyperbun | 68,397.27 | 55,832.92 | 53,499.66 |
-| kingworld | 173,653.22 | 153,832.96 | 70,095.04 |
-| nbit | 63,838.51 | 53,545.44 | 50,620.68 |
+| baojs | 72,301.82 | 64,382.2 | 64,255.81 |
+| bun-bakery | 80,068.52 | 66,081.6 | 60,557.72 |
+| bun | 118,112.28 | 98,919.05 | 75,991.97 |
+| colston | 84,723.76 | 78,989.46 | 76,971.47 |
+| express | 13,009.02 | 14,499.9 | 11,833.02 |
+| hono | 83,279.39 | 69,079.3 | 69,317.97 |
+| hyperbun | 76,023.71 | 63,507.64 | 61,905.11 |
+| kingworld | 110,763.46 | 89,696.88 | 70,031.98 |
+| nbit | 76,059.12 | 64,475.55 | 60,554.8 |
 
-## FAQ
-- Why does KingWorld performance drop on JSON?
-    - As the creator of KingWorld, I can admit that KingWorld cheat a bit. Bun currently has [async-await performance issue](https://github.com/oven-sh/bun/issues/567#issuecomment-1204756323),and KingWorld try its best to avoid it. But parsing request's body need to use await otherwise it's you need to compile to es5 (which isn't a good trade-off), so the performance drop there.
-    - So in the future, once the issue is solved, you can expected to see all the framework performance improvement by a lot.
+## Notice
+According to Bun 0.1.11 release note, seems like there are a performance different between Apple Silicon and x86_64 Linux.
+
+On x86_64 Linux side, most benchmark catch up to KingWorld and Hono even surpass KingWorld in `Get (/)`, however on Apple Silicon tells the different story up above.
+
+I highly recommended testing this benchmark on your machine yourself.
