@@ -9,15 +9,15 @@ import rimraf from 'rimraf'
 import { $ } from 'zx'
 
 // ? Not working
-const blacklists = ['bunrest', 'colston']
+const blacklists = ['bunrest', 'express']
 
 const commands = [
-    `wrk -t 4 -c 250 -d 10s http://localhost:3000/`,
-    `wrk -t 4 -c 250 -d 10s http://localhost:3000/id/1?name=bun`,
-    `wrk -t 4 -c 250 -d 10s -s ./scripts/json.lua http://localhost:3000/json`
+    `bombardier --fasthttp -c 500 -d 10s http://localhost:3000/`,
+    `bombardier --fasthttp -c 500 -d 10s http://localhost:3000/id/1?name=bun`,
+    `bombardier --fasthttp -c 500 -d 10s -m POST -H 'Content-Type: application/json' -f ./scripts/body.json http://localhost:3000/json`
 ]
 
-const catchNumber = /Requests\/sec:\s+(\d+[.|,]\d+)/m
+const catchNumber = /Reqs\/sec\s+(\d+[.|,]\d+)/m
 const format = Intl.NumberFormat('en-US').format
 
 if (existsSync('./results')) rimraf.sync('./results')
