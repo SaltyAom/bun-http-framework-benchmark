@@ -9,7 +9,7 @@ import rimraf from 'rimraf'
 import { $ } from 'zx'
 
 // ? Not working
-const blacklists = ['bunrest', 'colston']
+const blacklists = ['bunrest']
 
 const commands = [
     `wrk -t 4 -c 250 -d 10s http://localhost:3000/`,
