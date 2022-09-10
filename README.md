@@ -50,7 +50,7 @@ This benchmark is tested under the following condition:
 - Bun 0.1.11
 - Node 16.16.0
 
-Tested at 9 Sep 11:53 (GMT+7)
+Tested at 10 Sep 11:39 (GMT+7)
 
 ## Results
 These results are measure in req/s:
