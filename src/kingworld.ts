@@ -5,11 +5,11 @@ const app = new KingWorld()
 const xPoweredBy = 'benchmark'
 
 app.get('/', () => 'Hi')
-    .post('/json', ({ body }) => body)
-    .get('/id/:id', ({ params: { id }, query: { name }, responseHeaders }) => {
-        responseHeaders.set('x-powered-by', xPoweredBy)
+    .post('/json', (ctx) => ctx.body)
+    .get('/id/:id', (ctx) => {
+        ctx.responseHeaders.set('x-powered-by', xPoweredBy)
 
-        return `${id} ${name}`
+        return `${ctx.params.id} ${ctx.query.name}`
     })
     .listen(3000)
 
