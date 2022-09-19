@@ -50,25 +50,25 @@ This benchmark is tested under the following condition:
 - Bun 0.1.11
 - Node 16.16.0
 
-Tested at 10 Sep 11:39 (GMT+7)
+Tested at 19 Sep 12:15 (GMT+7)
 
 ## Results
 These results are measure in req/s:
 
 |  Framework       |  Get (/)    |  Params, query & header | Post JSON  |
 | ---------------- | ----------- | ----------------------- | ---------- |
-| baojs | 76,562.92 | 64,411.41 | 65,320.72 |
-| bun-bakery | 94,133.94 | 68,272.31 | 60,913.9 |
-| bun | 161,697.26 | 122,121.39 | 83,272.13 |
-| colston | 74,931.73 | 91,100.8 | 44,702.58 |
-| express | 9,743.41 | 11,170.62 | 9,041.01 |
-| hono | 145,814.15 | 116,929.97 | 79,445.85 |
-| hyperbun | 82,680.22 | 64,750.15 | 60,134.22 |
-| kingworld | 148,724.99 | 117,991.09 | 80,798.16 |
-| nbit | 81,869.73 | 64,776.42 | 59,883.22 |
+| baojs | 94,229.05 | 77,841.57 | 69,642.95 |
+| bun-bakery | 99,329.63 | 70,180.41 | 65,470.18 |
+| bun | 165,204.23 | 126,362.49 | 84,161.06 |
+| colston | 76,188.43 | 94,466.66 | 44,357.32 |
+| express | 24,792.92 | 24,235.19 | 14,013.7 |
+| hono | 152,517.76 | 122,750.68 | 86,218.87 |
+| hyperbun | 88,634.5 | 68,044.37 | 64,306.62 |
+| kingworld | 154,504.36 | 120,663.79 | 85,774.19 |
+| nbit | 86,007.09 | 66,869.51 | 65,011.4 |
 
 ## Notice
-According to Bun 0.1.11 release note, seems like there are a performance different between Apple Silicon and x86_64 Linux.
+According to Bun 0.1.13 release note, seems like there are a performance different between Apple Silicon and x86_64 Linux.
 
 On x86_64 Linux side, most benchmark catch up to KingWorld and Hono even surpass KingWorld in `Get (/)`, however on Apple Silicon tells the different story up above.
 
