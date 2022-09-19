@@ -38,7 +38,7 @@ writeFileSync(
 `
 )
 
-for (const framework of ['kingworld']) {
+for (const framework of frameworks) {
     const name = framework.replace('/index', '')
     console.log(`\n${name}\n`)
 
