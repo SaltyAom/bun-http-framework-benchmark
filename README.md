@@ -46,8 +46,8 @@ Dump result will be avilable at `results/[benchmark-name].txt`
 ## Benchmark Condition
 This benchmark is tested under the following condition:
 - MacBook Pro 14' M1 Max 10 CPU Core, 32 GPU Core, 64GB of RAM
-- MacOS 12.5
-- Bun 0.1.11
+- MacOS 12.6
+- Bun 0.1.13
 - Node 16.16.0
 
 Tested at 19 Sep 12:15 (GMT+7)
@@ -68,7 +68,7 @@ These results are measure in req/s:
 | nbit | 86,007.09 | 66,869.51 | 65,011.4 |
 
 ## Notice
-According to Bun 0.1.13 release note, seems like there are a performance different between Apple Silicon and x86_64 Linux.
+According to Bun 0.1.11 release note, seems like there are a performance different between Apple Silicon and x86_64 Linux.
 
 On x86_64 Linux side, most benchmark catch up to KingWorld and Hono even surpass KingWorld in `Get (/)`, however on Apple Silicon tells the different story up above.
 
