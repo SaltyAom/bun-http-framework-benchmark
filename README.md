@@ -46,28 +46,24 @@ Dump result will be avilable at `results/[benchmark-name].txt`
 ## Benchmark Condition
 This benchmark is tested under the following condition:
 - MacBook Pro 14' M1 Max 10 CPU Core, 32 GPU Core, 64GB of RAM
-- MacOS 12.6
-- Bun 0.2.0
-- Node 16.16.0
+- MacOS 13.0
+- Bun 0.2.2
+- Node 18.6.0
 
-Tested at 14 Oct 10:27 (GMT+7)
+Tested at 30 Oct 23:33 (GMT+7)
 
 ## Results
 These results are measure in req/s:
 
-|  Framework       |  Get (/)    |  Params, query & header | Post JSON  |
-| ---------------- | ----------- | ----------------------- | ---------- |
-| baojs | 89,815.61 | 78,893.78 | 73,613.71 |
-| bun-bakery | 112,590.01 | 79,890.18 | 69,406.26 |
-| bun | 163,705.35 | 129,364.36 | 89,723.65 |
-| colston | 7,716.77 | 103,185.97 | 11,604.82 |
-| express | 24,538.77 | 23,865.71 | 6,491.6 |
-| hono | 186,835.8 | 138,642.78 | 93,240.68 |
-| hyperbun | 97,856.71 | 74,648.01 | 68,810.79 |
-| kingworld | 158,395.62 | 129,790.04 | 89,371.59 |
-| nbit | 87,300.5 | 73,024.87 | 68,067.32 |
+| baojs | 93,524.25 | 82,983.52 | 47,083.92 |
+| bun-bakery | 107,496.18 | 86,055.31 | 79,114.97 |
+| bun | 131,526.21 | 109,468.16 | 99,372.31 |
+| colston | 8,045.15 | 98,689.24 | 11,504.86 |
+| express | 24,759 | 24,424 | 5,744.84 |
+| hono | 148,692.32 | 118,088.39 | 98,541.17 |
+| hyperbun | 100,929.28 | 83,005.48 | 80,835.21 |
+| kingworld | 157,739.24 | 133,482.8 | 98,639.97 |
+| nbit | 92,429.39 | 81,505.91 | 78,957.81 |
 
 ## Notice
-On x86_64 Linux side, most benchmark catch up to KingWorld and Hono even surpass KingWorld in `Get (/)`, however on Apple Silicon tells the different story up above.
-
 I highly recommended testing this benchmark on your machine yourself.

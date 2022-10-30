@@ -12,7 +12,7 @@ specifiers:
   fastify: ^4.5.3
   hono: ^2.2.5
   hyperbun: ^0.4.6
-  kingworld: ^0.0.0-experimental.27
+  kingworld: ../kingworld
   rimraf: ^3.0.2
   zx: ^7.0.7
 
@@ -26,7 +26,7 @@ dependencies:
   fastify: 4.8.1
   hono: 2.2.5
   hyperbun: 0.4.6
-  kingworld: 0.0.0-experimental.27
+  kingworld: link:../kingworld
 
 devDependencies:
   '@types/express': 4.17.14
@@ -82,13 +82,6 @@ packages:
       deepmerge-ts: 4.2.2
     dev: false
 
-  /@medley/router/0.2.1:
-    resolution: {integrity: sha512-mdvS1spIxmZoUbTdYmWknHtwm72WwrGNoQCDd4RTvcXJ9G6XThxeC3g+cpOf6Fw6vIERHt50pYiJpsk5XTJQ5w==}
-    engines: {node: '>=8'}
-    dependencies:
-      object-treeify: 1.1.33
-    dev: false
-
   /@nbit/bun/0.7.0:
     resolution: {integrity: sha512-S4We7jaEWf2fPUvr7XJP9cmXIUwFmX+3mAB+TSQ/eLL74AibckqJmV76Ra8/UIzLLFtNkm/vqe5gfwqiJulQXQ==}
     dev: false
@@ -110,10 +103,6 @@ packages:
     dependencies:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.13.0
-
-  /@saltyaom/trek-router/0.0.7:
-    resolution: {integrity: sha512-59391o76kGiMT5uYkA3B5wMoseLrpICiWem5pt8vg2RfxfSXwdLLSijp9xRUBhY6oHSYKwWr+If5bsLIQ/cbUw==}
-    dev: false
 
   /@types/body-parser/1.19.2:
     resolution: {integrity: sha512-ALYone6pm6QmwZoAgeyNksccT9Q4AWZQ6PvfwR37GT6r6FWUPguq6sUmNGSMV2Wr761oQoBxwGGa6DR5o1DC9g==}
@@ -1116,13 +1105,6 @@ packages:
       graceful-fs: 4.2.10
     dev: true
 
-  /kingworld/0.0.0-experimental.27:
-    resolution: {integrity: sha512-L2qHFKhEfBZbMvFESEWcDr/OGM6DSE17+Z/7b6Mt9aOPwBKKgmELUovSf/QJr/Krceuvws0xiaOYIJulC3xAzw==}
-    dependencies:
-      '@medley/router': 0.2.1
-      '@saltyaom/trek-router': 0.0.7
-    dev: false
-
   /light-my-request/5.6.1:
     resolution: {integrity: sha512-sbJnC1UBRivi9L1kICr3CESb82pNiPNB3TvtdIrZZqW0Qh8uDXvoywMmWKZlihDcmw952CMICCzM+54LDf+E+g==}
     dependencies:
@@ -1279,11 +1261,6 @@ packages:
 
   /object-inspect/1.12.2:
     resolution: {integrity: sha512-z+cPxW0QGUp0mcqcsgQyLVRDoXFQbXOwBaqyF7VIgI4TWNQsDHrBpUQslRmIfAoYWdYzs6UlKJtB2XJpTaNSpQ==}
-    dev: false
-
-  /object-treeify/1.1.33:
-    resolution: {integrity: sha512-EFVjAYfzWqWsBMRHPMAXLCDIJnpMhdWAqR7xG6M6a2cs6PMFpl/+Z20w9zDW4vkxOFfddegBKq9Rehd0bxWE7A==}
-    engines: {node: '>= 10'}
     dev: false
 
   /on-exit-leak-free/2.1.0:
