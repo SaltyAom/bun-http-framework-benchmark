@@ -55,6 +55,8 @@ Tested at 30 Oct 23:33 (GMT+7)
 ## Results
 These results are measure in req/s:
 
+|  Framework       |  Get (/)    |  Params, query & header | Post JSON  |
+| ---------------- | ----------- | ----------------------- | ---------- |
 | baojs | 93,524.25 | 82,983.52 | 47,083.92 |
 | bun-bakery | 107,496.18 | 86,055.31 | 79,114.97 |
 | bun | 131,526.21 | 109,468.16 | 99,372.31 |

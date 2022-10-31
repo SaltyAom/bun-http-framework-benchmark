@@ -1,9 +1,3 @@
-const type = new Headers()
-type.append('content-type', 'application/json')
-const jsonHeader = {
-    headers: type
-}
-
 Bun.serve({
     port: 3000,
     fetch: async (request) => {
@@ -12,10 +6,11 @@ Bun.serve({
 
         if (method === 'GET' && pathname === '/') return new Response('Hi')
         if (method === 'POST' && pathname === '/json')
-            return new Response(
-                JSON.stringify(await request.json()),
-                jsonHeader
-            )
+            return new Response(JSON.stringify(await request.json()), {
+                headers: {
+                    'content-type': 'application/json'
+                }
+            })
 
         if (method === 'GET' && pathname.startsWith('/id/')) {
             const [id, extraPath] = pathname.substring(4).split('/')
