@@ -50,22 +50,22 @@ This benchmark is tested under the following condition:
 - Bun 0.2.2
 - Node 18.6.0
 
-Tested at 30 Oct 23:33 (GMT+7)
+Tested at 2 Nov 00:19 (GMT+7)
 
 ## Results
 These results are measure in req/s:
 
 |  Framework       |  Get (/)    |  Params, query & header | Post JSON  |
 | ---------------- | ----------- | ----------------------- | ---------- |
-| baojs | 93,524.25 | 82,983.52 | 47,083.92 |
-| bun-bakery | 107,496.18 | 86,055.31 | 79,114.97 |
-| bun | 131,526.21 | 109,468.16 | 99,372.31 |
-| colston | 8,045.15 | 98,689.24 | 11,504.86 |
-| express | 24,759 | 24,424 | 5,744.84 |
-| hono | 148,692.32 | 118,088.39 | 98,541.17 |
-| hyperbun | 100,929.28 | 83,005.48 | 80,835.21 |
-| kingworld | 157,739.24 | 133,482.8 | 98,639.97 |
-| nbit | 92,429.39 | 81,505.91 | 78,957.81 |
+| baojs | 98,776.63 | 86,463.07 | 47,625.26 |
+| bun-bakery | 104,347.5 | 86,458.27 | 80,232.19 |
+| bun | 139,667.67 | 115,234.17 | 97,050.33 |
+| colston | 7,908.99 | 98,435.3 | 10,862.38 |
+| express | 24,596.89 | 24,270.72 | 5,658.98 |
+| hono | 146,024.87 | 113,498.69 | 93,961.78 |
+| hyperbun | 100,911.61 | 82,996.55 | 79,778.45 |
+| kingworld | 158,066.51 | 133,893.73 | 97,814.52 |
+| nbit | 89,283.32 | 79,103.26 | 78,968.81 |
 
 ## Notice
 I highly recommended testing this benchmark on your machine yourself.
