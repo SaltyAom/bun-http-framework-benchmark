@@ -21,7 +21,6 @@
     "fastify": "^4.9.2",
     "hono": "^2.4.1",
     "hyperbun": "^0.4.6",
-    "kingworld": "^0.0.0-experimental.29",
-    "zod": "^3.19.1"
+    "kingworld": "^0.0.0-experimental.37"
   }
 }
