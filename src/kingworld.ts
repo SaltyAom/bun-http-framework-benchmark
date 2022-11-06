@@ -1,12 +1,11 @@
 import { KingWorld, t } from 'kingworld'
 
-const app = new KingWorld()
-
-const xPoweredBy = 'benchmark'
-
-app.get('/', () => 'Hi')
+new KingWorld()
+    .get('/', () => 'Hi')
     .post('/json', (ctx) => ctx.body)
-    .get('/id/:id', (ctx) => `${ctx.params.id} ${ctx.query.name}`)
-    .listen(3000)
+    .get('/id/:id', (ctx) => {
+        ctx.responseHeaders['x-powered-by'] = 'benchmark2'
 
-export default app
+        return `${ctx.params.id} ${ctx.query.name}`
+    })
+    .listen(3000)
