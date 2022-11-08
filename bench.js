@@ -9,7 +9,7 @@ import rimraf from 'rimraf'
 import { $ } from 'zx'
 
 // ? Not working
-const blacklists = ['bunrest', 'fastify']
+const blacklists = ['bunrest', 'colston', 'fastify']
 
 const commands = [
     `bombardier --fasthttp -c 500 -d 10s http://localhost:3000/`,

@@ -4,9 +4,9 @@ import { resolve } from 'path'
 
 import { spawn, type Subprocess } from 'bun'
 
-const startup = () => new Promise((resolve) => setTimeout(resolve, 100))
+const startup = (ms = 5000) => new Promise((resolve) => setTimeout(resolve, ms))
 
-const blacklists = ['bunrest', 'fastify']
+const blacklists = ['bunrest', 'colston', 'fastify']
 
 const frameworks = readdirSync(resolve('src'))
     .filter((a) => a.endsWith('.ts') || !a.includes('.'))
@@ -16,7 +16,7 @@ const frameworks = readdirSync(resolve('src'))
 // ? Not usable atm (bun 0.2.2)
 // ! Blocking on: https://github.com/oven-sh/bun/issues/1462
 describe('correctness', async () => {
-    for (const framework of frameworks) {
+    for (const framework of ['kingworld']) {
         const server = Bun.spawn({
             cmd: ['bun', `src/${framework}.ts`],
             env: {
@@ -24,13 +24,25 @@ describe('correctness', async () => {
             }
         })
 
-        await startup()
+        await startup(100)
 
-        it('[GET /]: return hi in plain/text', async () => {
-            console.log('Hi')
+        let ops: Promise<void>[] = []
 
-            const res = await fetch('http://localhost:3000/')
-            expect(await res.text()).toBe('Hi')
+        const wrap = (
+            executor: (
+                resolve: (value: void) => void | Promise<void>
+            ) => Promise<void>
+        ): void => {
+            ops.push(new Promise(executor))
+        }
+
+        it('[GET /]: return hi in plain/text', () => {
+            wrap(async (resolve) => {
+                const res = await fetch('http://localhost:3000/')
+                expect(await res.text()).toBe('Hi')
+
+                resolve()
+            })
         })
 
         it('[GET /id/:id]: set header and return params and query', async () => {
@@ -40,26 +52,23 @@ describe('correctness', async () => {
             expect(await res.text()).toBe('1 bun')
         })
 
-        it('[POST /json]: mirror json result', async () => {
-            const body = JSON.stringify({
-                hello: 'world'
-            })
+        it('[POST /json]: mirror json result', () =>
+            wrap(async () => {
+                const body = JSON.stringify({
+                    hello: 'world'
+                })
 
-            const res = await fetch('http://localhost:3000/json', {
-                method: 'POST',
-                body,
-                headers: {
-                    'content-type': 'application/json',
-                    'content-length': body.length.toString()
-                }
-            })
+                const res = await fetch('http://localhost:3000/json', {
+                    method: 'POST',
+                    body,
+                    headers: {
+                        'content-type': 'application/json',
+                        'content-length': body.length.toString()
+                    }
+                })
 
-            expect(res.headers.get('content-type')).toBe('application/json')
-            expect(await res.text()).toBe(body)
-        })
-
-        server.kill()
-        await server.exited
-        await startup()
+                expect(res.headers.get('content-type')).toBe('application/json')
+                expect(await res.text()).toBe(body)
+            }))
     }
 })

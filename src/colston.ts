@@ -3,6 +3,7 @@ import Colston from 'colstonjs'
 const app = new Colston()
 const xPoweredBy = 'benchmark'
 
+// ? Got "TypeError: Attempted to assign to readonly property." for all route
 app.get('/', (ctx) => ctx.text('Hi'))
     .post('/json', (ctx) => ctx.json(ctx.request.json()))
     .get('/id/:id', (ctx) => {
@@ -18,13 +19,8 @@ app.get('/', (ctx) => ctx.text('Hi'))
         const name = ctx.request.query.name // undefined
 
         ctx.setHeader('x-powered-by', xPoweredBy)
-        // ctx.response.headers.set('x-powered-by', xPoweredBy)
 
         return ctx.text(`${id} ${name}`)
     })
-
-// The issie was fixed in here: https://github.com/ajimae/colstonjs/pull/4 and release in v0.1.0-beta.4
-// It should work fine now
-// throw new Error('Unable to get it to work for some reason')
 
 app.start(3000, () => console.log(`server listening on port :3000`))

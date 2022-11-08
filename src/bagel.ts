@@ -14,5 +14,4 @@ app.get('/', async (req, res) => {
 
         res.send(`${req.params.id} ${req.query.name}`)
     })
-
-app.listen(3000)
+    .listen(3000)

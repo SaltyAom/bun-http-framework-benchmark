@@ -21,8 +21,8 @@
     "colstonjs": "0.1.0-beta.5",
     "express": "^4.18.2",
     "fastify": "^4.9.2",
-    "hono": "^2.4.1",
+    "hono": "^2.5.0",
     "hyperbun": "^0.4.6",
-    "kingworld": "^0.0.0-experimental.37"
+    "kingworld": "^0.0.0-experimental.39"
   }
 }
