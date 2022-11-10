@@ -1,32 +1,36 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@kakengloh/bagel': ^0.2.0
   '@kapsonfire/bun-bakery': ^0.4.4
   '@nbit/bun': ^0.7.0
   '@types/express': ^4.17.14
+  '@zarfjs/zarf': ^0.0.1-alpha.23
   baojs: ^0.1.3
   bun-types: ^0.2.2
   bunrest: ^1.1.6
   colstonjs: 0.1.0-beta.5
   express: ^4.18.2
   fastify: ^4.9.2
-  hono: ^2.4.1
+  hono: ^2.5.0
   hyperbun: ^0.4.6
-  kingworld: ^0.0.0-experimental.37
+  kingworld: ../kingworld
   rimraf: ^3.0.2
   zx: ^7.1.1
 
 dependencies:
+  '@kakengloh/bagel': 0.2.0
   '@kapsonfire/bun-bakery': 0.4.4
   '@nbit/bun': 0.7.0
+  '@zarfjs/zarf': 0.0.1-alpha.23
   baojs: 0.1.3
   bunrest: 1.1.6
   colstonjs: 0.1.0-beta.5
   express: 4.18.2
   fastify: 4.9.2
-  hono: 2.4.1
+  hono: 2.5.0
   hyperbun: 0.4.6
-  kingworld: 0.0.0-experimental.37
+  kingworld: link:../kingworld
 
 devDependencies:
   '@types/express': 4.17.14
@@ -76,6 +80,12 @@ packages:
       fast-json-stringify: 5.4.0
     dev: false
 
+  /@kakengloh/bagel/0.2.0:
+    resolution: {integrity: sha512-rUfp5n3OARHb8BhLezkpnBq+n8RQ5bnbMrXukV0Szb8WKk+MjVufIDb2bso5eWBGiEK7f0JOkO0AwPznzlGx3A==}
+    dependencies:
+      path-to-regexp: 6.2.1
+    dev: false
+
   /@kapsonfire/bun-bakery/0.4.4:
     resolution: {integrity: sha512-JmlgQXt3FpPXS9hNAgz5SifhujQYKGUBRKsXJH94hOMOFq5Usw2nT48GfGWbjSIO9c3aYsDoPb5sBq6Whdgw/w==}
     dependencies:
@@ -103,10 +113,6 @@ packages:
     dependencies:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.13.0
-
-  /@sinclair/typebox/0.25.2:
-    resolution: {integrity: sha512-QWjo2shO8oUWM6rSwIz7tUY8+WxP0fhUYQvaFA5eq+sECaQjQaRZIBXgWhWzzsB+lbgjljB1zRFfyX8mudn1gQ==}
-    dev: false
 
   /@types/body-parser/1.19.2:
     resolution: {integrity: sha512-ALYone6pm6QmwZoAgeyNksccT9Q4AWZQ6PvfwR37GT6r6FWUPguq6sUmNGSMV2Wr761oQoBxwGGa6DR5o1DC9g==}
@@ -178,6 +184,10 @@ packages:
   /@types/which/2.0.1:
     resolution: {integrity: sha512-Jjakcv8Roqtio6w1gr0D7y6twbhx6gGgFGF5BLwajPpnOIOxFkakFhCq+LmyyeAz7BX6ULrjBOxdKaCDy+4+dQ==}
     dev: true
+
+  /@zarfjs/zarf/0.0.1-alpha.23:
+    resolution: {integrity: sha512-Rc60Ge7nVQSxXPTfxxfMdcDPwauQMNaw49sTWrcLTh2TAlmMhb1+H0dSWO4UrPKs7cOr42jPjSsbsBqvtXi0JQ==}
+    dev: false
 
   /abort-controller/3.0.0:
     resolution: {integrity: sha512-h8lQ8tacZYnR3vNQTgibj+tODHI5/+l06Au2Pcriv/Gmet0eaj4TwWH41sO9wnHDiQsEj19q0drzdWdeAHtweg==}
@@ -1004,8 +1014,8 @@ packages:
       function-bind: 1.1.1
     dev: false
 
-  /hono/2.4.1:
-    resolution: {integrity: sha512-cxnfkoMJSyt7Kg17HdbL4/k63Mo80v8DvIXY4qHrQX9ceFiEo73oTH/Ikr8Ii7ym/ur78x9O5/4zQ6as9TRz9A==}
+  /hono/2.5.0:
+    resolution: {integrity: sha512-t3ZrlzJ6lqKJE81vspmHBlUQfP4iqTq/o0eHMu8gM59AOUIa8R+so2g/abXhMPAd2AKMbjWN1liYDGCaqG37eg==}
     engines: {node: '>=16.0.0'}
     dev: false
 
@@ -1113,12 +1123,6 @@ packages:
     optionalDependencies:
       graceful-fs: 4.2.10
     dev: true
-
-  /kingworld/0.0.0-experimental.37:
-    resolution: {integrity: sha512-RtnchwZKXaFGIbaIFhbwCwiUCDg4xMngJMft14bl/n5BG4z1ErBuTmPJaKuBknx+g5Wi8sV/FIQgZPup55+CNg==}
-    dependencies:
-      '@sinclair/typebox': 0.25.2
-    dev: false
 
   /light-my-request/5.6.1:
     resolution: {integrity: sha512-sbJnC1UBRivi9L1kICr3CESb82pNiPNB3TvtdIrZZqW0Qh8uDXvoywMmWKZlihDcmw952CMICCzM+54LDf+E+g==}
@@ -1317,6 +1321,10 @@ packages:
 
   /path-to-regexp/0.1.7:
     resolution: {integrity: sha512-5DFkuoqlv1uYQKxy8omFBeJPQcdoE07Kv2sferDCrAq1ohOU+MSDswDIbnx3YAM60qIOnYa53wBhXW0EbMonrQ==}
+    dev: false
+
+  /path-to-regexp/6.2.1:
+    resolution: {integrity: sha512-JLyh7xT1kizaEvcaXOQwOc2/Yhw6KZOvPf1S8401UyLk86CU79LN3vl7ztXGm/pZ+YjoyAJ4rxmHwbkBXJX+yw==}
     dev: false
 
   /path-type/4.0.0:
