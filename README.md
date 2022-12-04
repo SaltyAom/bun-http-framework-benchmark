@@ -9,7 +9,7 @@ Library/framework:
 - express
 - hono
 - hyperbun
-- kingworld
+- ~~kingworld~~ elysia
 - nbit
 - zarf
 
@@ -51,23 +51,23 @@ This benchmark is tested under the following condition:
 - Bun 0.2.2
 - Node 18.6.0
 
-Tested on 21 Nov 14:38 (GMT+7)
+Tested on 4 Dec 22:21 (GMT+7)
 
 ## Results
 These results are measured in req/s:
 
 |  Framework       |  Get (/)    |  Params, query & header | Post JSON  |
 | ---------------- | ----------- | ----------------------- | ---------- |
-| bagel | 68,337.97 | 53,860.69 | 56,681.34 |
-| baojs | 99,927.08 | 88,485.89 | 48,563.31 |
-| bun-bakery | 111,250.95 | 87,910.84 | 81,630.4 |
-| bun | 147,788.58 | 122,512.9 | 99,801.68 |
-| express | 24,366.45 | 24,062.24 | 6,172.58 |
-| hono | 152,603.97 | 112,658.48 | 99,095.03 |
-| hyperbun | 102,351.23 | 85,179.63 | 80,727.59 |
-| kingworld | 163,391.57 | 139,697.7 | 99,898.95 |
-| nbit | 95,847.99 | 80,004.54 | 80,245.9 |
-| zarf | 63,771.45 | 65,605.83 | 66,433.63 |
+| bagel | 65,376.59 | 52,728.26 | 55,837.97 |
+| baojs | 95,180.04 | 86,313.79 | 86,143.23 |
+| bun-bakery | 111,867.72 | 88,149.65 | 82,156.52 |
+| bun | 143,474.42 | 120,181.69 | 97,914.37 |
+| elysia | 162,225.46 | 139,780.89 | 98,668.38 |
+| express | 23,835.44 | 23,717.24 | 5,771.06 |
+| hono | 148,663.19 | 106,210.93 | 100,073.22 |
+| hyperbun | 101,668.68 | 86,176.31 | 81,789.73 |
+| nbit | 95,990.4 | 81,933.19 | 82,669.7 |
+| zarf | 63,897.06 | 64,156.38 | 64,452.87 |
 
 ## Notice
 I highly recommended testing this benchmark on your machine yourself.

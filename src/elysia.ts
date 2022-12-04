@@ -1,6 +1,6 @@
-import { KingWorld, t } from 'kingworld'
+import { Elysia } from 'elysia'
 
-new KingWorld()
+new Elysia()
     .get('/', () => 'Hi')
     .post('/json', (ctx) => ctx.body)
     .get('/id/:id', (ctx) => {
