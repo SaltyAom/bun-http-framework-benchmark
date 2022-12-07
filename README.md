@@ -48,26 +48,26 @@ Dump result will be available at `results/[benchmark-name].txt`
 This benchmark is tested under the following condition:
 - MacBook Pro 14' M1 Max 10 CPU Core, 32 GPU Core, 64GB of RAM
 - MacOS 13.0.1
-- Bun 0.2.2
+- Bun 0.3.0
 - Node 18.6.0
 
-Tested on 4 Dec 22:21 (GMT+7)
+Tested on 7 Dec 22:14 (GMT+7)
 
 ## Results
 These results are measured in req/s:
 
 |  Framework       |  Get (/)    |  Params, query & header | Post JSON  |
 | ---------------- | ----------- | ----------------------- | ---------- |
-| bagel | 65,376.59 | 52,728.26 | 55,837.97 |
-| baojs | 95,180.04 | 86,313.79 | 86,143.23 |
-| bun-bakery | 111,867.72 | 88,149.65 | 82,156.52 |
-| bun | 143,474.42 | 120,181.69 | 97,914.37 |
-| elysia | 162,225.46 | 139,780.89 | 98,668.38 |
-| express | 23,835.44 | 23,717.24 | 5,771.06 |
-| hono | 148,663.19 | 106,210.93 | 100,073.22 |
-| hyperbun | 101,668.68 | 86,176.31 | 81,789.73 |
-| nbit | 95,990.4 | 81,933.19 | 82,669.7 |
-| zarf | 63,897.06 | 64,156.38 | 64,452.87 |
+| bagel | 66,959.11 | 52,829.93 | 55,867.55 |
+| baojs | 98,521.43 | 88,810.08 | 88,340.4 |
+| bun-bakery | 113,625.37 | 84,459.79 | 81,223.79 |
+| bun | 146,678.85 | 119,559.35 | 101,705.15 |
+| elysia | 164,312.53 | 142,176.17 | 100,339.16 |
+| express | 23,935.97 | 23,422.17 | 6,193.47 |
+| hono | 152,975.02 | 113,652.89 | 100,156.69 |
+| hyperbun | 102,795.28 | 83,575.15 | 81,623.81 |
+| nbit | 95,232.87 | 81,176.7 | 81,606.5 |
+| zarf | 64,669.1 | 65,910.63 | 66,778.14 |
 
 ## Notice
 I highly recommended testing this benchmark on your machine yourself.
