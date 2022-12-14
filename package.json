@@ -17,6 +17,7 @@
     "@nbit/bun": "^0.7.0",
     "@zarfjs/zarf": "^0.0.1-alpha.23",
     "baojs": "^0.2.1",
+    "buchta": "^0.4.0",
     "bunrest": "^1.1.6",
     "colstonjs": "0.1.0-beta.5",
     "elysia": "^0.1.0-rc.1",
