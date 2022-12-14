@@ -20,10 +20,10 @@
     "buchta": "^0.4.0",
     "bunrest": "^1.1.6",
     "colstonjs": "0.1.0-beta.5",
-    "elysia": "^0.1.0-rc.1",
+    "elysia": "^0.1.0-rc.6",
     "express": "^4.18.2",
     "fastify": "^4.10.2",
-    "hono": "^2.5.7",
+    "hono": "^2.6.2",
     "hyperbun": "^0.4.6"
   }
 }

@@ -4,12 +4,13 @@ Compare throughput benchmarks from various Bun HTTP framework
 Library/framework:
 - bagel
 - baojs
+- buchta
+- bun-bakery
 - bun
-- bun
+- ~~kingworld~~ elysia
 - express
 - hono
 - hyperbun
-- ~~kingworld~~ elysia
 - nbit
 - zarf
 
@@ -51,23 +52,24 @@ This benchmark is tested under the following condition:
 - Bun 0.3.0
 - Node 18.6.0
 
-Tested on 7 Dec 22:14 (GMT+7)
+Tested on 14 Dec 23:03 (GMT+7)
 
 ## Results
 These results are measured in req/s:
 
 |  Framework       |  Get (/)    |  Params, query & header | Post JSON  |
 | ---------------- | ----------- | ----------------------- | ---------- |
-| bagel | 66,959.11 | 52,829.93 | 55,867.55 |
-| baojs | 98,521.43 | 88,810.08 | 88,340.4 |
-| bun-bakery | 113,625.37 | 84,459.79 | 81,223.79 |
-| bun | 146,678.85 | 119,559.35 | 101,705.15 |
-| elysia | 164,312.53 | 142,176.17 | 100,339.16 |
-| express | 23,935.97 | 23,422.17 | 6,193.47 |
-| hono | 152,975.02 | 113,652.89 | 100,156.69 |
-| hyperbun | 102,795.28 | 83,575.15 | 81,623.81 |
-| nbit | 95,232.87 | 81,176.7 | 81,606.5 |
-| zarf | 64,669.1 | 65,910.63 | 66,778.14 |
+| bagel | 63,474.05 | 50,853.85 | 54,069.09 |
+| baojs | 88,414.41 | 80,647.95 | 79,613.88 |
+| buchta | 120,720.37 | 99,249.85 | 78,116.05 |
+| bun-bakery | 111,995.82 | 86,053.25 | 76,612.67 |
+| bun | 139,402.32 | 116,682.16 | 94,440.85 |
+| elysia | 154,621.76 | 127,704.25 | 91,991.75 |
+| express | 23,009.95 | 22,612.06 | 207.02 |
+| hono | 153,918.58 | 104,385.16 | 91,482.32 |
+| hyperbun | 97,362.26 | 81,294.39 | 70,760.55 |
+| nbit | 86,696.52 | 76,987.94 | 75,572.27 |
+| zarf | 69,987.27 | 61,178.43 | 62,818.22 |
 
 ## Notice
 I highly recommended testing this benchmark on your machine yourself.
