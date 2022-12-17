@@ -5,13 +5,17 @@ Library/framework:
 - bagel
 - baojs
 - buchta
-- bun-bakery
 - bun
-- ~~kingworld~~ elysia
+- bun-bakery
+- elysia ~~(previously kingworld)~~
 - express
+- express-node
+- fastify-node
 - hono
 - hyperbun
+- koa-node
 - nbit
+- nest-node
 - zarf
 
 Test method:
@@ -59,17 +63,21 @@ These results are measured in req/s:
 
 |  Framework       |  Get (/)    |  Params, query & header | Post JSON  |
 | ---------------- | ----------- | ----------------------- | ---------- |
-| bagel | 63,474.05 | 50,853.85 | 54,069.09 |
-| baojs | 88,414.41 | 80,647.95 | 79,613.88 |
-| buchta | 120,720.37 | 99,249.85 | 78,116.05 |
-| bun-bakery | 111,995.82 | 86,053.25 | 76,612.67 |
-| bun | 139,402.32 | 116,682.16 | 94,440.85 |
-| elysia | 154,621.76 | 127,704.25 | 91,991.75 |
-| express | 23,009.95 | 22,612.06 | 207.02 |
-| hono | 153,918.58 | 104,385.16 | 91,482.32 |
-| hyperbun | 97,362.26 | 81,294.39 | 70,760.55 |
-| nbit | 86,696.52 | 76,987.94 | 75,572.27 |
-| zarf | 69,987.27 | 61,178.43 | 62,818.22 |
+| bagel | 63,289.84 | 51,377.51 | 53,471.66 |
+| baojs | 89,682.84 | 81,275.86 | 79,269.86 |
+| buchta | 118,695.4 | 98,472.42 | 76,084.4 |
+| bun | 141,464.17 | 114,356.1 | 93,249.57 |
+| bun-bakery | 110,296.27 | 86,974.38 | 75,201.47 |
+| elysia | 152,746.59 | 126,075.27 | 127,666.64 |
+| express | 23,032.38 | 22,765.45 | 21,568.72 |
+| express-node | 18,150.6 | 17,696.28 | 16,803.6 |
+| fastify-node | 65,015.7 | 60,087.82 | 31,430.84 |
+| hono | 159,936.26 | 111,077.9 | 90,491.46 |
+| hyperbun | 97,258.6 | 82,007 | 71,065.5 |
+| koa-node | 47,652.99 | 42,900.22 | 37,349.66 |
+| nbit | 87,356.79 | 77,745.53 | 65,873.92 |
+| nest-node | 17,381.51 | 16,815.01 | 15,433.11 |
+| zarf | 69,803.14 | 61,696.74 | 63,971.91 |
 
 ## Notice
 I highly recommended testing this benchmark on your machine yourself.
