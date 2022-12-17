@@ -37,10 +37,8 @@ Throughput
 - Bun
 
 # Run Test
-Test is written in Node.js but spawn process is bun.
-
 ```typescript
-npm run benchmark
+bun run benchmark
 ```
 
 Dump result will be available at `results/[benchmark-name].txt`
@@ -55,6 +53,8 @@ This benchmark is tested under the following condition:
 Tested on 14 Dec 23:03 (GMT+7)
 
 ## Results
+For results suffix with `-node` means that the framework is run in Node, otherwise is using Bun.
+
 These results are measured in req/s:
 
 |  Framework       |  Get (/)    |  Params, query & header | Post JSON  |

@@ -2,13 +2,14 @@
   "compilerOptions": {
     "strict": true,
     "lib": ["ES2022"],
-    "module": "ES2020",
+    "module": "CommonJS",
     "target": "esnext",
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
 
     // so that if your project isn't using TypeScript, it still has autocomplete
     "allowJs": true,
+    "experimentalDecorators": true,
 
     // "bun-types" is the important part
     "types": ["bun-types", "@types/node"]
