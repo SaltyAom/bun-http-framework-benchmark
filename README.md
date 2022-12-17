@@ -54,7 +54,7 @@ This benchmark is tested under the following condition:
 - Bun 0.3.0
 - Node 18.6.0
 
-Tested on 14 Dec 23:03 (GMT+7)
+Tested on 17 Dec 20:20 (GMT+7)
 
 ## Results
 For results suffix with `-node` means that the framework is run in Node, otherwise is using Bun.
