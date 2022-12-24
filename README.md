@@ -1,7 +1,9 @@
 # Bun HTTP Framework Benchmark
+
 Compare throughput benchmarks from various Bun HTTP framework
 
 Library/framework:
+
 - bagel
 - baojs
 - buchta
@@ -20,27 +22,30 @@ Library/framework:
 
 Test method:
 Throughput
+
 1. Get (/)
-    - [GET] `/`
-    - Return `hi` in plain text
+   - [GET] `/`
+   - Return `hi` in plain text
 2. Params, query & header
-    - [GET] `/id/:id`
-    - Extract path params, query and header.
-    - For this benchmark, the request URL will be send as: `/id/1?name=bun`
-    - Set `x-powered-by` to `benchmark`
-    - Expected response: **"1 bun"** (`${id} ${query}`)
+   - [GET] `/id/:id`
+   - Extract path params, query and header.
+   - For this benchmark, the request URL will be send as: `/id/1?name=bun`
+   - Set `x-powered-by` to `benchmark`
+   - Expected response: **"1 bun"** (`${id} ${query}`)
 3. Post JSON
-    - [POST] `/json`
-    - Mirror body to response
-    - For the benchmark, the request body will be sent as: `{ "hello": "world" }`
-    - Expected response: `{ "hello": "world" }`
+   - [POST] `/json`
+   - Mirror body to response
+   - For the benchmark, the request body will be sent as: `{ "hello": "world" }`
+   - Expected response: `{ "hello": "world" }`
 
 # Prerequistes
+
 - [bombardier](https://github.com/codesenberg/bombardier)
 - Nodejs
 - Bun
 
 # Run Test
+
 ```typescript
 bun run benchmark
 ```
@@ -48,36 +53,42 @@ bun run benchmark
 Dump result will be available at `results/[benchmark-name].txt`
 
 ## Benchmark Condition
-This benchmark is tested under the following condition:
-- MacBook Pro 14' M1 Max 10 CPU Core, 32 GPU Core, 64GB of RAM
-- MacOS 13.0.1
-- Bun 0.3.0
-- Node 18.6.0
 
-Tested on 17 Dec 20:20 (GMT+7)
+This benchmark is tested under the following condition:
+
+- Windows 11 under WSL Debian
+- AMD Ryzen 5 3500X, DDR4 RAM 16GB 2667MHz
+- Windows 11 22H2 build 22621.963
+- Debian GNU/Linux 11 (Bullseye), kernel: 5.15.79.1-microsoft-standard-WSL2
+- Bun 0.4.0
+- Node 18.12.1
+
+Tested on 25 Dec 1:31 (GMT+7)
 
 ## Results
+
 For results suffix with `-node` means that the framework is run in Node, otherwise is using Bun.
 
 These results are measured in req/s:
 
-|  Framework       |  Get (/)    |  Params, query & header | Post JSON  |
-| ---------------- | ----------- | ----------------------- | ---------- |
-| bagel | 63,289.84 | 51,377.51 | 53,471.66 |
-| baojs | 89,682.84 | 81,275.86 | 79,269.86 |
-| buchta | 118,695.4 | 98,472.42 | 76,084.4 |
-| bun | 141,464.17 | 114,356.1 | 93,249.57 |
-| bun-bakery | 110,296.27 | 86,974.38 | 75,201.47 |
-| elysia | 152,746.59 | 126,075.27 | 127,666.64 |
-| express | 23,032.38 | 22,765.45 | 21,568.72 |
-| express-node | 18,150.6 | 17,696.28 | 16,803.6 |
-| fastify-node | 65,015.7 | 60,087.82 | 31,430.84 |
-| hono | 159,936.26 | 111,077.9 | 90,491.46 |
-| hyperbun | 97,258.6 | 82,007 | 71,065.5 |
-| koa-node | 47,652.99 | 42,900.22 | 37,349.66 |
-| nbit | 87,356.79 | 77,745.53 | 65,873.92 |
-| nest-node | 17,381.51 | 16,815.01 | 15,433.11 |
-| zarf | 69,803.14 | 61,696.74 | 63,971.91 |
+| Framework    | Get (/)    | Params, query & header | Post JSON  |
+| ------------ | ---------- | ---------------------- | ---------- |
+| bagel        | 52,480.14  | 38,559.33              | 40,839.07  |
+| baojs        | 94,425.75  | 81,870.93              | 79,090.07  |
+| buchta       | 108,359.82 | 81,744.09              | 83,432.06  |
+| bun          | 143,179.64 | 106,306.16             | 102,027.23 |
+| bun-bakery   | 121,099.15 | 90,149.68              | 73,999.25  |
+| elysia       | 158,842.77 | 118,570.52             | 122,342.47 |
+| express      | 8,313.09   | 8,177.43               | 7,765.92   |
+| express-node | 6,350.76   | 6,051.1                | 5,812.16   |
+| fastify-node | 6,390.35   | 6,161.97               | 5,898.13   |
+| hono         | 166,430.02 | 95,942.99              | 97,052.24  |
+| hyperbun     | 115,502.26 | 82,832.1               | 64,588.61  |
+| koa-node     | 11,233.31  | 10,525.02              | 9,428.71   |
+| nbit         | 90,452.17  | 75,916.21              | 62,592.92  |
+| nest-node    | 19,216.1   | 5,794.28               | 5,325.94   |
+| zarf         | 63,663.53  | 54,291.81              | 54,307.66  |
 
 ## Notice
+
 I highly recommended testing this benchmark on your machine yourself.
