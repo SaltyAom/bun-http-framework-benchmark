@@ -4,45 +4,45 @@ Compare throughput benchmarks from various Bun HTTP framework
 
 Library/framework:
 
-- bagel
-- baojs
-- buchta
-- bun
-- bun-bakery
-- elysia ~~(previously kingworld)~~
-- express
-- express-node
-- fastify-node
-- hono
-- hyperbun
-- koa-node
-- nbit
-- nest-node
-- zarf
+-   bagel
+-   baojs
+-   buchta
+-   bun
+-   bun-bakery
+-   elysia ~~(previously kingworld)~~
+-   express
+-   express-node
+-   fastify-node
+-   hono
+-   hyperbun
+-   koa-node
+-   nbit
+-   nest-node
+-   zarf
 
 Test method:
 Throughput
 
 1. Get (/)
-   - [GET] `/`
-   - Return `hi` in plain text
+    - [GET] `/`
+    - Return `hi` in plain text
 2. Params, query & header
-   - [GET] `/id/:id`
-   - Extract path params, query and header.
-   - For this benchmark, the request URL will be send as: `/id/1?name=bun`
-   - Set `x-powered-by` to `benchmark`
-   - Expected response: **"1 bun"** (`${id} ${query}`)
+    - [GET] `/id/:id`
+    - Extract path params, query and header.
+    - For this benchmark, the request URL will be send as: `/id/1?name=bun`
+    - Set `x-powered-by` to `benchmark`
+    - Expected response: **"1 bun"** (`${id} ${query}`)
 3. Post JSON
-   - [POST] `/json`
-   - Mirror body to response
-   - For the benchmark, the request body will be sent as: `{ "hello": "world" }`
-   - Expected response: `{ "hello": "world" }`
+    - [POST] `/json`
+    - Mirror body to response
+    - For the benchmark, the request body will be sent as: `{ "hello": "world" }`
+    - Expected response: `{ "hello": "world" }`
 
 # Prerequistes
 
-- [bombardier](https://github.com/codesenberg/bombardier)
-- Nodejs
-- Bun
+-   [bombardier](https://github.com/codesenberg/bombardier)
+-   Nodejs
+-   Bun
 
 # Run Test
 
@@ -56,12 +56,12 @@ Dump result will be available at `results/[benchmark-name].txt`
 
 This benchmark is tested under the following condition:
 
-- Windows 11 under WSL Debian
-- AMD Ryzen 5 3500X, DDR4 RAM 16GB 2667MHz
-- Windows 11 22H2 build 22621.963
-- Debian GNU/Linux 11 (Bullseye), kernel: 5.15.79.1-microsoft-standard-WSL2
-- Bun 0.4.0
-- Node 18.12.1
+-   Windows 11 under WSL Debian
+-   AMD Ryzen 5 3500X, DDR4 RAM 16GB 2667MHz
+-   Windows 11 22H2 build 22621.963
+-   Debian GNU/Linux 11 (Bullseye), kernel: 5.15.79.1-microsoft-standard-WSL2
+-   Bun 0.4.0
+-   Node 18.12.1
 
 Tested on 25 Dec 1:31 (GMT+7)
 
@@ -81,7 +81,7 @@ These results are measured in req/s:
 | elysia       | 158,842.77 | 118,570.52             | 122,342.47 |
 | express      | 8,313.09   | 8,177.43               | 7,765.92   |
 | express-node | 6,350.76   | 6,051.1                | 5,812.16   |
-| fastify-node | 6,390.35   | 6,161.97               | 5,898.13   |
+| fastify-node | 24,448.88  | 19,125.56              | 10,136.47  |
 | hono         | 166,430.02 | 95,942.99              | 97,052.24  |
 | hyperbun     | 115,502.26 | 82,832.1               | 64,588.61  |
 | koa-node     | 11,233.31  | 10,525.02              | 9,428.71   |

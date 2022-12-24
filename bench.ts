@@ -11,7 +11,7 @@ import kill from "kill-port"
 import killPort from "kill-port"
 
 // ? Not working
-const blacklists = ["bunrest", "colston", "fastify", "fastify-node"]
+const blacklists = ["bunrest", "colston", "fastify"]
 
 const commands = [
 	`bombardier --fasthttp -c 500 -d 10s http://localhost:3000/`,
@@ -41,7 +41,7 @@ writeFileSync(
 )
 
 const main = async () => {
-	for (const framework of frameworks) {
+	for (const framework of ["fastify-node"]) {
 		const name = framework.replace("/index", "")
 
 		console.log("\n", name)
