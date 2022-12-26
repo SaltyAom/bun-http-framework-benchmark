@@ -41,7 +41,7 @@ writeFileSync(
 )
 
 const main = async () => {
-	for (const framework of ["fastify-node"]) {
+	for (const framework of frameworks) {
 		const name = framework.replace("/index", "")
 
 		console.log("\n", name)
