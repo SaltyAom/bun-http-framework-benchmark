@@ -11,7 +11,7 @@ import kill from "kill-port"
 import killPort from "kill-port"
 
 // ? Not working
-const blacklists = ["bunrest", "colston", "fastify"]
+const blacklists = ["bunrest", "colston", "fastify", "express"]
 
 const commands = [
 	`bombardier --fasthttp -c 500 -d 10s http://localhost:3000/`,
@@ -22,25 +22,26 @@ const commands = [
 const catchNumber = /Reqs\/sec\s+(\d+[.|,]\d+)/m
 const format = (value: any) => Intl.NumberFormat("en-US").format(value)
 
-if (!existsSync("./results")) mkdirSync("./results")
+const main = async () => {
+	if (!existsSync("./results")) mkdirSync("./results")
 
-const frameworks = readdirSync("src")
-	.filter((a) => a.endsWith(".ts") || !a.includes("."))
-	.map((a) => (a.includes(".") ? a.replace(".ts", "") : `${a}/index`))
-	.filter((a) => !blacklists.includes(a))
-	.sort()
+	const frameworks = readdirSync("src")
+		.filter((a) => a.endsWith(".ts") || !a.includes("."))
+		.map((a) => (a.includes(".") ? a.replace(".ts", "") : `${a}/index`))
+		.filter((a) => !blacklists.includes(a))
+		.sort()
 
-const sleep = (s = 1) => new Promise((resolve) => setTimeout(resolve, s * 1000))
+	const sleep = (s = 1) =>
+		new Promise((resolve) => setTimeout(resolve, s * 1000))
 
-writeFileSync(
-	"results/results.md",
-	`
+	writeFileSync(
+		"results/results.md",
+		`
 |  Framework       |  Get (/)    |  Params, query & header | Post JSON  |
 | ---------------- | ----------- | ----------------------- | ---------- |
 `
-)
+	)
 
-const main = async () => {
 	for (const framework of frameworks) {
 		const name = framework.replace("/index", "")
 
@@ -82,10 +83,57 @@ const main = async () => {
 
 		appendFileSync("./results/results.md", `|\n`)
 
-		await server.kill()
+		await server.kill(0)
 
 		await sleep()
 	}
 }
 
+const toNumber = (a: string) => +a.replaceAll(",", "")
+
+const arrange = async () => {
+	const table = await Bun.file("results/results.md").text()
+
+	const orders: Array<{
+		name: string
+		total: number
+		row: string
+	}> = []
+
+	const [_, title, divider, ...rows] = table.split("\n")
+	for (const row of rows) {
+		const data = row
+			.replace(/\ /g, "")
+			.split("|")
+			.filter((a) => a)
+
+		if (data.length !== 4) continue
+
+		const [name, c1, c2, c3] = data
+		orders.push({
+			name,
+			total: toNumber(c1) + toNumber(c2) + toNumber(c3),
+			row
+		})
+	}
+
+	console.log(
+		[
+			title,
+			divider,
+			...orders.sort((a, b) => b.total - a.total).map((a) => a.row)
+		].join("\n")
+	)
+
+	await Bun.write(
+		"results/results.md",
+		[
+			title,
+			divider,
+			...orders.sort((a, b) => b.total - a.total).map((a) => a.row)
+		].join("\n")
+	)
+}
+
 main()
+arrange()
