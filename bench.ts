@@ -11,7 +11,7 @@ import kill from "kill-port"
 import killPort from "kill-port"
 
 // ? Not working
-const blacklists = ["bunrest", "colston", "fastify", "express"]
+const blacklists = ["bunrest", "colston", "fastify"]
 
 const commands = [
 	`bombardier --fasthttp -c 500 -d 10s http://localhost:3000/`,
@@ -83,9 +83,20 @@ const main = async () => {
 
 		appendFileSync("./results/results.md", `|\n`)
 
-		await server.kill(0)
+		await server.kill()
 
 		await sleep()
+
+		try {
+			if (
+				(await fetch("http://localhost:3000/").then(
+					(r) => r.status
+				)) === 200
+			)
+				await Bun.spawn(["npm", "run", "kill-port"])
+		} catch (error) {
+			// nothing
+		}
 	}
 }
 
@@ -135,5 +146,4 @@ const arrange = async () => {
 	)
 }
 
-main()
-arrange()
+main().then(arrange)
