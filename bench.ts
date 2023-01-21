@@ -14,9 +14,9 @@ import killPort from "kill-port"
 const blacklists = ["bunrest", "colston", "fastify"]
 
 const commands = [
-	`bombardier --fasthttp -c 500 -d 10s http://localhost:3000/`,
-	`bombardier --fasthttp -c 500 -d 10s http://localhost:3000/id/1?name=bun`,
-	`bombardier --fasthttp -c 500 -d 10s -m POST -H 'Content-Type:application/json' -f ./scripts/body.json http://localhost:3000/json`
+	`./scripts/get.sh`,
+	`./scripts/query.sh`,
+	`./scripts/body.sh`
 ] as const
 
 const catchNumber = /Reqs\/sec\s+(\d+[.|,]\d+)/m
@@ -67,7 +67,7 @@ const main = async () => {
 		for (const command of commands) {
 			appendFileSync(`./results/${name}.txt`, `${command}\n`)
 
-			const { stdout } = Bun.spawnSync(command.split(" ") as any, {
+			const { stdout } = Bun.spawnSync(["bash", command], {
 				stdout: "pipe"
 			})
 
