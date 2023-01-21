@@ -9,7 +9,7 @@ Library/framework:
 -   buchta
 -   bun
 -   bun-bakery
--   bunsrv
+-   bunsvr
 -   elysia
 -   express
 -   express-node
