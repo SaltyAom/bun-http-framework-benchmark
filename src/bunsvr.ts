@@ -14,7 +14,7 @@ router.dynamic("GET", "/id/:id",
     async (req, server, params) => {
 	const name = new URL(req.url).searchParams.get("name");
 	
-	return new Response(`${params["id"]} ${name}`, {
+	return new Response(`${params[1]} ${name}`, {
 	    headers: { "x-powered-by": "benchmark" }
 	});
     }
