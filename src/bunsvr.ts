@@ -1,53 +1,23 @@
-import { Router } from "@bunsvr/router"
+import { Router } from "@bunsvr/router";
 
-const router = new Router()
+const router = new Router();
 
-router.use({
-	path: "/",
-	run: () => new Response("Hi")
-})
+router.static("GET", "/", 
+    () => new Response("hi")
+);
 
-router.use({
-	method: "POST",
-	path: "/json",
-	run: async (request) =>
-		new Response(await request.json(), {
-			headers: {
-				"content-type": "application/json"
-			}
-		})
-})
+router.static("POST", "/json", 
+    async req => new Response(await req.text())
+);
 
-router.use({
-	method: "GET",
-	path: "/id/*",
-	run: (request) => {
-		const { pathname, searchParams } = new URL(request.url)
+router.dynamic("GET", "/id/:id", 
+    async (req, server, params) => {
+	const name = new URL(req.url).searchParams.get("name");
+	
+	return new Response(`${params[1]} ${name}`, {
+	    headers: { "x-powered-by": "benchmark" }
+	});
+    }
+);
 
-		const [id, extraPath] = pathname.substring(4).split("/")
-
-		if (extraPath)
-			return new Response("NOT_FOUND", {
-				status: 404
-			})
-
-		return new Response(`${id} ${searchParams.get("name")}`, {
-			headers: {
-				"x-powered-by": "benchmark"
-			}
-		})
-	}
-})
-
-router.use({
-	path: "*",
-	run: () =>
-		new Response("NOT_FOUND", {
-			status: 404
-		})
-})
-
-router.serve({
-	baseURI: "http://localhost:3000",
-	port: 3000
-})
+router.serve();

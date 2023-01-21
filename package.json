@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@bunsvr/core": "^0.0.9",
-    "@bunsvr/router": "^0.0.3",
+    "@bunsvr/router": "^0.0.8",
     "@kakengloh/bagel": "^0.2.2",
     "@kapsonfire/bun-bakery": "^0.4.4",
     "@nbit/bun": "^0.7.0",
