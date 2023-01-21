@@ -5,7 +5,7 @@ const route = new Router();
 route.use({
     method: "GET",
     path: "/",
-    run: () => new Response("Hi")
+    run: () => new Response("hi")
 });
 
 route.use({
