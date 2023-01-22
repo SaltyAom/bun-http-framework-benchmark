@@ -7,20 +7,19 @@ import {
 	lstatSync
 } from "fs"
 import rimraf from "rimraf"
-import kill from "kill-port"
-import killPort from "kill-port"
+import { $ } from "zx"
 
 // ? Not working
 const blacklists = ["bunrest", "colston", "fastify"]
 
 const commands = [
-	`./scripts/get.sh`,
-	`./scripts/query.sh`,
-	`./scripts/body.sh`
-] as const
+	`bombardier --fasthttp -c 500 -d 10s http://localhost:3000/`,
+	`bombardier --fasthttp -c 500 -d 10s http://localhost:3000/id/1?name=bun`,
+	`bombardier --fasthttp -c 500 -d 10s -m POST -H 'Content-Type:application/json' -f ./scripts/body.json http://localhost:3000/json`
+]
 
 const catchNumber = /Reqs\/sec\s+(\d+[.|,]\d+)/m
-const format = (value: any) => Intl.NumberFormat("en-US").format(value)
+const format = (value) => Intl.NumberFormat("en-US").format(value)
 
 const main = async () => {
 	if (!existsSync("./results")) mkdirSync("./results")
@@ -50,7 +49,7 @@ const main = async () => {
 		writeFileSync(`./results/${name}.txt`, "")
 		appendFileSync("./results/results.md", `| ${name} `)
 
-		let file: string
+		let file
 
 		file = existsSync(`./src/${framework}.ts`)
 			? `src/${framework}.ts`
@@ -59,7 +58,7 @@ const main = async () => {
 		const runtime = framework.includes("-node") ? "ts-node" : "bun"
 		console.log(" >", runtime, file, "\n")
 
-		const server = Bun.spawn([runtime, file])
+		const server = $`${runtime} ${file}`.quiet().nothrow()
 
 		// Wait 1 second for server to bootup
 		await sleep()
@@ -67,12 +66,7 @@ const main = async () => {
 		for (const command of commands) {
 			appendFileSync(`./results/${name}.txt`, `${command}\n`)
 
-			const { stdout } = Bun.spawnSync(["bash", command], {
-				stdout: "pipe"
-			})
-
-			const res = stdout?.toString()!
-			console.log(res)
+			const res = (await $([command]).nothrow()) + ""
 
 			const results = catchNumber.exec(res)
 			if (!results?.[1]) continue
@@ -93,23 +87,19 @@ const main = async () => {
 					(r) => r.status
 				)) === 200
 			)
-				await Bun.spawn(["npm", "run", "kill-port"])
+				await $`npm kill-port`
 		} catch (error) {
 			// nothing
 		}
 	}
 }
 
-const toNumber = (a: string) => +a.replaceAll(",", "")
+const toNumber = (a) => +a.replaceAll(",", "")
 
 const arrange = async () => {
 	const table = await Bun.file("results/results.md").text()
 
-	const orders: Array<{
-		name: string
-		total: number
-		row: string
-	}> = []
+	const orders = []
 
 	const [_, title, divider, ...rows] = table.split("\n")
 	for (const row of rows) {
