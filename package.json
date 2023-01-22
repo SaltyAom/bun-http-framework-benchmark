@@ -1,9 +1,9 @@
 {
   "name": "bun-http-framework-benchmark",
-  "type": "module",
   "scripts": {
-    "benchmark": "node bench.js",
-    "kill-port": "kill-port 3000"
+    "benchmark": "node bench.mjs",
+    "kill-port": "kill-port 3000",
+    "ts-node": "ts-node"
   },
   "devDependencies": {
     "@types/express": "^4.17.15",

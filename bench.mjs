@@ -4,7 +4,8 @@ import {
 	existsSync,
 	writeFileSync,
 	appendFileSync,
-	lstatSync
+	lstatSync,
+	readFileSync
 } from "fs"
 import rimraf from "rimraf"
 import { $ } from "zx"
@@ -15,7 +16,7 @@ const blacklists = ["bunrest", "colston", "fastify"]
 const commands = [
 	`bombardier --fasthttp -c 500 -d 10s http://localhost:3000/`,
 	`bombardier --fasthttp -c 500 -d 10s http://localhost:3000/id/1?name=bun`,
-	`bombardier --fasthttp -c 500 -d 10s -m POST -H 'Content-Type:application/json' -f ./scripts/body.json http://localhost:3000/json`
+	`bombardier --fasthttp -c 500 -d 10s -m POST -H 'Content-Type: application/json' -f ./scripts/body.json http://localhost:3000/json`
 ]
 
 const catchNumber = /Reqs\/sec\s+(\d+[.|,]\d+)/m
@@ -55,10 +56,12 @@ const main = async () => {
 			? `src/${framework}.ts`
 			: `src/${framework}.js`
 
-		const runtime = framework.includes("-node") ? "ts-node" : "bun"
+		const runtime = framework.includes("-node") ? "npm run ts-node" : "bun"
 		console.log(" >", runtime, file, "\n")
 
-		const server = $`${runtime} ${file}`.quiet().nothrow()
+		const server = $([`${runtime} ${file}`])
+			.quiet()
+			.nothrow()
 
 		// Wait 1 second for server to bootup
 		await sleep()
@@ -81,23 +84,16 @@ const main = async () => {
 
 		await sleep()
 
-		try {
-			if (
-				(await fetch("http://localhost:3000/").then(
-					(r) => r.status
-				)) === 200
-			)
-				await $`npm kill-port`
-		} catch (error) {
-			// nothing
-		}
+		await $`npm kill-port`.nothrow().quiet()
 	}
 }
 
 const toNumber = (a) => +a.replaceAll(",", "")
 
-const arrange = async () => {
-	const table = await Bun.file("results/results.md").text()
+const arrange = () => {
+	const table = readFileSync("results/results.md", {
+		encoding: "utf-8"
+	})
 
 	const orders = []
 
@@ -126,13 +122,16 @@ const arrange = async () => {
 		].join("\n")
 	)
 
-	await Bun.write(
+	writeFileSync(
 		"results/results.md",
 		[
 			title,
 			divider,
 			...orders.sort((a, b) => b.total - a.total).map((a) => a.row)
-		].join("\n")
+		].join("\n"),
+		{
+			encoding: "utf-8"
+		}
 	)
 }
 
