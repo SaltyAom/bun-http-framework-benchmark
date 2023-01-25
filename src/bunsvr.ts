@@ -1,4 +1,4 @@
-import { Router } from ".";
+import { Router } from "@bunsvr/router";
 
 // Get all query string
 const slicer = /\?(.+)/;
