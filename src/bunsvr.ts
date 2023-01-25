@@ -1,28 +1,23 @@
-import { Router } from "@bunsvr/router"
+import { Router } from ".";
 
-const router = new Router()
+// Get all query string
+const slicer = /\?(.+)/;
 
-router.static("GET", "/", () => new Response("hi"))
-
-router.static(
-	"POST",
-	"/json",
-	async (req) =>
-		// Should confirm that body is an actual json
-		new Response(JSON.stringify(await req.json()), {
-			headers: {
-				// Should add content-type headers to specified that response is json
-				"content-type": "application/json"
-			}
-		})
-)
-
-router.dynamic("GET", "/id/:id", async (req, server, params) => {
-	const name = new URL(req.url).searchParams.get("name")
-
-	return new Response(`${params[1]} ${name}`, {
-		headers: { "x-powered-by": "benchmark" }
-	})
-})
-
-router.serve()
+new Router()
+    .static("GET", "/", () => new Response("hi"))
+    .static("POST", "/json", async req =>
+        new Response(JSON.stringify(await req.json()), {
+            headers: { "content-type": "application/json" }
+        })
+    )
+    .dynamic("GET", "/id/:id", async req => 
+        new Response(`${req.params?.[1]} ${
+            // Get name parameter from the query params
+            new URLSearchParams(
+                slicer.exec(req.url)?.[1]
+            ).get("name")
+        }`, {
+            headers: { "x-powered-by": "benchmark" }
+        })
+    )
+    .serve();
