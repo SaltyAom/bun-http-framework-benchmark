@@ -2,6 +2,9 @@ import { Router } from "@stricjs/router"
 
 const router = new Router()
 
+// Get all query string
+const slicer = /\?(.+)/;
+
 router.static("GET", "/", () => new Response("hi"))
 
 router.static(
