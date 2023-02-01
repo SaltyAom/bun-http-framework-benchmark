@@ -1,4 +1,4 @@
-import { Router } from "@bunsvr/router"
+import { Router } from "@stricjs/router"
 
 const router = new Router()
 
@@ -17,10 +17,10 @@ router.static(
 		})
 )
 
-router.dynamic("GET", "/id/:id", async (req, server, params) => {
+router.dynamic("GET", "/id/:id", async (req) => {
 	const name = new URL(req.url).searchParams.get("name")
 
-	return new Response(`${params[1]} ${name}`, {
+	return new Response(`${req.params[1]} ${name}`, {
 		headers: { "x-powered-by": "benchmark" }
 	})
 })

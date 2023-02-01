@@ -6,34 +6,34 @@
     "ts-node": "ts-node"
   },
   "devDependencies": {
-    "@types/express": "^4.17.15",
+    "@bunsvr/core": "^0.0.12",
+    "@types/express": "^4.17.16",
     "@types/kill-port": "^2.0.0",
     "@types/koa": "^2.13.5",
     "@types/koa-bodyparser": "^4.3.10",
     "@types/koa-router": "^7.4.4",
-    "bun-types": "^0.4.0",
-    "rimraf": "^4.0.4",
+    "bun-types": "^0.5.0",
+    "rimraf": "^4.1.2",
     "zx": "^7.1.1"
   },
   "dependencies": {
-    "@bunsvr/core": "^0.0.9",
-    "@bunsvr/router": "^0.0.8",
     "@kakengloh/bagel": "^0.2.2",
-    "@kapsonfire/bun-bakery": "^0.4.4",
+    "@kapsonfire/bun-bakery": "^0.4.12",
     "@nbit/bun": "^0.7.0",
     "@nestjs/common": "^9.2.1",
     "@nestjs/core": "^9.2.1",
     "@nestjs/platform-express": "^9.2.1",
+    "@stricjs/router": "^1.0.2",
     "@types/rimraf": "^3.0.2",
     "@zarfjs/zarf": "^0.0.1-alpha.23",
     "baojs": "^0.2.1",
-    "buchta": "0.4.25",
-    "bunrest": "^1.1.8",
+    "buchta": "0.4.33",
+    "bunrest": "^1.2.0",
     "colstonjs": "0.1.0-beta.5",
-    "elysia": "^0.1.2",
+    "elysia": "^0.2.4",
     "express": "^4.18.2",
-    "fastify": "^4.11.0",
-    "hono": "^2.7.2",
+    "fastify": "^4.12.0",
+    "hono": "^2.7.5",
     "hyperbun": "^0.4.6",
     "kill-port": "^2.0.1",
     "koa": "^2.14.1",
@@ -42,6 +42,6 @@
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.0",
     "ts-node": "^10.9.1",
-    "typescript": "^4.9.4"
+    "typescript": "^4.9.5"
   }
 }
