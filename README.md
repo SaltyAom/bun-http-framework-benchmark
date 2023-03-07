@@ -58,13 +58,13 @@ Dump result will be available at `results/[benchmark-name].txt`
 This benchmark is tested under the following condition:
 
 -   Windows 11 under WSL Debian
--   AMD Ryzen 5 3500X, DDR4 RAM 16GB 2667MHz
--   Windows 11 22H2 build 22621.963
--   Debian GNU/Linux 11 (Bullseye), kernel: 5.15.79.1-microsoft-standard-WSL2
--   Bun 0.5.6
--   Node 18.12.1
+-   Intel I7-13700K, DDR5 32 5600MHz
+-   Windows 11 22H2 build 22621.1265
+-   Debian GNU/Linux 11 (Bullseye), kernel: 5.15.90.1-microsoft-standard-WSL2
+-   Bun 0.5.7
+-   Node 18.14.2
 
-Tested on 21 Feb 2023 19:19 (GMT+7)
+Tested on 8 Mar 2023 12:08 (GMT+7)
 
 ## Results
 
@@ -72,24 +72,24 @@ For results suffix with `-node` means that the framework is run in Node, otherwi
 
 These results are measured in req/s:
 
-| Framework    | Get (/)    | Params, query & header | Post JSON |
-| ------------ | ---------- | ---------------------- | --------- |
-| stricjs      | 147,495.81 | 83,392.93              | 99,545.78 |
-| elysia       | 138,055.57 | 96,651.02              | 93,269.54 |
-| hono         | 137,363.24 | 96,908.63              | 83,535.1  |
-| bun          | 126,377.67 | 88,464.87              | 93,505.79 |
-| bun-bakery   | 116,297.98 | 82,001.51              | 73,519.62 |
-| hyperbun     | 99,653.83  | 76,623.24              | 57,629.79 |
-| baojs        | 81,579.49  | 70,479.39              | 71,922.27 |
-| buchta       | 86,508.01  | 63,164.2               | 70,905.64 |
-| nbit         | 77,934.51  | 66,313.41              | 64,885.51 |
-| zarf         | 56,239.29  | 46,860.55              | 50,286.27 |
-| bagel        | 48,031.56  | 35,119.75              | 37,595.17 |
-| fastify-node | 30,001.15  | 16,847.79              | 11,536.58 |
-| koa-node     | 12,213.62  | 10,226.89              | 8,439.79  |
-| nest-node    | 21,300.82  | 4,895.06               | 4,017.4   |
-| express      | 9,554.71   | 9,777.45               | 9,845.45  |
-| express-node | 7,593.15   | 5,408.79               | 4,559.03  |
+| Framework    | Get (/)    | Params, query & header | Post JSON  |
+| ------------ | ---------- | ---------------------- | ---------- |
+| stricjs      | 358,420.32 | 217,264.49             | 242,579.53 |
+| elysia       | 332,186.86 | 241,814.47             | 220,267.42 |
+| hono         | 335,614.78 | 237,821.33             | 202,863.64 |
+| bun          | 293,286.89 | 225,051.14             | 222,384.17 |
+| bun-bakery   | 284,124.72 | 191,443.62             | 183,606.15 |
+| buchta       | 246,575.88 | 194,267.66             | 184,283.29 |
+| baojs        | 205,530.92 | 176,228.64             | 176,780.67 |
+| hyperbun     | 235,306.6  | 180,835.21             | 142,176.65 |
+| nbit         | 197,169.15 | 166,178.08             | 161,524.26 |
+| zarf         | 131,048.87 | 117,136.96             | 119,880.84 |
+| bagel        | 118,429.49 | 83,730.49              | 91,116.46  |
+| fastify-node | 64,715.2   | 59,450.78              | 48,975.9   |
+| koa-node     | 43,273.05  | 37,895.64              | 30,708.98  |
+| express      | 31,851.71  | 30,703.92              | 25,727.83  |
+| express-node | 16,323.47  | 15,570.08              | 12,143.09  |
+| nest-node    | 15,644.89  | 13,016.44              | 10,888.6   |
 
 ## Notice
 
