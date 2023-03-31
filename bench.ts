@@ -8,19 +8,70 @@ import {
 	readFileSync
 } from "fs"
 import rimraf from "rimraf"
-import { $ } from "zx"
+import { Subprocess } from "bun"
+
+import { cpus } from "os"
+
+const threads = cpus().length - 1
+
+const sleep = (s = 0.5) =>
+	new Promise((resolve) => setTimeout(resolve, s * 1000))
+
+const spawnServer = (framework: string, file: string) => {
+	const runtime = framework.includes("-node") ? "ts-node" : "bun"
+	const cmd = [...runtime.split(" "), file]
+
+	console.log(" >", cmd.join(" "))
+	console.log(" Using", threads, "threads\n")
+
+	if (runtime === "ts-node")
+		return [
+			Bun.spawn({
+				cmd,
+				env: {
+					ENV: "production",
+					NODE_ENV: "production",
+					cwd: process.cwd()
+				}
+			})
+		]
+
+	return new Array(threads).fill(null).map(() => {
+		return Bun.spawn({
+			cmd,
+			env: {
+				ENV: "production",
+				NODE_ENV: "production",
+				cwd: process.cwd()
+			}
+		})
+	})
+}
+
+const killServer = async (process: Subprocess[]) => {
+	await Promise.all(process.map((x) => x.kill()))
+
+	await sleep()
+
+	await Bun.spawn({
+		cmd: ["npm", "kill-port"]
+	})
+
+	await sleep()
+}
 
 // ? Not working
-const blacklists = ["bunrest", "colston", "fastify"]
+const blacklists = ["bagel", "bunrest", "colston", "fastify", "fastify-node"]
 
 const commands = [
-	`bombardier --fasthttp -c 500 -d 10s http://localhost:3000/`,
-	`bombardier --fasthttp -c 500 -d 10s http://localhost:3000/id/1?name=bun`,
-	`bombardier --fasthttp -c 500 -d 10s -m POST -H 'Content-Type: application/json' -f ./scripts/body.json http://localhost:3000/json`
+	["bash", "./get.sh"],
+	["bash", "./query.sh"],
+	["bash", "./body.sh"]
 ]
 
 const catchNumber = /Reqs\/sec\s+(\d+[.|,]\d+)/m
-const format = (value) => Intl.NumberFormat("en-US").format(value)
+const format = (value: string) =>
+	Intl.NumberFormat("en-US").format(value as any)
 
 const main = async () => {
 	if (!existsSync("./results")) mkdirSync("./results")
@@ -29,10 +80,8 @@ const main = async () => {
 		.filter((a) => a.endsWith(".ts") || !a.includes("."))
 		.map((a) => (a.includes(".") ? a.replace(".ts", "") : `${a}/index`))
 		.filter((a) => !blacklists.includes(a))
+		.filter((a) => !a.includes("-node"))
 		.sort()
-
-	const sleep = (s = 1) =>
-		new Promise((resolve) => setTimeout(resolve, s * 1000))
 
 	writeFileSync(
 		"results/results.md",
@@ -56,12 +105,7 @@ const main = async () => {
 			? `src/${framework}.ts`
 			: `src/${framework}.js`
 
-		const runtime = framework.includes("-node") ? "npm run ts-node" : "bun"
-		console.log(" >", runtime, file, "\n")
-
-		const server = $([`${runtime} ${file}`])
-			.quiet()
-			.nothrow()
+		const server = spawnServer(framework, file)
 
 		// Wait 1 second for server to bootup
 		await sleep()
@@ -69,7 +113,14 @@ const main = async () => {
 		for (const command of commands) {
 			appendFileSync(`./results/${name}.txt`, `${command}\n`)
 
-			const res = (await $([command]).nothrow()) + ""
+			const { stdout } = Bun.spawnSync({
+				cmd: command as any,
+				stdout: "pipe",
+				cwd: "./scripts"
+			})
+
+			const res = stdout?.toString()!
+			console.log(res)
 
 			const results = catchNumber.exec(res)
 			if (!results?.[1]) continue
@@ -80,15 +131,11 @@ const main = async () => {
 
 		appendFileSync("./results/results.md", `|\n`)
 
-		await server.kill()
-
-		await sleep()
-
-		await $`npm kill-port`.nothrow().quiet()
+		killServer(server)
 	}
 }
 
-const toNumber = (a) => +a.replaceAll(",", "")
+const toNumber = (a: string) => +a.replaceAll(",", "")
 
 const arrange = () => {
 	const table = readFileSync("results/results.md", {
