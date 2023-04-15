@@ -1,31 +1,19 @@
-import { Router } from "@stricjs/router"
+import { Router } from "@stricjs/router";
+import { URLParser } from "@stricjs/utils";
 
-const router = new Router()
+new Router()
+    .static("GET", "/", () => new Response("hi"))
+    .static("POST", "/json", async req =>
+        new Response(JSON.stringify(await req.json()), {
+            headers: { "content-type": "application/json" }
+        })
+    )
+    .dynamic("GET", "/id/:id", req => {
+        const name = new URLSearchParams(
+            URLParser.query(req.url)
+        ).get("name");
 
-// Get all query string
-const slicer = /\?(.+)/;
-
-router.static("GET", "/", () => new Response("hi"))
-
-router.static(
-	"POST",
-	"/json",
-	async (req) =>
-		// Should confirm that body is an actual json
-		new Response(JSON.stringify(await req.json()), {
-			headers: {
-				// Should add content-type headers to specified that response is json
-				"content-type": "application/json"
-			}
-		})
-)
-
-router.dynamic("GET", "/id/:id", async (req) => {
-	const name = new URL(req.url).searchParams.get("name")
-
-	return new Response(`${req.params[1]} ${name}`, {
-		headers: { "x-powered-by": "benchmark" }
-	})
-})
-
-router.serve()
+        return new Response(`${req.params[1]} ${name}`, {
+            headers: { "x-powered-by": "benchmark" }
+        })
+    }).serve();
