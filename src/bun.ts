@@ -1,31 +1,50 @@
 Bun.serve({
-    port: 3000,
-    fetch: async (request) => {
-        const { url, method, json } = request
-        const { pathname, searchParams } = new URL(url)
+	port: 3000,
+	fetch: async (request) => {
+		const url = new URL(request.url)
 
-        if (method === 'GET' && pathname === '/') return new Response('Hi')
-        if (method === 'POST' && pathname === '/json')
-            return new Response(JSON.stringify(await request.json()), {
-                headers: {
-                    'content-type': 'application/json'
-                }
-            })
+		switch (request.method) {
+			case "GET":
+				switch (url.pathname) {
+					case "/":
+						return new Response("Hi")
+				}
 
-        if (method === 'GET' && pathname.startsWith('/id/')) {
-            const [id, extraPath] = pathname.substring(4).split('/')
+				if (url.pathname.startsWith("/id/")) {
+					const [id, rest] = url.pathname.slice(4).split("/")
 
-            if (!extraPath) {
-                return new Response(`${id} ${searchParams.get('name')}`, {
-                    headers: {
-                        'x-powered-by': 'benchmark'
-                    }
-                })
-            }
-        }
+					if (!rest)
+						return new Response(
+							`${id} ${new URLSearchParams(url.pathname).get(
+								"name"
+							)}`,
+							{
+								headers: {
+									"x-powered-by": "benchmark"
+								}
+							}
+						)
+				}
 
-        return new Response('Not Found', {
-            status: 404
-        })
-    }
+				return new Response("Not Found", {
+					status: 404
+				})
+
+			case "POST":
+				switch (url.pathname) {
+					case "/json":
+						return Response.json(await request.json())
+
+					default:
+						return new Response("Not Found", {
+							status: 404
+						})
+				}
+
+			default:
+				return new Response("Not Found", {
+					status: 404
+				})
+		}
+	}
 })
