@@ -69,7 +69,7 @@ const main = async () => {
 `
 	)
 
-	for (const target of frameworks) {
+	for (const target of ["bun/elysia"]) {
 		let [runtime, framework, index] = target.split("/")
 		if (index) framework += "/index"
 
