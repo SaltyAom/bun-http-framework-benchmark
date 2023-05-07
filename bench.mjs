@@ -11,7 +11,7 @@ import rimraf from "rimraf"
 import { $ } from "zx"
 
 // ? Not working
-const blacklists = ["bunrest", "colston", "fastify"]
+const blacklists = ["bagel", "bunrest", "colston", "fastify"]
 
 const commands = [
 	`bombardier --fasthttp -c 500 -d 10s http://localhost:3000/`,
@@ -37,8 +37,8 @@ const main = async () => {
 	writeFileSync(
 		"results/results.md",
 		`
-|  Framework       |  Get (/)    |  Params, query & header | Post JSON  |
-| ---------------- | ----------- | ----------------------- | ---------- |
+|  Framework       | Average |  Get (/)    |  Params, query & header | Post JSON  |
+| ---------------- | ------- | ----------- | ----------------------- | ---------- |
 `
 	)
 
@@ -66,6 +66,9 @@ const main = async () => {
 		// Wait 1 second for server to bootup
 		await sleep()
 
+		let content = ''
+		const total = []
+
 		for (const command of commands) {
 			appendFileSync(`./results/${name}.txt`, `${command}\n`)
 
@@ -74,11 +77,15 @@ const main = async () => {
 			const results = catchNumber.exec(res)
 			if (!results?.[1]) continue
 
+			total.push(toNumber(results[1]))
+
 			appendFileSync(`./results/${name}.txt`, results + "\n")
-			appendFileSync("./results/results.md", `| ${format(results[1])} `)
+
+			content += `| ${format(results[1])} `
 		}
 
-		appendFileSync("./results/results.md", `|\n`)
+		content = `| ${format(total.reduce((a, b) => +a + +b, 0) / commands.length)} ` + content + '|\n'
+		appendFileSync("./results/results.md", content)
 
 		await server.kill()
 
@@ -104,31 +111,30 @@ const arrange = () => {
 			.split("|")
 			.filter((a) => a)
 
-		if (data.length !== 4) continue
+		if (data.length !== commands.length + 2) continue
 
-		const [name, c1, c2, c3] = data
+		const [name, total] = data
 		orders.push({
 			name,
-			total: toNumber(c1) + toNumber(c2) + toNumber(c3),
+			total,
 			row
 		})
 	}
 
-	console.log(
-		[
-			title,
-			divider,
-			...orders.sort((a, b) => b.total - a.total).map((a) => a.row)
-		].join("\n")
-	)
+	const content = [
+		title,
+		divider,
+		...orders.map(x => ({
+			...x,
+			total: toNumber(x.total),
+		})).sort((a, b) => b.total - a.total).map((a) => a.row)
+	].join("\n")
+
+	console.log(content)
 
 	writeFileSync(
 		"results/results.md",
-		[
-			title,
-			divider,
-			...orders.sort((a, b) => b.total - a.total).map((a) => a.row)
-		].join("\n"),
+		content,
 		{
 			encoding: "utf-8"
 		}

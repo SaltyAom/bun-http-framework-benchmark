@@ -13,7 +13,7 @@
     "@types/koa-router": "^7.4.4",
     "bun-types": "^0.5.8",
     "rimraf": "4.4.1",
-    "zx": "^7.2.1"
+    "zx": "^7.2.2"
   },
   "dependencies": {
     "@kakengloh/bagel": "^0.2.2",
@@ -22,7 +22,7 @@
     "@nestjs/common": "^9.4.0",
     "@nestjs/core": "^9.4.0",
     "@nestjs/platform-express": "^9.4.0",
-    "@stricjs/router": "^1.0.9",
+    "@stricjs/router": "^2.0.4",
     "@stricjs/utils": "^1.0.8",
     "@types/rimraf": "^3.0.2",
     "@zarfjs/zarf": "^0.0.1-alpha.23",
@@ -30,18 +30,18 @@
     "buchta": "0.5.11",
     "bunrest": "^1.2.1",
     "colstonjs": "0.1.0-beta.5",
-    "elysia": "0.4.12",
+    "elysia": "0.4.15",
     "express": "^4.18.2",
-    "fastify": "^4.16.3",
-    "hono": "^3.1.6",
+    "fastify": "^4.17.0",
+    "hono": "^3.1.8",
     "hyperbun": "^0.4.6",
     "kill-port": "^2.0.1",
     "koa": "^2.14.2",
     "koa-bodyparser": "^4.4.0",
     "koa-router": "^12.0.0",
-    "nhttp-land": "^1.2.11",
+    "nhttp-land": "^1.2.14",
     "reflect-metadata": "^0.1.13",
-    "rxjs": "^7.8.0",
+    "rxjs": "^7.8.1",
     "ts-node": "^10.9.1",
     "typescript": "^5.0.4"
   }
