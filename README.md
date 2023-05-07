@@ -63,7 +63,7 @@ This benchmark is tested under the following condition:
 -   Bun 0.5.9
 -   Node 18.16.0
 
-Tested on 7 May 2023 17:03 (GMT+7)
+Tested on 7 May 2023 11:08 (GMT+7)
 
 ## Results
 
