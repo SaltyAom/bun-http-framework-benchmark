@@ -23,10 +23,7 @@ const server = fastify()
   .get(
     "/id/:id",
     (
-      req: FastifyRequest<{
-        Params: { id: string };
-        Querystring: { name: string };
-      }>,
+      req,
       res
     ) => {
       res.header("x-powered-by", "benchmark");
