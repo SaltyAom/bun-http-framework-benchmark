@@ -5,7 +5,6 @@ Compare throughput benchmarks from various Bun HTTP framework
 Library/framework:
 
 -   baojs
--   buchta
 -   bun
 -   bun-bakery
 -   elysia
@@ -79,7 +78,6 @@ These results are measured in req/s:
 | bun (bun)        | 252,754.03  | 306,891.29 | 222,853.6              | 228,517.2  |
 | bun-bakery (bun) | 217,500.707 | 281,155.77 | 191,781.32             | 179,565.03 |
 | nhttp (bun)      | 216,123.583 | 320,882.64 | 158,514.91             | 168,973.2  |
-| buchta (bun)     | 207,732.543 | 248,463.36 | 192,427.61             | 182,306.66 |
 | hyperbun (bun)   | 184,092.563 | 233,791.3  | 178,293.58             | 140,192.81 |
 | baojs (bun)      | 183,177.883 | 201,969.71 | 173,924.02             | 173,639.92 |
 | nbit (bun)       | 171,721.733 | 195,587.73 | 162,044.98             | 157,532.49 |
