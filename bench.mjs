@@ -34,7 +34,7 @@ const secToMin = (seconds) => Math.floor(seconds / 60) + ":" + (seconds % 60 < 1
 const main = async () => {
 	if (!existsSync("./results")) mkdirSync("./results")
 
-	const frameworks = readdirSync("src")
+	let frameworks = readdirSync("src")
 		.flatMap((runtime) => {
 			if (!lstatSync(`src/${runtime}`).isDirectory()) return
 
@@ -53,6 +53,9 @@ const main = async () => {
 		.filter((x) => x)
 		.sort()
 
+	// Overwrite test here
+	// frameworks = ['bun/elysia', 'bun/stricjs', 'bun/hono']
+
 	console.log(`${frameworks.length} frameworks`)
 	for (const framework of frameworks)
 		console.log(`- ${framework}`)
@@ -69,7 +72,7 @@ const main = async () => {
 `
 	)
 
-	for (const target of ["bun/elysia"]) {
+	for (const target of frameworks) {
 		let [runtime, framework, index] = target.split("/")
 		if (index) framework += "/index"
 
