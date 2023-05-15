@@ -54,7 +54,7 @@ const main = async () => {
 		.sort()
 
 	// Overwrite test here
-	// frameworks = ['bun/elysia', 'bun/stricjs', 'bun/hono']
+	// frameworks = ['bun/elysia', 'bun/stricjs', 'bun/hono', 'deno/oak']
 
 	console.log(`${frameworks.length} frameworks`)
 	for (const framework of frameworks)
