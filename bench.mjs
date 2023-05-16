@@ -29,7 +29,11 @@ const catchNumber = /Reqs\/sec\s+(\d+[.|,]\d+)/m
 const format = (value) => Intl.NumberFormat("en-US").format(value)
 const sleep = (s = 1) => new Promise((resolve) => setTimeout(resolve, s * 1000))
 
-const secToMin = (seconds) => Math.floor(seconds / 60) + ":" + (seconds % 60 < 10 ? "0" : "") + seconds % 60;
+const secToMin = (seconds) =>
+	Math.floor(seconds / 60) +
+	":" +
+	(seconds % 60 < 10 ? "0" : "") +
+	(seconds % 60)
 
 const main = async () => {
 	if (!existsSync("./results")) mkdirSync("./results")
@@ -42,10 +46,15 @@ const main = async () => {
 				mkdirSync(`results/${runtime}`)
 
 			return readdirSync(`src/${runtime}`)
-				.filter((a) => a.endsWith(".ts") || !a.includes("."))
+				.filter(
+					(a) =>
+						a.endsWith(".ts") ||
+						a.endsWith(".js") ||
+						!a.includes(".")
+				)
 				.map((a) =>
 					a.includes(".")
-						? `${runtime}/` + a.replace(".ts", "")
+						? `${runtime}/` + a.replace(/.(j|t)s$/, "")
 						: `${runtime}/${a}/index`
 				)
 				.filter((a) => !blacklists.includes(a))
@@ -57,10 +66,9 @@ const main = async () => {
 	// frameworks = ['bun/elysia', 'bun/stricjs', 'bun/hono', 'deno/oak']
 
 	console.log(`${frameworks.length} frameworks`)
-	for (const framework of frameworks)
-		console.log(`- ${framework}`)
+	for (const framework of frameworks) console.log(`- ${framework}`)
 
-	const estimateTime = (frameworks.length * ((commands.length * 10) + 1))
+	const estimateTime = frameworks.length * (commands.length * 10 + 1)
 
 	console.log(`\nEstimate time: ${secToMin(estimateTime)} min`)
 
@@ -87,6 +95,8 @@ const main = async () => {
 		const file = existsSync(`./src/${runtime}/${framework}.ts`)
 			? `src/${runtime}/${framework}.ts`
 			: `src/${runtime}/${framework}.js`
+
+		console.log(`NODE_ENV=production ENV=production ${runtimeCommand[runtime]} ${file}`)
 
 		const server = $([`NODE_ENV=production ENV=production ${runtimeCommand[runtime]} ${file}`])
 			.quiet()

@@ -1,4 +1,5 @@
-import { Server } from "hyper-express"
+const { Server } = require("hyper-express")
+
 const app = new Server()
 
 app.get("/", (req, res) => {
@@ -16,4 +17,4 @@ app.post("/json", async (req, res) => {
 	res.send(JSON.stringify(await req.json()))
 })
 
-app.listen(8080)
+app.listen(3000)
