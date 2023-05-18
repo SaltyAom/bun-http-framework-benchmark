@@ -11,7 +11,18 @@ import rimraf from "rimraf"
 import { $ } from "zx"
 
 // ? Not working
-const blacklists = ["bun/bagel", "bun/bunrest", "bun/colston", "bun/fastify"]
+const blacklists = [
+	// Crash
+	"bun/bagel", 
+	// Crash
+	"bun/bunrest", 
+	// Doesn't work properly
+	"bun/colston", 
+	// Problem with closing port
+	"bun/fastify", 
+	// Crash on 0.6.2
+	"bun/zarf"
+]
 
 const commands = [
 	`bombardier --fasthttp -c 500 -d 10s http://localhost:3000/`,
@@ -29,12 +40,16 @@ const catchNumber = /Reqs\/sec\s+(\d+[.|,]\d+)/m
 const format = (value) => Intl.NumberFormat("en-US").format(value)
 const sleep = (s = 1) => new Promise((resolve) => setTimeout(resolve, s * 1000))
 
-const secToMin = (seconds) => Math.floor(seconds / 60) + ":" + (seconds % 60 < 10 ? "0" : "") + seconds % 60;
+const secToMin = (seconds) =>
+	Math.floor(seconds / 60) +
+	":" +
+	(seconds % 60 < 10 ? "0" : "") +
+	(seconds % 60)
 
 const main = async () => {
 	if (!existsSync("./results")) mkdirSync("./results")
 
-	const frameworks = readdirSync("src")
+	let frameworks = readdirSync("src")
 		.flatMap((runtime) => {
 			if (!lstatSync(`src/${runtime}`).isDirectory()) return
 
@@ -42,10 +57,15 @@ const main = async () => {
 				mkdirSync(`results/${runtime}`)
 
 			return readdirSync(`src/${runtime}`)
-				.filter((a) => a.endsWith(".ts") || !a.includes("."))
+				.filter(
+					(a) =>
+						a.endsWith(".ts") ||
+						a.endsWith(".js") ||
+						!a.includes(".")
+				)
 				.map((a) =>
 					a.includes(".")
-						? `${runtime}/` + a.replace(".ts", "")
+						? `${runtime}/` + a.replace(/.(j|t)s$/, "")
 						: `${runtime}/${a}/index`
 				)
 				.filter((a) => !blacklists.includes(a))
@@ -53,11 +73,13 @@ const main = async () => {
 		.filter((x) => x)
 		.sort()
 
-	console.log(`${frameworks.length} frameworks`)
-	for (const framework of frameworks)
-		console.log(`- ${framework}`)
+	// Overwrite test here
+	// frameworks = ['bun/elysia', 'node/adonis/index']
 
-	const estimateTime = (frameworks.length * ((commands.length * 10) + 1))
+	console.log(`${frameworks.length} frameworks`)
+	for (const framework of frameworks) console.log(`- ${framework}`)
+
+	const estimateTime = frameworks.length * (commands.length * 10 + 1)
 
 	console.log(`\nEstimate time: ${secToMin(estimateTime)} min`)
 
@@ -69,7 +91,7 @@ const main = async () => {
 `
 	)
 
-	for (const target of ["bun/elysia"]) {
+	for (const target of frameworks) {
 		let [runtime, framework, index] = target.split("/")
 		if (index) framework += "/index"
 
@@ -84,6 +106,8 @@ const main = async () => {
 		const file = existsSync(`./src/${runtime}/${framework}.ts`)
 			? `src/${runtime}/${framework}.ts`
 			: `src/${runtime}/${framework}.js`
+
+		console.log(`NODE_ENV=production ENV=production ${runtimeCommand[runtime]} ${file}`)
 
 		const server = $([`NODE_ENV=production ENV=production ${runtimeCommand[runtime]} ${file}`])
 			.quiet()

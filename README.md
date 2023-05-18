@@ -41,6 +41,7 @@ Throughput
 
 -   [bombardier](https://github.com/codesenberg/bombardier)
 -   Nodejs
+-   Deno
 -   Bun
 
 # Run Test
@@ -59,10 +60,11 @@ This benchmark is tested under the following condition:
 -   Intel I7-13700K, DDR5 32 5600MHz
 -   Windows 11 22H2 build 22621.1555
 -   Debian GNU/Linux 11 (Bullseye), kernel: 5.15.90.1-microsoft-standard-WSL2
--   Bun 0.5.9
+-   Bun 0.6.2
 -   Node 18.16.0
+-   Deno 1.33.2
 
-Tested on 7 May 2023 11:08 (GMT+7)
+Tested on 16 May 2023 14:08 (GMT+7)
 
 ## Results
 

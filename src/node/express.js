@@ -1,4 +1,4 @@
-import * as express from 'express'
+const express = require('express')
 
 express()
     .use(express.json())

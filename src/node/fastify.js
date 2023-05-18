@@ -1,4 +1,4 @@
-import { fastify, FastifyRequest } from "fastify";
+const fastify = require("fastify");
 
 const server = fastify()
   .get("/", (req, res) => "Hi")

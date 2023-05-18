@@ -1,17 +1,15 @@
 import { nhttp } from 'nhttp-land'
 
-const app = nhttp({
-    flash: true
-});
+const app = nhttp()
 
-app.get("/", (rev) => "Hi")
+app.get("/", () => "Hi")
 
-app.get("/json", (rev) => rev.body)
+app.post("/json", (rev) => rev.body)
 
 app.get("/id/:id", (rev) => {
-  rev.setHeader("x-powered-by", "benchmark");
+  rev.response.setHeader("x-powered-by", "benchmark");
 
   return `${rev.params.id} ${rev.query.name}`
-});
+})
 
 app.listen(3000)

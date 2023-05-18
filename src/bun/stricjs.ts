@@ -2,7 +2,7 @@ import { Router } from "@stricjs/router"
 import { URLParser } from "@stricjs/utils"
 
 export default new Router()
-	.use("GET", "/", () => new Response("hi"))
+	.use("GET", "/", () => new Response("Hi"))
 	.use(
 		"POST",
 		"/json",
