@@ -16,6 +16,7 @@
     "zx": "^7.2.2"
   },
   "dependencies": {
+    "@elysiajs/fn": "^0.5.0",
     "@kakengloh/bagel": "^0.2.2",
     "@kapsonfire/bun-bakery": "^0.4.12",
     "@nbit/bun": "^0.7.0",
@@ -33,6 +34,7 @@
     "elysia": "0.5.1",
     "express": "^4.18.2",
     "fastify": "^4.17.0",
+    "h3": "^1.6.6",
     "hono": "^3.1.8",
     "hyper-express": "^6.5.9",
     "hyperbun": "^0.4.6",

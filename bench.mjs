@@ -11,7 +11,18 @@ import rimraf from "rimraf"
 import { $ } from "zx"
 
 // ? Not working
-const blacklists = ["bun/bagel", "bun/bunrest", "bun/colston", "bun/fastify"]
+const blacklists = [
+	// Crash
+	"bun/bagel", 
+	// Crash
+	"bun/bunrest", 
+	// Doesn't work properly
+	"bun/colston", 
+	// Problem with closing port
+	"bun/fastify", 
+	// Crash on 0.6.2
+	"bun/zarf"
+]
 
 const commands = [
 	`bombardier --fasthttp -c 500 -d 10s http://localhost:3000/`,
@@ -63,7 +74,7 @@ const main = async () => {
 		.sort()
 
 	// Overwrite test here
-	// frameworks = ['bun/elysia', 'bun/stricjs', 'bun/hono', 'deno/oak']
+	// frameworks = ['bun/elysia', 'node/adonis/index']
 
 	console.log(`${frameworks.length} frameworks`)
 	for (const framework of frameworks) console.log(`- ${framework}`)
