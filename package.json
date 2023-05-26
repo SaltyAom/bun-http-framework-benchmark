@@ -24,7 +24,7 @@
     "@nestjs/common": "^9.4.2",
     "@nestjs/core": "^9.4.2",
     "@nestjs/platform-express": "^9.4.2",
-    "@stricjs/router": "2.0.5",
+    "@stricjs/router": "2.0.8",
     "@stricjs/utils": "^1.0.8",
     "@types/rimraf": "^3.0.2",
     "@zarfjs/zarf": "^0.0.1-alpha.23",
