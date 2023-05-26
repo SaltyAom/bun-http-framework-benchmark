@@ -74,7 +74,7 @@ const main = async () => {
 		.sort()
 
 	// Overwrite test here
-	// frameworks = ['bun/elysia', 'node/adonis/index']
+	// frameworks = ['bun/elysia', 'bun/express', 'bun/nest/index', 'bun/koa', 'bun/baojs']
 
 	console.log(`${frameworks.length} frameworks`)
 	for (const framework of frameworks) console.log(`- ${framework}`)
@@ -191,6 +191,8 @@ const arrange = () => {
 	writeFileSync("results/results.md", content, {
 		encoding: "utf-8"
 	})
+
+	process.exit(0)
 }
 
 main().then(arrange)

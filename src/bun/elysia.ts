@@ -2,12 +2,12 @@ import { Elysia } from "elysia"
 
 new Elysia()
 	.get("/", () => "Hi")
-	.get("/id/:id", ({ set, params: { id }, query: { name } }) => {
-		set.headers["x-powered-by"] = "benchmark"
+	.get("/id/:id", (c) => {
+		c.set.headers["x-powered-by"] = "benchmark"
 
-		return `${id} ${name}`
+		return `${c.params.id} ${c.query.name}`
 	})
-	.post("/json", ({ body }) => body, {
+	.post("/json", (c) => c.body, {
 		type: "json"
 	})
 	.listen(3000)
