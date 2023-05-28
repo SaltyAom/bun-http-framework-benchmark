@@ -16,9 +16,10 @@ Test method: Average throughput
     - Expected response: **"1 bun"** (`${id} ${query}`)
         - You **MUST NOT use hardcode string or index** to extract querystring.
         - In a real-world situation, there's no enforcement that the request will follow the specification, using hardcode index to extract `name=bun` querystring will be prone to error.
-        - To test if it pass the requirement, the implementation should be able to extract querystring **dynamically**, which means that the same code should be able to extract querystring, for example:
+        - To test if it pass the requirement, the implementation should be able to extract querystring **dynamically** (please treat the value of 'name=bun' can be any value beside 'bun', for example 'alice', 'hina'), which means that the same code should be able to extract querystring, for example:
         - `/id/1?name=bun&id=1` -> should return `1 bun` not `1 bun&id=1`
         - `/id/1?id=1` -> should return `1 `
+        - Query beside `name` maybe not need to be extracted and is optional
     - Headers must contains text `Content-Type: text/plain`, additional context is acceptable eg. `Content-Type: text/plain; charset=utf-8`
 3. Post JSON
     - [POST] `/json`
