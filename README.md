@@ -5,19 +5,27 @@ Compare throughput benchmarks from various Bun HTTP framework
 Test method: Average throughput
 
 1. Get (/)
-    - [GET] `/`
-    - Return `hi` in plain text
+    - Request to [GET] `/`
+    - Return `hi`
+    - Headers must contains text `Content-Type: text/plain`, additional context is acceptable eg. `Content-Type: text/plain; charset=utf-8`
 2. Params, query & header
-    - [GET] `/id/:id`
-    - Extract path params, query and header.
+    - Request to [GET] `/id/:id`
+    - Extract path parameter, query string and setting headers.
     - For this benchmark, the request URL will be send as: `/id/1?name=bun`
-    - Set `x-powered-by` to `benchmark`
+    - Headers must contains `x-powered-by` to `benchmark`
     - Expected response: **"1 bun"** (`${id} ${query}`)
+        - You **MUST NOT use hardcode string or index** to extract querystring.
+        - In a real-world situation, there's no enforcement that the request will follow the specification, using hardcode index to extract `name=bun` querystring will be prone to error.
+        - To test if it pass the requirement, the implementation should be able to extract querystring **dynamically**, which means that the same code should be able to extract querystring, for example:
+        - `/id/1?name=bun&id=1` -> should return `1 bun` not `1 bun&id=1`
+        - `/id/1?id=1` -> should return `1 `
+    - Headers must contains text `Content-Type: text/plain`, additional context is acceptable eg. `Content-Type: text/plain; charset=utf-8`
 3. Post JSON
     - [POST] `/json`
     - Mirror body to response
     - For the benchmark, the request body will be sent as: `{ "hello": "world" }`
     - Expected response: `{ "hello": "world" }`
+    - Headers must contains text `Content-Type: application/json`, additional context is acceptable eg. `Content-Type: application/json; charset=utf-8`.
 
 # Prerequistes
 
