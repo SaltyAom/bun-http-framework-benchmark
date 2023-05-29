@@ -7,6 +7,11 @@ const json = {
         'content-type': 'application/json'
     }
 }
+const query = {
+    headers: {
+        "x-powered-by": "benchmark"
+    }
+}
 const paramPath = '/id/';
 const paramPathLen = paramPath.length;
 
@@ -14,8 +19,10 @@ const paramPathLen = paramPath.length;
 export default {
     port: 3000,
     async fetch(req) {
+        // The path to check
         let path: string;
-        let query: string;
+        // The request query string
+        let qry: string;
         const method = req.method;
 
         // This part parses the path and the query
@@ -25,10 +32,10 @@ export default {
 
         if (-1 === pathEnd) {
             path = url.substring(pathStart);
-            query = '';
+            qry = '';
         } else {
             path = url.substring(pathStart, pathEnd);
-            query = url.substring(pathEnd + 1);
+            qry = url.substring(pathEnd + 1);
         }
 
         // Handle static routes
@@ -55,7 +62,7 @@ export default {
 
                     return new Response(
                         path.substring(param + paramPathLen) + ' ' +
-                        new URLSearchParams(query).get('name')
+                        new URLSearchParams(qry).get('name'), query
                     );
                 }
         }
