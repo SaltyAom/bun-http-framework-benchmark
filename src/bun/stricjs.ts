@@ -5,7 +5,7 @@ const json = {
     headers: { 'content-type': 'application/json' } 
 };
 const query = {
-    headers: { 'x-powered-by": "benchmark' }
+    headers: { 'x-powered-by': 'benchmark' }
 }
 
 // Create a router and serve using Bun
