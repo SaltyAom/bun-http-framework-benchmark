@@ -1,50 +1,73 @@
-Bun.serve({
-	port: 3000,
-	fetch: async (request) => {
-		const url = new URL(request.url)
+/// <reference types="bun-types" />
+import Bun from "bun";
 
-		switch (request.method) {
-			case "GET":
-				switch (url.pathname) {
-					case "/":
-						return new Response("Hi")
-				}
+const notFound = { status: 404 };
+const json = {
+    headers: {
+        'content-type': 'application/json'
+    }
+}
+const query = {
+    headers: {
+        "x-powered-by": "benchmark"
+    }
+}
+const paramPath = '/id/';
+const paramPathLen = paramPath.length;
 
-				if (url.pathname.startsWith("/id/")) {
-					const [id, rest] = url.pathname.slice(4).split("/")
+// Serve the server
+export default {
+    port: 3000,
+    async fetch(req) {
+        // The path to check
+        let path: string;
+        // The request query string
+        let qry: string;
+        const method = req.method;
 
-					if (!rest)
-						return new Response(
-							`${id} ${new URLSearchParams(url.pathname).get(
-								"name"
-							)}`,
-							{
-								headers: {
-									"x-powered-by": "benchmark"
-								}
-							}
-						)
-				}
+        // This part parses the path and the query
+        const url = req.url;
+        const pathStart = url.indexOf('/', 12);
+        const pathEnd = url.indexOf('?', pathStart + 1);
 
-				return new Response("Not Found", {
-					status: 404
-				})
+        if (-1 === pathEnd) {
+            path = url.substring(pathStart);
+            qry = '';
+        } else {
+            path = url.substring(pathStart, pathEnd);
+            qry = url.substring(pathEnd + 1);
+        }
 
-			case "POST":
-				switch (url.pathname) {
-					case "/json":
-						return Response.json(await request.json())
+        // Handle static routes
+        switch (path) {
+            // Handle GET request to '/'
+            case '/':
+                if (method === 'GET')
+                    return new Response('Hi');
+                return new Response('', notFound);
+            // Handle POST request to '/json'
+            case '/json':
+                if (method === 'JSON')
+                    return new Response(
+                        JSON.stringify(await req.json()), json
+                    );
+                return new Response('', notFound);
+            // Handle GET request to '/id/...'
+            default:
+                if (method === "GET") {
+                    // Check param 
+                    const param = path.indexOf(paramPath);
+                    if (param === -1)
+                        return new Response('', notFound);
 
-					default:
-						return new Response("Not Found", {
-							status: 404
-						})
-				}
+                    return new Response(
+                        path.substring(param + paramPathLen) + ' ' +
+                        new URLSearchParams(qry).get('name'), query
+                    );
+                }
+        }
+    }
+} as Bun.ServeOptions;
 
-			default:
-				return new Response("Not Found", {
-					status: 404
-				})
-		}
-	}
-})
+// This shows how hard it is to code a fast server without using a framework
+// I like Stric and Elysia
