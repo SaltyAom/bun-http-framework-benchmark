@@ -30,7 +30,7 @@
     "baojs": "^0.2.1",
     "bunrest": "^1.2.1",
     "colstonjs": "0.1.0-beta.5",
-    "elysia": "0.5.7",
+    "elysia": "0.5.9",
     "express": "^4.18.2",
     "fastify": "^4.17.0",
     "h3": "^1.6.6",

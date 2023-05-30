@@ -47,7 +47,7 @@ export default {
                 return new Response('', notFound);
             // Handle POST request to '/json'
             case '/json':
-                if (method === 'JSON')
+                if (method === 'POST')
                     return new Response(
                         JSON.stringify(await req.json()), json
                     );

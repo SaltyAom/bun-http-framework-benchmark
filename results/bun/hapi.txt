@@ -1,0 +1,3 @@
+bombardier --fasthttp -c 500 -d 10s http://localhost:3000/
+Reqs/sec    352854.04,352854.04
+bombardier --fasthttp -c 500 -d 10s http://localhost:3000/id/1?name=bun
