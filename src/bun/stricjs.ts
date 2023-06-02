@@ -7,7 +7,6 @@ const jsonHeaders = {
 const queryHeaders = {
     headers: { 'x-powered-by': 'benchmark' }
 }
-const serverErrorHeader = { status: 500 };
 
 // Create a router and serve using Bun
 export default new Router()
@@ -17,7 +16,7 @@ export default new Router()
     .post('/json', async req =>
         new Response(
             JSON.stringify(await req.json()),
-            jsonHeaders
+            jsonHeaders,
         ))
     // Return 90 for requests to `/id/90` for instance
     .get('/id/:id', ({ params: { id }, url, query }) =>
@@ -29,5 +28,3 @@ export default new Router()
         ))
     // Use the default 404 handler
     .use(404)
-    // Handle errors
-    .use('error', () => new Response(null, serverErrorHeader));
