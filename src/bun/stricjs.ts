@@ -25,6 +25,4 @@ export default new Router()
                 // Slice the query
                 url.substring(query + 1)
             ).get('name'), queryHeaders
-        ))
-    // Use the default 404 handler
-    .use(404)
+        ));
