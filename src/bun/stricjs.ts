@@ -19,10 +19,14 @@ export default new Router()
             jsonHeaders,
         ))
     // Return 90 for requests to `/id/90` for instance
-    .get('/id/:id', ({ params: { id }, url, query }) =>
-        new Response(
+    .get('/id/:id', ({ params: { id }, url, query }) => {
+        if (query === -1)
+            return new Response(id);
+    
+        return new Response(
             id + ' ' + new URLSearchParams(
                 // Slice the query
                 url.substring(query + 1)
             ).get('name'), queryHeaders
-        ));
+        )
+    });
