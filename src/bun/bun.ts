@@ -1,5 +1,5 @@
-/// <reference types="bun-types" />
-import Bun from "bun";
+/// <reference types='bun-types' />
+import Bun from 'bun';
 
 const notFound = { status: 404 };
 const json = {
@@ -9,11 +9,10 @@ const json = {
 }
 const query = {
     headers: {
-        "x-powered-by": "benchmark"
+        'x-powered-by': 'benchmark'
     }
 }
 const paramPath = '/id/';
-const paramPathLen = paramPath.length;
 
 // Serve the server
 export default {
@@ -22,7 +21,6 @@ export default {
         // The path to check
         let path: string;
         // The request query string
-        let qry: string;
         const method = req.method;
 
         // This part parses the path and the query
@@ -30,13 +28,10 @@ export default {
         const pathStart = url.indexOf('/', 12);
         const pathEnd = url.indexOf('?', pathStart + 1);
 
-        if (-1 === pathEnd) {
+        if (pathEnd === -1) {
             path = url.substring(pathStart);
-            qry = '';
-        } else {
+        } else 
             path = url.substring(pathStart, pathEnd);
-            qry = url.substring(pathEnd + 1);
-        }
 
         // Handle static routes
         switch (path) {
@@ -54,17 +49,23 @@ export default {
                 return new Response('', notFound);
             // Handle GET request to '/id/...'
             default:
-                if (method === "GET") {
+                if (method === 'GET') {
                     // Check param 
                     const param = path.indexOf(paramPath);
                     if (param === -1)
                         return new Response('', notFound);
 
+                    if (pathEnd === -1) 
+                        return new Response(path.substring(param + 4));
+
                     return new Response(
-                        path.substring(param + paramPathLen) + ' ' +
-                        new URLSearchParams(qry).get('name'), query
+                        path.substring(param + 4) + ' ' +
+                        new URLSearchParams(
+                            url.substring(pathEnd + 1)
+                        ).get('name'), query
                     );
                 }
+                return new Response('', notFound);
         }
     }
 } as Bun.ServeOptions;
