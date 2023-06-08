@@ -11,7 +11,7 @@
     "@types/koa": "^2.13.6",
     "@types/koa-bodyparser": "^4.3.10",
     "@types/koa-router": "^7.4.4",
-    "bun-types": "^0.6.3",
+    "bun-types": "canary",
     "rimraf": "4.4.1",
     "zx": "^7.2.2"
   },
@@ -24,7 +24,7 @@
     "@nestjs/common": "^9.4.2",
     "@nestjs/core": "^9.4.2",
     "@nestjs/platform-express": "^9.4.2",
-    "@stricjs/router": "^2.1.6",
+    "@stricjs/router": "^3.0.0",
     "@types/rimraf": "^3.0.2",
     "@zarfjs/zarf": "^0.0.1-alpha.23",
     "baojs": "^0.2.1",
