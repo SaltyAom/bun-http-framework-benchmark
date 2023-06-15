@@ -1,34 +1,21 @@
-import { Router } from '..';
+import { Router } from '@stricjs/router';
+import { Query } from '@stricjs/utils';
 
-// Prepare headers
-const jsonHeaders = {
+const opts = {
     headers: { 'content-type': 'application/json' }
 };
-const queryHeaders = {
-    headers: { 'x-powered-by': 'benchmark' }
-};
+const p = Query.parse;
 
-// Create a router and serve using Bun
 export default new Router()
-    // Handle GET request to `/`
     .get('/', () => new Response('Hi'))
-    // Handle POST request to `/json`
-    .post('/json', async req =>
-        new Response(
-            JSON.stringify(await req.json()),
-            jsonHeaders,
-        ))
-    // Return 90 for requests to `/id/90` for instance
-    .get('/id/:id', ({ params: { id }, url, query }) => {
-        if (query === -1)
-            return new Response(id);
-
-        return new Response(
-            id + ' ' + new URLSearchParams(
-                // Slice the query
-                url.substring(query + 1)
-            ).get('name'), queryHeaders
-        )
-    })
-    // Use the default 404 handler
+    .post('/json', async req => new Response(
+        JSON.stringify(await req.json()), opts
+    ))
+    .get('/id/:id', ({
+        params: { id }, query, url
+    }) => new Response(
+        id + ' ' + p<{ name: string }>(
+            url.substring(query + 1)
+        ).name
+    ))
     .use(404);
