@@ -4,6 +4,11 @@ import { Query } from '@stricjs/utils';
 const opts = {
     headers: { 'content-type': 'application/json' }
 };
+const bench = {
+    headers: {
+        'x-powered-by': 'benchmark'
+    }
+}
 const p = Query.parse;
 
 export default new Router()
@@ -16,6 +21,7 @@ export default new Router()
     }) => new Response(
         id + ' ' + p<{ name: string }>(
             url.substring(query + 1)
-        ).name
+        ).name,
+        bench
     ))
     .use(404);
