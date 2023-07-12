@@ -1,20 +1,16 @@
 import { Router } from '@stricjs/router';
 import { query as parse } from '@stricjs/utils';
 
-const jsonHeaders = { headers: { 'Content-Type': 'application/json' } }, 
-    stringify = JSON.stringify, 
-    benchHeaders = { headers: { 'x-powered-by': 'benchmark' } };
+const toRes = Response.json, poweredByBench = { headers: { 'x-powered-by': 'benchmark' } };
 
-export default new Router()
+export default new Router({ host: 'https://localhost:3000' })
     .get('/', () => new Response('Hi'))
-    .post('/json', async req => new Response(
-        stringify(await req.json()), jsonHeaders
-    ))
+    .post('/json', req => req.json().then(toRes))
     .get('/id/:id', ({
         params: { id }, query, url
     }) => new Response(
         id + ' ' + parse(
             url.substring(query + 1)
-        ).name, benchHeaders
+        ).name, poweredByBench
     ))
     .use(404);
