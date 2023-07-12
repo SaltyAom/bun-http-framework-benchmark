@@ -24,8 +24,8 @@
     "@nestjs/common": "^10.0.0",
     "@nestjs/core": "^10.0.0",
     "@nestjs/platform-express": "^10.0.0",
-    "@stricjs/router": "3.2.1",
-    "@stricjs/utils": "1.2.6"
+    "@stricjs/router": "3.2.5",
+    "@stricjs/utils": "1.2.7"
     "@types/rimraf": "^3.0.2",
     "@zarfjs/zarf": "^0.0.1-alpha.23",
     "baojs": "^0.2.1",
