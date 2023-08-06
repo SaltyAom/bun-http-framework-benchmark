@@ -1,4 +1,4 @@
-import { Router } from '@stricjs/router';
+import { Router, macro } from '@stricjs/router';
 import { qs } from '@stricjs/utils';
 
 const toRes = Response.json, parse = qs.searchKey('name'), poweredByBench = { headers: { 'x-powered-by': 'benchmark' } };;

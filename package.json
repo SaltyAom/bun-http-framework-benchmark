@@ -12,7 +12,7 @@
     "@types/koa": "^2.13.6",
     "@types/koa-bodyparser": "^4.3.10",
     "@types/koa-router": "^7.4.4",
-    "bun-types": "canary",
+    "bun-types": "^0.7.2",
     "rimraf": "4.4.1",
     "zx": "^7.2.3"
   },
