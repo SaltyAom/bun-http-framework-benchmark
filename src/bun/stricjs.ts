@@ -1,10 +1,15 @@
 import { Router, macro } from '@stricjs/router';
-import { qs } from '@stricjs/utils';
+import { qs, writeHead } from '@stricjs/utils';
 
-const toRes = Response.json, parse = qs.searchKey('name'), poweredByBench = { headers: { 'x-powered-by': 'benchmark' } };;
+const toRes = Response.json, parse = qs.searchKey('name'), send = writeHead({ 
+    headers: { 'x-powered-by': 'benchmark' } 
+});
 
-export default new Router({ base: 'http://localhost:3000' })
-    .get('/', macro(() => new Response('Hi')))
-    .post('/json', req => req.json().then(toRes))
-    .get('/id/:id', req => new Response(req.params.id + ' ' + parse(req), poweredByBench))
+export default new Router({ 
+    base: 'http://localhost:3000',
+    parsePath: false
+})
+    .get('/', macro('Hi'))
+    .post('/json', ctx => ctx.json().then(toRes))
+    .get('/id/:id', ctx => send(ctx.params.id + ' ' + parse(ctx)))
     .use(404);
