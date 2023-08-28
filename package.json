@@ -17,7 +17,7 @@
     "zx": "^7.2.3"
   },
   "dependencies": {
-    "@elysiajs/fn": "^0.5.2",
+    "@elysiajs/fn": "^0.6.0",
     "@elysiajs/node": "^0.0.0-alpha.0",
     "@hapi/hapi": "^21.3.2",
     "@kakengloh/bagel": "^0.2.2",
@@ -33,7 +33,7 @@
     "baojs": "^0.2.1",
     "bunrest": "^1.2.1",
     "colstonjs": "0.1.0-beta.5",
-    "elysia": "0.5.24",
+    "elysia": "0.6.14",
     "express": "^4.18.2",
     "fastify": "^4.20.0",
     "h3": "^1.7.1",
