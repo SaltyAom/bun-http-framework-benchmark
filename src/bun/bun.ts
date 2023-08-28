@@ -2,6 +2,10 @@ const jsonHeaders = { headers: {'Content-Type': 'application/json'} },
     queryHeaders = { headers: {'x-powered-by': 'benchmark'} },
     notFound = { status: 404 };
 
+function toResponse(json: Object) {
+    return new Response(JSON.stringify(json), jsonHeaders)
+}
+
 Bun.serve({
     fetch(req): Response | Promise<Response> {
         const pathIndex = req.url.indexOf('/', 12) + 1;
