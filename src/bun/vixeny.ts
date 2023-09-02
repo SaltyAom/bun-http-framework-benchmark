@@ -1,4 +1,5 @@
-import fun from "vixeny"
+import fun from "vixeny/fun"
+
 
 export default {
     fetch: fun({
@@ -12,7 +13,9 @@ export default {
             },
             {
                 path: "/id/:id",
-                headers: { 'x-powered-by': 'benchmark' },
+                headings: {
+                    headers: { 'x-powered-by': 'benchmark' }
+                },
                 query: {
                     only: ["name"]
                 },
@@ -21,7 +24,9 @@ export default {
             {
                 path: "/json",
                 method: "POST",
-                headers: ".json", 
+                headings: {
+                    headers: { 'x-powered-by': 'benchmark' }
+                },
                 f : async f =>  JSON.stringify(await f.req.json())
             }
         ]
