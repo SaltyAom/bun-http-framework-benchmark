@@ -18,8 +18,6 @@ const blacklists = [
 	"bun/bunrest", 
 	// Doesn't work properly
 	"bun/colston", 
-	// Problem with closing port
-	"bun/fastify", 
 	// Crash on 0.6.2
 	"bun/zarf"
 ]
