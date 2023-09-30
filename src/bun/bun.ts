@@ -13,7 +13,7 @@ Bun.serve({
             if (req.method === 'GET') 
                 return new Response('Hi');
         
-        const queryIndex = req.url.indexOf('?', pathIndex),
+        let queryIndex = req.url.indexOf('?', pathIndex),
             path = queryIndex === -1 
                 ? req.url.substring(pathIndex)
                 : req.url.substring(pathIndex, queryIndex);
@@ -21,12 +21,24 @@ Bun.serve({
         if (path === 'json') {
             if (req.method === 'POST') return req.json().then(jsonRes);
         } else if (path.startsWith('id/'))
-            if (req.method === 'GET') 
-                return new Response(
-                    path.substring(3) + ' ' + new URLSearchParams(
-                        req.url.substring(queryIndex + 1)
-                    ).get('name'), queryHeaders
-                );
+            if (req.method === 'GET') {
+                path = path.substring(3);
+                
+                if (queryIndex === -1)
+                    return new Response(path);
+
+                let nameStart = req.url.indexOf('name=', queryIndex + 1);
+                if (nameStart === -1)
+                    return new Response(path);
+
+                nameStart += 5;
+                const nameEnd = req.url.indexOf('&', nameStart);
+
+                return new Response(path + ' ' + (nameEnd === -1 
+                    ? req.url.substring(nameStart) 
+                    : req.url.substring(nameStart, nameEnd)
+                ), queryHeaders);
+            }
 
         return new Response(null, notFound);
     }
