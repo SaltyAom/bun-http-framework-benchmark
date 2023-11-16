@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   Query,
+  Res,
 } from '@nestjs/common';
 import { AppService } from './app.service';
 
@@ -14,14 +15,15 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get('/')
-  getHello(): string {
+  @Header('content-type', 'text/html')
+  getHello() {
     return this.appService.getHello();
   }
 
   @Get('/id/:id')
-  @Header('x-powered-by', 'Benchmark')
-  getCompose(@Param('id') id: string, @Query('name') name: string): string {
-    return this.appService.getCompose(id, name);
+  @Header('content-type', 'text/html')
+  getCompose(@Param('id') id: string, @Query('name') name: string) {
+    return `${id} ${name}`;
   }
 
   @Post('/json')

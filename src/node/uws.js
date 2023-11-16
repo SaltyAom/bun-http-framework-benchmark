@@ -1,30 +1,30 @@
 /* Non-SSL is simply App() */
-require("uWebSockets.js")
+require('uWebSockets.js')
 	.App()
-	.get("/", (res, req) => {
-		res.end("Hi!")
+	.get('/', (res, req) => {
+		res.writeHeader('content-type', 'text/plain').end('Hi')
 	})
-	.get("/id/:id", (res, req) => {
-		res.writeHeader("x-powered-by", "benchmark").end(
-			`${req.getParameter("id")} ${req.getQuery("name")}`
-		)
+	.get('/id/:id', (res, req) => {
+		res.writeHeader('content-type', 'text/plain')
+			.writeHeader('x-powered-by', 'benchmark')
+			.end(`${req.getParameter('id')} ${req.getQuery('name')}`)
 	})
-	.post("/json", (res, req) => {
+	.post('/json', (res, req) => {
 		readJson(
 			res,
 			(obj) => {
-				res.writeHeader("content-type", "application/json").end(
+				res.writeHeader('content-type', 'application/json').end(
 					JSON.stringify(obj)
 				)
 			},
 			() => {
-				res.end("Ok")
+				res.end('Ok')
 			}
 		)
 	})
 	.listen(3000, (listenSocket) => {
 		if (listenSocket) {
-			console.log("Listening to port 3000")
+			console.log('Listening to port 3000')
 		}
 	})
 

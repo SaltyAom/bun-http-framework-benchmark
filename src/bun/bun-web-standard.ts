@@ -7,45 +7,43 @@ Bun.serve({
 		const url = new URL(request.url)
 
 		switch (request.method) {
-			case "GET":
+			case 'GET':
 				switch (url.pathname) {
-					case "/":
-						return new Response("Hi")
+					case '/':
+						return new Response('Hi')
 				}
 
-				if (url.pathname.startsWith("/id/")) {
-					const [id, rest] = url.pathname.slice(4).split("/")
+				if (url.pathname.startsWith('/id/')) {
+					const [id, rest] = url.pathname.slice(4).split('/')
 
 					if (!rest)
 						return new Response(
-							`${id} ${new URLSearchParams(url.pathname).get(
-								"name"
-							)}`,
+							`${id} ${url.searchParams.get('name')}`,
 							{
 								headers: {
-									"x-powered-by": "benchmark"
+									'x-powered-by': 'benchmark'
 								}
 							}
 						)
 				}
 
-				return new Response("Not Found", {
+				return new Response('Not Found', {
 					status: 404
 				})
 
-			case "POST":
+			case 'POST':
 				switch (url.pathname) {
-					case "/json":
+					case '/json':
 						return Response.json(await request.json())
 
 					default:
-						return new Response("Not Found", {
+						return new Response('Not Found', {
 							status: 404
 						})
 				}
 
 			default:
-				return new Response("Not Found", {
+				return new Response('Not Found', {
 					status: 404
 				})
 		}

@@ -23,26 +23,28 @@ let AppController = class AppController {
         return this.appService.getHello();
     }
     getCompose(id, name) {
-        return this.appService.getCompose(id, name);
+        return `${id} ${name}`;
     }
     postMirror(body) {
         return body;
     }
 };
+exports.AppController = AppController;
 __decorate([
     (0, common_1.Get)('/'),
+    (0, common_1.Header)('content-type', 'text/html'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", String)
+    __metadata("design:returntype", void 0)
 ], AppController.prototype, "getHello", null);
 __decorate([
     (0, common_1.Get)('/id/:id'),
-    (0, common_1.Header)('x-powered-by', 'Benchmark'),
+    (0, common_1.Header)('content-type', 'text/html'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Query)('name')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, String]),
-    __metadata("design:returntype", String)
+    __metadata("design:returntype", void 0)
 ], AppController.prototype, "getCompose", null);
 __decorate([
     (0, common_1.Post)('/json'),
@@ -51,9 +53,8 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], AppController.prototype, "postMirror", null);
-AppController = __decorate([
+exports.AppController = AppController = __decorate([
     (0, common_1.Controller)(),
     __metadata("design:paramtypes", [app_service_1.AppService])
 ], AppController);
-exports.AppController = AppController;
 //# sourceMappingURL=app.controller.js.map

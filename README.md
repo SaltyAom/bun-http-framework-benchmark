@@ -4,11 +4,11 @@ Compare throughput benchmarks from various Bun HTTP framework
 
 Test method: Average throughput
 
-1. Get (/)
+1. Ping
     - Request to [GET] `/`
     - Return `hi`
     - Headers must contains text `Content-Type: text/plain`, additional context is acceptable eg. `Content-Type: text/plain; charset=utf-8`
-2. Params, query & header
+2. Query
     - Request to [GET] `/id/:id`
     - Extract path parameter, query string and setting headers.
     - For this benchmark, the request URL will be send as: `/id/1?name=bun`
@@ -21,7 +21,7 @@ Test method: Average throughput
         - `/id/1?id=1` -> should return `1 `
         - Query beside `name` maybe not need to be extracted and is optional
     - Headers must contains text `Content-Type: text/plain`, additional context is acceptable eg. `Content-Type: text/plain; charset=utf-8`
-3. Post JSON
+3. Body
     - [POST] `/json`
     - Mirror body to response
     - For the benchmark, the request body will be sent as: `{ "hello": "world" }`
@@ -38,7 +38,7 @@ Test method: Average throughput
 # Run Test
 
 ```typescript
-bun run benchmark
+bun benchmark
 ```
 
 Dump result will be available at `results/[benchmark-name].txt`

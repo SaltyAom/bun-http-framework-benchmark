@@ -6,11 +6,20 @@ import {
 	readFileSync,
 	writeFileSync
 } from 'fs'
+import killPort from 'kill-port'
 import rimraf from 'rimraf'
 import { $ } from 'zx'
 
 // ? Not working
 const blacklists = [
+	// Not booting up in test
+	'node/adonis/index',
+	// Not setting content-type header for some reason
+	'node/nest/index',
+	// 'Not booting up in test'
+	'node/hapi',
+	// Body: Result not match
+	'bun/xirelta',
 	// Crash
 	'bun/bagel',
 	// Crash
@@ -47,51 +56,72 @@ const secToMin = (seconds: number) =>
 	(seconds % 60)
 
 // Fetch with retry
-const retryFetch = (url: string, options?: RequestInit, time = 0) => {
+const retryFetch = (
+	url: string,
+	options?: RequestInit,
+	time = 0,
+	resolveEnd?: Function,
+	rejectEnd?: Function
+) => {
 	return new Promise<Response>((resolve, reject) => {
 		fetch(url, options)
-			.then(resolve)
+			.then((a) => {
+				if (resolveEnd) resolveEnd(a)
+
+				resolve(a)
+			})
 			.catch((e) => {
-				if (time > 3) return reject(e)
-				setTimeout(() => retryFetch(url, options, time + 1), 200)
+				if (time > 7) {
+					if (rejectEnd) rejectEnd(e)
+
+					return reject(e)
+				}
+				setTimeout(
+					() => retryFetch(url, options, time + 1, resolve, reject),
+					200
+				)
 			})
 	})
 }
 
 const test = async () => {
-	const index = await retryFetch('http://127.0.0.1:3000/')
+	try {
+		const index = await retryFetch('http://127.0.0.1:3000/')
 
-	if ((await index.text()) !== 'Hi')
-		throw new Error('Index: Result not match')
+		if ((await index.text()) !== 'Hi')
+			throw new Error('Index: Result not match')
 
-	if (!index.headers.get('Content-Type')?.includes('text/plain'))
-		throw new Error('Index: Content-Type not match')
+		if (!index.headers.get('Content-Type')?.includes('text/plain'))
+			throw new Error('Index: Content-Type not match')
 
-	const query = await retryFetch('http://127.0.0.1:3000/id/1?name=bun')
-	if ((await query.text()) !== '1 bun')
-		throw new Error('Query: Result not match')
+		const query = await retryFetch('http://127.0.0.1:3000/id/1?name=bun')
+		if ((await query.text()) !== '1 bun')
+			throw new Error('Query: Result not match')
 
-	if (!query.headers.get('Content-Type')?.includes('text/plain'))
-		throw new Error('Query: Content-Type not match')
+		if (!query.headers.get('Content-Type')?.includes('text/plain'))
+			throw new Error('Query: Content-Type not match')
 
-	if (!query.headers.get('X-Powered-By')?.includes('benchmark'))
-		throw new Error('Query: X-Powered-By not match')
+		if (!query.headers.get('X-Powered-By')?.includes('benchmark'))
+			throw new Error('Query: X-Powered-By not match')
 
-	const body = await retryFetch('http://127.0.0.1:3000/json', {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify({
-			hello: 'world'
+		const body = await retryFetch('http://127.0.0.1:3000/json', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				hello: 'world'
+			})
 		})
-	})
 
-	if ((await body.text()) !== JSON.stringify({ hello: 'world' }))
-		throw new Error('Body: Result not match')
+		if ((await body.text()) !== JSON.stringify({ hello: 'world' }))
+			throw new Error('Body: Result not match')
 
-	if (!body.headers.get('Content-Type')?.includes('application/json'))
-		throw new Error('Body: Content-Type not match')
+		if (!body.headers.get('Content-Type')?.includes('application/json'))
+			throw new Error('Body: Content-Type not match')
+	} catch (error) {
+		throw error
+	}
 }
 
 const spawn = (target: string, title = true) => {
@@ -121,8 +151,17 @@ const spawn = (target: string, title = true) => {
 
 	return async () => {
 		await server.kill()
-		await sleep(0.2)
-		await $`npm kill-port`.nothrow().quiet()
+		await sleep(0.3)
+
+		try {
+			await fetch('http://127.0.0.1:3000')
+			await sleep(0.6)
+			await fetch('http://127.0.0.1:3000')
+
+			await killPort(3000)
+		} catch {
+			// Empty
+		}
 	}
 }
 
@@ -131,6 +170,13 @@ const resultFile = Bun.file('results/results.md')
 const result = resultFile.writer()
 
 const main = async () => {
+	try {
+		await fetch('http://127.0.0.1:3000')
+		await killPort(3000)
+	} catch {
+		// Empty
+	}
+
 	if (!existsSync('./results')) mkdirSync('./results')
 
 	let frameworks = readdirSync('src')
@@ -161,7 +207,7 @@ const main = async () => {
 		.sort()
 
 	// Overwrite test here
-	frameworks = ['bun/elysia', 'bun/bun-web-standard', 'bun/hono']
+	// frameworks = ['bun/elysia', 'bun/bun-web-standard', 'bun/hono']
 
 	console.log(`${frameworks.length} frameworks`)
 	for (const framework of frameworks) console.log(`- ${framework}`)
@@ -221,7 +267,7 @@ const main = async () => {
 		result.write(`| ${name} | ${runtime} `)
 
 		// Wait .3 second for server to bootup
-		await sleep(0.3)
+		await sleep(0.4)
 
 		let content = ''
 		const total = []
@@ -292,5 +338,9 @@ const arrange = () => {
 
 	process.exit(0)
 }
+
+process.on('beforeExit', async () => {
+	await killPort(3000)
+})
 
 main().then(arrange)

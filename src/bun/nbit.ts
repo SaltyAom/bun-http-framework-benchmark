@@ -5,7 +5,7 @@ const { defineRoutes, attachRoutes } = createApplication()
 const xPoweredBy = "benchmark"
 
 const routes = defineRoutes((app) => [
-	app.get("/", () => "Hi"),
+	app.get("/", () => new Response("Hi")),
 	app.post("/json", async (request) => request.json()),
 	app.get("/id/:id", async (request) => {
 		const id = request.params.id
