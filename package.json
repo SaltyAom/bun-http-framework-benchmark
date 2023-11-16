@@ -31,6 +31,7 @@
     "@types/rimraf": "^3.0.2",
     "@zarfjs/zarf": "^0.0.1-alpha.23",
     "baojs": "^0.2.1",
+    "bunnet": "^0.0.5",
     "bunrest": "^1.2.1",
     "colstonjs": "0.1.0-beta.5",
     "elysia": "0.6.14",
