@@ -1,7 +1,7 @@
 {
   "name": "bun-http-framework-benchmark",
   "scripts": {
-    "benchmark": "node bench.mjs",
+    "benchmark": "bun bench.ts",
     "kill-port": "kill-port 3000",
     "ts-node": "ts-node"
   },
