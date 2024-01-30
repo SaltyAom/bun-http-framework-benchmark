@@ -11,17 +11,29 @@ export default {
 		},
 		{
 			path: '/id/:id',
-			headers: { 'x-powered-by': 'benchmark' },
+			headings: {
+				headers: new Headers([[
+					'x-powered-by', 'benchmark'
+				]])
+			},
+			param:{
+				unique: true
+			},
 			query: {
-				only: ['name']
+				unique: true,
+				name: "name"
 			},
             // @ts-ignore
-			f: (f) => f.param.id + ' ' + f.query?.name
+			f: (f) => f.param+ ' ' + f.query
 		},
 		{
 			path: '/json',
 			method: 'POST',
-			headers: { 'content-type': 'application/json' },
+			headings: {
+				headers: new Headers([[
+					'content-type', 'application/json'
+				]])
+			},
 			f: async (f) => JSON.stringify(await f.req.json())
 		}
 	])
