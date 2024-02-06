@@ -94,6 +94,8 @@ These results are measured in req/s:
 | acorn (deno)           | 3,217.67    | 5,340.93   | 2,452.29               | 1,859.79   |
 
 Crash:
+| Framework              | Average     | Get (/)    | Params, query & header | Post JSON  |
+| ---------------------- | ----------- | ---------- | ---------------------- | ---------- |
 | express (bun) | 512,117.39 | 513,848.37 | 511,647.49 | 510,856.31 |
 | cheetah (deno) | 300,995.98 | 507,117.96 | 378,810.25 | 17,059.73 |
 
