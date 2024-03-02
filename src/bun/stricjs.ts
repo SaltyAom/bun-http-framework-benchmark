@@ -9,4 +9,4 @@ export default new Router({ base: 'http://localhost:3000' })
     .get('/', macro('Hi'))
     .post('/json', ctx => ctx.json().then(toRes))
     .get('/id/:id', ctx => send(ctx.params.id + ' ' + parse(ctx)))
-    .use(404);
+    .use(404)
