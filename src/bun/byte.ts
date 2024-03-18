@@ -10,7 +10,7 @@ const getName = query.value('name');
 
 // Serve directly
 export default new Byte()
-    .get('/', () => send.body('hi'))
+    .get('/', () => send.body('Hi'))
     // Send ID with query
     .get('/id/:id', (ctx) => send.body(`${ctx.params.id} ${getName(ctx)}`, options))
     // Yield body

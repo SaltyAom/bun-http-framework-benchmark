@@ -27,15 +27,20 @@ const blacklists = [
 	// Doesn't work properly
 	'bun/colston',
 	// Crash on 0.6.2
-	'bun/zarf'
+	'bun/zarf',
+	/**
+	 * Invalid npm version requirement. Unexpected character.
+  	 * github:uNetworking/uWebSockets.js#v20.41.0
+	 */
+	'deno/byte'
 ] as const
 
 const time = 10
 
 const commands = [
-	`bombardier --fasthttp -c 500 -d ${time}s http://localhost:3000/`,
-	`bombardier --fasthttp -c 500 -d ${time}s http://localhost:3000/id/1?name=bun`,
-	`bombardier --fasthttp -c 500 -d ${time}s -m POST -H 'Content-Type: application/json' -f ./scripts/body.json http://localhost:3000/json`
+	`bombardier --fasthttp -c 500 -d ${time}s http://127.0.0.1:3000/`,
+	`bombardier --fasthttp -c 500 -d ${time}s http://127.0.0.1:3000/id/1?name=bun`,
+	`bombardier --fasthttp -c 500 -d ${time}s -m POST -H 'Content-Type: application/json' -f ./scripts/body.json http://127.0.0.1:3000/json`
 ] as const
 
 const runtimeCommand = {
