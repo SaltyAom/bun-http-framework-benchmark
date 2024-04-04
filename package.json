@@ -17,7 +17,7 @@
     "zx": "^7.2.3"
   },
   "dependencies": {
-    "@bit-js/byte": "^1.0.13",
+    "@bit-js/byte": "^1.1.2",
     "@elysiajs/fn": "^0.6.1",
     "@hapi/hapi": "^21.3.3",
     "@kakengloh/bagel": "^0.2.2",
