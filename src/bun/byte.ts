@@ -4,7 +4,7 @@ import { Byte, query, send } from '@bit-js/byte';
 const options = { headers: { 'X-Powered-By': 'benchmark' } };
 
 // Extract the 'name' parameter value from query
-const getName = query.value('name');
+const getName = query.get('name');
 
 // Serve directly
 export default new Byte()
