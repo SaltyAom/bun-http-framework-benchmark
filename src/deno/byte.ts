@@ -7,11 +7,11 @@ const options = { headers: { 'X-Powered-By': 'benchmark' } };
 const getName = query.get('name');
 
 // Serve directly
-const app = new Byte()
-    .get('/', () => send.body('hi'))
+export default new Byte()
+    .get('/', (ctx) => ctx.text('Hi'))
     // Send ID with query
-    .get('/id/:id', (ctx) => send.body(`${ctx.params.id} ${getName(ctx)}`, options))
+    .get('/id/:id', (ctx) => new Response(`${ctx.params.id} ${getName(ctx)}`, options))
     // Yield body
-    .post('/json', (ctx) => ctx.req.json().then(send.json));
+    .post('/json', async (ctx) => await ctx.json(ctx.req.json()));
 
 Deno.serve({ port: 3000 }, app.fetch);

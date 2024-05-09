@@ -38,7 +38,7 @@
     "fastify": "^4.26.1",
     "h3": "^1.11.1",
     "hono": "^4.0.8",
-    "hyper-express": "^6.14.12",
+    "hyper-express": "^6.16.1",
     "kill-port": "^2.0.1",
     "koa": "^2.15.0",
     "koa-bodyparser": "^4.4.1",
@@ -49,6 +49,7 @@
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3",
     "vixeny": "^0.0.932",
+    "wobe": "^1.1.0",
     "xirelta": "^0.0.51"
   }
 }

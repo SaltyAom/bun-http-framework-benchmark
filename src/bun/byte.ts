@@ -8,8 +8,8 @@ const getName = query.get('name');
 
 // Serve directly
 export default new Byte()
-    .get('/', () => send.body('Hi'))
+    .get('/', (ctx) => ctx.text('Hi'))
     // Send ID with query
-    .get('/id/:id', (ctx) => send.body(`${ctx.params.id} ${getName(ctx)}`, options))
+    .get('/id/:id', (ctx) => new Response(`${ctx.params.id} ${getName(ctx)}`, options))
     // Yield body
-    .post('/json', (ctx) => ctx.req.json().then(send.json));
+    .post('/json', async (ctx) => ctx.json(await ctx.req.json()));
