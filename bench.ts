@@ -293,6 +293,8 @@ const main = async () => {
 		for (const command of commands) {
 			frameworkResult.write(`${command}\n`)
 
+			console.log(command)
+
 			const res = await Bun.spawn({
 				cmd: command.split(' '),
 				env: Bun.env
