@@ -1,6 +1,0 @@
-bombardier --fasthttp -c 500 -d 10s http://localhost:3000/
-Reqs/sec    218591.35,218591.35
-bombardier --fasthttp -c 500 -d 10s http://localhost:3000/id/1?name=bun
-Reqs/sec    158992.25,158992.25
-bombardier --fasthttp -c 500 -d 10s -m POST -H 'Content-Type: application/json' -f ./scripts/body.json http://localhost:3000/json
-Reqs/sec    111273.74,111273.74

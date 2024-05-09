@@ -7,8 +7,10 @@ import {
 	writeFileSync
 } from 'fs'
 import killPort from 'kill-port'
+import { $, pathToFileURL } from 'bun'
 import rimraf from 'rimraf'
-import { $ } from 'zx'
+
+const whitelists = []
 
 // ? Not working
 const blacklists = [
@@ -27,12 +29,7 @@ const blacklists = [
 	// Doesn't work properly
 	'bun/colston',
 	// Crash on 0.6.2
-	'bun/zarf',
-	/**
-	 * Invalid npm version requirement. Unexpected character.
-  	 * github:uNetworking/uWebSockets.js#v20.41.0
-	 */
-	'deno/byte'
+	'bun/zarf'
 ] as const
 
 const time = 10
@@ -40,7 +37,7 @@ const time = 10
 const commands = [
 	`bombardier --fasthttp -c 500 -d ${time}s http://127.0.0.1:3000/`,
 	`bombardier --fasthttp -c 500 -d ${time}s http://127.0.0.1:3000/id/1?name=bun`,
-	`bombardier --fasthttp -c 500 -d ${time}s -m POST -H 'Content-Type: application/json' -f ./scripts/body.json http://127.0.0.1:3000/json`
+	`bombardier --fasthttp -c 500 -d ${time}s -m POST -H 'Content-Type:application/json' -f ./scripts/body.json http://127.0.0.1:3000/json`
 ] as const
 
 const runtimeCommand = {
@@ -148,11 +145,13 @@ const spawn = (target: string, title = true) => {
 		? `src/${runtime}/${framework}.ts`
 		: `src/${runtime}/${framework}.js`
 
-	const server = $([
-		`NODE_ENV=production ${runtimeCommand[runtime]} ${file}`
-	] as any)
-		.quiet()
-		.nothrow()
+	const server = Bun.spawn({
+		cmd: [runtimeCommand[runtime], file],
+		env: {
+			...Bun.env,
+			NODE_ENV: 'production'
+		}
+	})
 
 	return async () => {
 		await server.kill()
@@ -170,6 +169,10 @@ const spawn = (target: string, title = true) => {
 	}
 }
 
+try {
+	if (lstatSync('results').isDirectory()) rimraf.sync('results')
+} catch {}
+mkdirSync('results')
 writeFileSync('results/results.md', '')
 const resultFile = Bun.file('results/results.md')
 const result = resultFile.writer()
@@ -181,6 +184,8 @@ const main = async () => {
 	} catch {
 		// Empty
 	}
+
+	const runtimes = <string[]>[]
 
 	if (!existsSync('./results')) mkdirSync('./results')
 
@@ -212,7 +217,7 @@ const main = async () => {
 		.sort()
 
 	// Overwrite test here
-	// frameworks = ['bun/elysia', 'bun/hono']
+	frameworks = whitelists?.length ? whitelists : frameworks
 
 	console.log(`${frameworks.length} frameworks`)
 	for (const framework of frameworks) console.log(`- ${framework}`)
@@ -223,6 +228,12 @@ const main = async () => {
 
 		let [runtime, framework] = target!.split('/')
 		await sleep(0.1)
+
+		if (runtimes.includes(runtime)) {
+			const folder = `results/${runtime}`
+
+			if (!lstatSync(folder).isDirectory()) rimraf(folder)
+		}
 
 		try {
 			const kill = await test()
@@ -280,9 +291,15 @@ const main = async () => {
 		for (const command of commands) {
 			frameworkResult.write(`${command}\n`)
 
-			const res = (await $([command] as any).nothrow()) + ''
+			const res = await Bun.spawn({
+				cmd: command.split(' '),
+				env: Bun.env
+			})
 
-			const results = catchNumber.exec(res)
+			const stdout = await new Response(res.stdout).text()
+			console.log(stdout)
+
+			const results = catchNumber.exec(stdout)
 			if (!results?.[1]) continue
 
 			content += `| ${format(results[1])} `

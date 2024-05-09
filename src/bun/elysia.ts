@@ -2,7 +2,7 @@ import { Elysia } from "elysia"
 
 const app = new Elysia({ precompile: true })
 	.get("/", "Hi")
-	.post("/json", (c) => c.body, {
+	.post("/json", ({ body }) => body, {
 		type: "json"
 	})
 	.get("/id/:id", ({ set, params: { id }, query: { name } }) => {
