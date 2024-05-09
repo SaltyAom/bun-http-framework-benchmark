@@ -29,7 +29,9 @@ const blacklists = [
 	// Doesn't work properly
 	'bun/colston',
 	// Crash on 0.6.2
-	'bun/zarf'
+	'bun/zarf',
+	// Crash due to invalid npm version requirement of uWebSockets
+	'deno/byte'
 ] as const
 
 const time = 10
@@ -146,7 +148,7 @@ const spawn = (target: string, title = true) => {
 		: `src/${runtime}/${framework}.js`
 
 	const server = Bun.spawn({
-		cmd: [runtimeCommand[runtime], file],
+		cmd: [...runtimeCommand[runtime].split(" "), file],
 		env: {
 			...Bun.env,
 			NODE_ENV: 'production'
