@@ -1,15 +1,17 @@
-import { Byte, query, send } from '@bit-js/byte';
+import { Byte, query, send } from '@bit-js/byte'
 
-// Cache options
-const options = { headers: { 'X-Powered-By': 'benchmark' } };
+const xPoweredBy = ['X-Powered-By', 'benchmark'] as [string, string]
 
 // Extract the 'name' parameter value from query
-const getName = query.get('name');
+const getName = query.get('name')
 
 // Serve directly
 export default new Byte()
-    .get('/', (ctx) => ctx.text('Hi'))
-    // Send ID with query
-    .get('/id/:id', (ctx) => new Response(`${ctx.params.id} ${getName(ctx)}`, options))
-    // Yield body
-    .post('/json', async (ctx) => ctx.json(await ctx.req.json()));
+	.get('/', send.body('Hi'))
+	// Send ID with query
+	.get('/id/:id', (ctx) => {
+		ctx.headers.push(xPoweredBy)
+		return ctx.body(`${ctx.params.id} ${getName(ctx)}`)
+	})
+	// Yield body
+	.post('/json', async (ctx) => ctx.json(await ctx.req.json()))
