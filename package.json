@@ -17,7 +17,7 @@
     "rimraf": "4.4.1"
   },
   "dependencies": {
-    "@bit-js/byte": "^1.5.3",
+    "@bit-js/byte": "^1.1.6",
     "@elysiajs/fn": "^0.6.1",
     "@hapi/hapi": "^21.3.3",
     "@kakengloh/bagel": "^0.2.2",
@@ -26,6 +26,8 @@
     "@nestjs/common": "^10.3.3",
     "@nestjs/core": "^10.3.3",
     "@nestjs/platform-express": "^10.3.3",
+    "@stricjs/router": "5.0.6",
+    "@stricjs/utils": "1.6.1",
     "@types/rimraf": "^3.0.2",
     "@zarfjs/zarf": "^0.0.1-alpha.23",
     "baojs": "^0.2.1",
@@ -49,10 +51,5 @@
     "vixeny": "^0.0.932",
     "wobe": "^1.1.0",
     "xirelta": "^0.0.51"
-  },
-  "module": "index.ts",
-  "type": "module",
-  "peerDependencies": {
-    "typescript": "^5.0.0"
   }
 }
