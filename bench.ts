@@ -31,7 +31,9 @@ const blacklists = [
 	// Crash on 0.6.2
 	'bun/zarf',
 	// Crash due to invalid npm version requirement of uWebSockets
-	'deno/byte'
+	'deno/byte',
+	// Crash
+	'bun/fastify'
 ] as const
 
 const time = 10
