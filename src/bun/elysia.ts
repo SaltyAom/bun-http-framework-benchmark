@@ -1,13 +1,13 @@
-import { Elysia } from "elysia"
+import { Elysia, t } from 'elysia'
 
-const app = new Elysia({ precompile: true })
-	.get("/", "Hi")
-	.post("/json", (context) => context.body, {
-		type: "json"
+const app = new Elysia()
+	.get('/', 'Hi')
+	.get('/id/:id', (c) => {
+		c.set.headers['x-powered-by'] = 'benchmark'
+
+		return `${c.params.id} ${c.query.name}`
 	})
-	.get("/id/:id", ({ set, params: { id }, query: { name } }) => {
-		set.headers["x-powered-by"] = "benchmark"
-
-		return id + ' ' + name
+	.post('/json', (c) => c.body, {
+		type: 'json'
 	})
 	.listen(3000)
