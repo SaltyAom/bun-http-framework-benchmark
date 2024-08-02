@@ -1,15 +1,13 @@
-import fun from 'vixeny/fun'
+import { wrap } from 'vixeny'
+
 
 export default {
-	fetch: fun({
-		hasName: 'http://localhost:3000/'
-	})([
-		{
+	fetch: wrap()()
+		.petitionWithoutCTX({
 			path: '/',
-			type: 'response',
 			r: () => new Response('Hi')
-		},
-		{
+		})
+		.stdPetition({
 			path: '/id/:id',
 			headings: {
 				headers: new Headers([[
@@ -23,10 +21,9 @@ export default {
 				unique: true,
 				name: "name"
 			},
-            // @ts-ignore
-			f: (f) => f.param+ ' ' + f.query
-		},
-		{
+			f: (f) => f.param + ' ' + f.query
+		})
+		.stdPetition({
 			path: '/json',
 			method: 'POST',
 			headings: {
@@ -35,6 +32,6 @@ export default {
 				]])
 			},
 			f: async (f) => JSON.stringify(await f.req.json())
-		}
-	])
+		})
+		.compose()	
 }
