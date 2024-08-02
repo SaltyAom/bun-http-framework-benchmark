@@ -10,9 +10,10 @@ export default {
 		.stdPetition({
 			path: '/id/:id',
 			headings: {
-				headers: new Headers([[
-					'x-powered-by', 'benchmark'
-				]])
+				// This doesn't work for some reason
+				headers: {
+					'x-powered-by': 'benchmark'
+				}
 			},
 			param:{
 				unique: true
@@ -27,11 +28,11 @@ export default {
 			path: '/json',
 			method: 'POST',
 			headings: {
-				headers: new Headers([[
-					'content-type', 'application/json'
-				]])
+				headers: {
+					'content-type': 'application/json'
+				}
 			},
 			f: async (f) => JSON.stringify(await f.req.json())
 		})
-		.compose()	
+		.compose()
 }

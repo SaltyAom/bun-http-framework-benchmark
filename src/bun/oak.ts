@@ -1,4 +1,4 @@
-import { Application, Router } from "@oak/oak"
+import { Application, Router } from "@oakserver/oak"
 
 const router = new Router()
 	.get("/", (context) => {

@@ -1,15 +1,15 @@
-import { Router } from "https://deno.land/x/acorn@0.2.0/mod.ts"
+import { Router } from '@oak/acorn'
 
 const app = new Router()
 
-app.get("/", () => 'Hi')
-app.get("/id/:id", (ctx) => {
-	return new Response(`${ctx.params.id} ${ctx.searchParams.name}`, {
+app.get('/', () => new Response('Hi'))
+app.get('/id/:id', async (ctx) => {
+	return new Response(`${ctx.params.id} ${(await ctx.queryParams()).name}`, {
 		headers: {
-			"x-powered-by": "benchmark"
+			'x-powered-by': 'benchmark'
 		}
 	})
 })
-app.post("/json", (ctx) => ctx.body())
+app.post('/json', (ctx) => ctx.body())
 
 app.listen({ port: 3000 })

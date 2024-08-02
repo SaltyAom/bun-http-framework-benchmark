@@ -8,9 +8,8 @@ import {
 } from 'fs'
 import killPort from 'kill-port'
 import { $, pathToFileURL } from 'bun'
-import rimraf from 'rimraf'
 
-const whitelists = []
+const whitelists = <string[]>[]
 
 // ? Not working
 const blacklists = [
@@ -46,7 +45,7 @@ const commands = [
 
 const runtimeCommand = {
 	node: 'node',
-	deno: 'deno run --allow-net',
+	deno: 'deno run --allow-net --allow-env',
 	bun: 'bun'
 } as const
 
@@ -176,6 +175,7 @@ const spawn = (target: string, title = true) => {
 try {
 	if (lstatSync('results').isDirectory()) rimraf.sync('results')
 } catch {}
+await Bun.$`rm -rf ./results`
 mkdirSync('results')
 writeFileSync('results/results.md', '')
 const resultFile = Bun.file('results/results.md')
@@ -190,8 +190,6 @@ const main = async () => {
 	}
 
 	const runtimes = <string[]>[]
-
-	if (!existsSync('./results')) mkdirSync('./results')
 
 	let frameworks = readdirSync('src')
 		.flatMap((runtime) => {

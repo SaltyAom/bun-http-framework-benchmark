@@ -1,0 +1,6 @@
+{
+  "imports": {
+    "@oak/acorn": "jsr:@oak/acorn@^1.1.0",
+    "@oak/oak": "jsr:@oak/oak@^16.1.0"
+  }
+}
