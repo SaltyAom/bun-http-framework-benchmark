@@ -24,7 +24,7 @@
     "@nestjs/platform-express": "^10.3.10",
     "@oakserver/oak": "^14.1.0",
     "bunrest": "^1.3.8",
-    "elysia": "^1.1.5",
+    "elysia": "1.2.0-exp.8",
     "express": "^4.19.2",
     "fastify": "^4.28.1",
     "h3": "^1.12.0",

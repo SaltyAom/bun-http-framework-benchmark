@@ -12,6 +12,9 @@ function toResponse(json: unknown) {
 // Simulate the maximum performance you can get with Bun.serve
 // We should appreciate how frameworks make all these stuff easier :) - Reve
 Bun.serve({
+    static: {
+        '/': new Response('Hi', { headers: { 'content-type': 'text/plain;charset=utf8' } })
+    },
 	fetch(req): Response | Promise<Response> {
 		const { url } = req
 
