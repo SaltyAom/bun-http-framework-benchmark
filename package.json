@@ -39,7 +39,7 @@
     "rxjs": "^7.8.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.4",
-    "ultimate-express": "^1.1.8",
+    "ultimate-express": "^1.2.5",
     "vixeny": "^0.1.47",
     "wobe": "^1.1.7"
   },
