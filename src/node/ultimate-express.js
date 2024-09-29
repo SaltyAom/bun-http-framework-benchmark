@@ -1,14 +1,13 @@
 const uExpress = require('ultimate-express')
 
 const app = uExpress()
-
-app.use(uExpress.json())
+app.set("etag", false)
 
 app.get('/', (req, res) => {
 	res.setHeader('content-type', 'text/plain').send('Hi')
 })
 
-app.post('/json', ({ body }, res) => {
+app.post('/json', uExpress.json(), ({ body }, res) => {
 	res.json(body)
 })
 
