@@ -32,7 +32,9 @@ const blacklists = [
 	// Crash due to invalid npm version requirement of uWebSockets
 	'deno/byte',
 	// Crash
-	'bun/fastify'
+	'bun/fastify',
+	// failed to parse body in benchmark
+	'bun/byte'
 ] as const
 
 const time = 10
