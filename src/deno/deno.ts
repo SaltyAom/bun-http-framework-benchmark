@@ -1,46 +1,66 @@
 // @ts-nocheck
-Deno.serve({ port: 3000 }, async (request) => {
-    const url = new URL(request.url)
+const jsonHeaders = { headers: [['Content-Type', 'application/json']] },
+	queryHeaders = { headers: [['X-Powered-By', 'benchmark']] },
+	notFound = new Response(null, { status: 404 }),
+	hiRes = new Response('Hi')
 
-    switch (request.method) {
-        case 'GET':
-            switch (url.pathname) {
-                case '/':
-                    return new Response('Hi')
-            }
+function toResponse(json: unknown) {
+	return new Response(JSON.stringify(json), jsonHeaders)
+}
 
-            if (url.pathname.startsWith('/id/')) {
-                const [id, rest] = url.pathname.slice(4).split('/')
+// json -> [106, 115, 111, 110]
+// id/ -> [105, 100, 47]
+// Simulate the maximum performance you can get with Bun.serve
+// We should appreciate how frameworks make all these stuff easier :) - Reve
+Deno.serve({ port: 3000 }, (req) => {
+	const url = req.url
 
-                if (!rest)
-                    return new Response(
-                        `${id} ${url.searchParams.get('name')}`,
-                        {
-                            headers: {
-                                'x-powered-by': 'benchmark'
-                            }
-                        }
-                    )
-            }
+	const pathIndex = url.indexOf('/', 12) + 1
+	const queryIndex = url.indexOf('?', pathIndex)
+	const path =
+		queryIndex === -1
+			? url.substring(pathIndex)
+			: url.substring(pathIndex, queryIndex)
 
-            return new Response('Not Found', {
-                status: 404
-            })
+	if (path.length === 0)
+		return req.method === 'GET' ? hiRes.clone() : notFound
 
-        case 'POST':
-            switch (url.pathname) {
-                case '/json':
-                    return Response.json(await request.json())
+	switch (path.charCodeAt(0)) {
+		case 105:
+			if (
+				path.charCodeAt(1) === 100 &&
+				path.charCodeAt(2) === 47 &&
+				req.method === 'GET'
+			) {
+				// Shouldn't include a slash and should have query
+				if (queryIndex === -1 || path.indexOf('/', 3) !== -1)
+					return notFound
 
-                default:
-                    return new Response('Not Found', {
-                        status: 404
-                    })
-            }
+				const nameQueryIdx = url.indexOf('name=', queryIndex + 1)
+				if (nameQueryIdx === -1) return notFound
 
-        default:
-            return new Response('Not Found', {
-                status: 404
-            })
-    }
+				const nameQueryEndIdx = url.indexOf('&', nameQueryIdx + 1)
+				return new Response(
+					`${path.substring(3, queryIndex)} ${
+						nameQueryEndIdx === -1
+							? url.substring(nameQueryIdx + 5)
+							: url.substring(nameQueryIdx + 5, nameQueryEndIdx)
+					}`,
+					queryHeaders
+				)
+			}
+
+			return notFound
+
+		case 106:
+			return path.charCodeAt(1) === 115 &&
+				path.charCodeAt(2) === 111 &&
+				path.charCodeAt(3) === 110 &&
+				req.method === 'POST'
+				? req.json().then(toResponse)
+				: notFound
+
+		default:
+			return notFound
+	}
 })

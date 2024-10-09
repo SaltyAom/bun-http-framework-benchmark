@@ -16,7 +16,7 @@ Bun.serve({
         '/': new Response('Hi', { headers: { 'content-type': 'text/plain;charset=utf8' } })
     },
 	fetch(req): Response | Promise<Response> {
-		const { url } = req
+		const url = req.url
 
 		const pathIndex = url.indexOf('/', 12) + 1
 		const queryIndex = url.indexOf('?', pathIndex)
