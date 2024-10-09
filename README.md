@@ -54,11 +54,11 @@ This benchmark is tested under the following condition:
 
 -   Intel I7-13700K, DDR5 32GB 5600MHz
 -   Arch Linux 6.10.8-arch1-1 (btw I use Arch)
--   Bun 1.1.28
+-   Bun 1.1.30
 -   Node 22.8.0
--   Deno 1.46.3
+-   Deno 2.0.0
 
-Tested on 5 Oct 2024 00:09 (GMT+7)
+Tested on 10 Oct 2024 01:22 (GMT+7)
 
 ## Results
 
