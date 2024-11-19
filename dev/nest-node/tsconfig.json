@@ -1,16 +1,10 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
-    "declaration": true,
-    "removeComments": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
-    "target": "es2017",
-    "sourceMap": true,
-    "outDir": "../../src/node/nest",
-    "baseUrl": "./",
-    "incremental": false,
-    "skipLibCheck": true
-  }
+    "skipLibCheck": true,
+    "strict": true
+  },
+  "exclude": ["node_modules", "dist"]
 }

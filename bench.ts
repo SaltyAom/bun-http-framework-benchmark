@@ -15,8 +15,6 @@ const whitelists = <string[]>[]
 const blacklists = [
 	// Not booting up in test
 	'node/adonis/index',
-	// Not setting content-type header for some reason
-	'node/nest/index',
 	// 'Not booting up in test'
 	'node/hapi',
 	// Body: Result not match
@@ -42,7 +40,7 @@ const time = 10
 const commands = [
 	`bombardier --fasthttp -c 500 -d ${time}s http://127.0.0.1:3000/`,
 	`bombardier --fasthttp -c 500 -d ${time}s http://127.0.0.1:3000/id/1?name=bun`,
-	`bombardier --fasthttp -c 500 -d ${time}s -m POST -H 'Content-Type:application/json' -f ./scripts/body.json http://127.0.0.1:3000/json`
+	`bombardier --fasthttp -c 500 -d ${time}s -m POST -H Content-Type:application/json -f ./scripts/body.json http://127.0.0.1:3000/json`
 ] as const
 
 const runtimeCommand = {
