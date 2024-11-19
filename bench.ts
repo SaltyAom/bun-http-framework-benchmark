@@ -15,8 +15,6 @@ const whitelists = <string[]>[]
 const blacklists = [
 	// Not booting up in test
 	'node/adonis/index',
-	// Not setting content-type header for some reason
-	'node/nest/index',
 	// 'Not booting up in test'
 	'node/hapi',
 	// Body: Result not match
