@@ -15,11 +15,11 @@ var __legacyMetadataTS = (k, v) => {
 };
 
 // src/nest-fastify.ts
-import { NestFactory } from "@nestjs/core";
-import { FastifyAdapter } from "@nestjs/platform-fastify";
+var import_core = require("@nestjs/core");
+var import_platform_fastify = require("@nestjs/platform-fastify");
 
 // src/app.module.ts
-import { Body, Controller, Get, Module, Param, Post, Query, Res } from "@nestjs/common";
+var import_common = require("@nestjs/common");
 class AppController {
   getHello(res) {
     res.header("content-type", "text/plain").send("Hi");
@@ -32,8 +32,8 @@ class AppController {
   }
 }
 __legacyDecorateClassTS([
-  Get("/"),
-  __legacyDecorateParamTS(0, Res()),
+  import_common.Get("/"),
+  __legacyDecorateParamTS(0, import_common.Res()),
   __legacyMetadataTS("design:type", Function),
   __legacyMetadataTS("design:paramtypes", [
     Object
@@ -41,10 +41,10 @@ __legacyDecorateClassTS([
   __legacyMetadataTS("design:returntype", undefined)
 ], AppController.prototype, "getHello", null);
 __legacyDecorateClassTS([
-  Get("/id/:id"),
-  __legacyDecorateParamTS(0, Res()),
-  __legacyDecorateParamTS(1, Param("id")),
-  __legacyDecorateParamTS(2, Query("name")),
+  import_common.Get("/id/:id"),
+  __legacyDecorateParamTS(0, import_common.Res()),
+  __legacyDecorateParamTS(1, import_common.Param("id")),
+  __legacyDecorateParamTS(2, import_common.Query("name")),
   __legacyMetadataTS("design:type", Function),
   __legacyMetadataTS("design:paramtypes", [
     Object,
@@ -54,8 +54,8 @@ __legacyDecorateClassTS([
   __legacyMetadataTS("design:returntype", undefined)
 ], AppController.prototype, "getCompose", null);
 __legacyDecorateClassTS([
-  Post("/json"),
-  __legacyDecorateParamTS(0, Body()),
+  import_common.Post("/json"),
+  __legacyDecorateParamTS(0, import_common.Body()),
   __legacyMetadataTS("design:type", Function),
   __legacyMetadataTS("design:paramtypes", [
     Object
@@ -63,18 +63,18 @@ __legacyDecorateClassTS([
   __legacyMetadataTS("design:returntype", undefined)
 ], AppController.prototype, "postMirror", null);
 AppController = __legacyDecorateClassTS([
-  Controller()
+  import_common.Controller()
 ], AppController);
 
 class AppModule {
 }
 AppModule = __legacyDecorateClassTS([
-  Module({ controllers: [AppController] })
+  import_common.Module({ controllers: [AppController] })
 ], AppModule);
 
 // src/nest-fastify.ts
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, new FastifyAdapter);
+  const app = await import_core.NestFactory.create(AppModule, new import_platform_fastify.FastifyAdapter);
   await app.listen(3000);
 }
 bootstrap();
