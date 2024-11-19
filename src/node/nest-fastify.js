@@ -25,7 +25,7 @@ class AppController {
     res.header("content-type", "text/plain").send("Hi");
   }
   getCompose(res, id, name) {
-    res.header("content-type", "text/plain").send(`${id} ${name}`);
+    res.header("x-powered-by", "benchmark").header("content-type", "text/plain").send(`${id} ${name}`);
   }
   postMirror(body) {
     return body;
@@ -47,7 +47,7 @@ __legacyDecorateClassTS([
   __legacyDecorateParamTS(2, import_common.Query("name")),
   __legacyMetadataTS("design:type", Function),
   __legacyMetadataTS("design:paramtypes", [
-    Object,
+    typeof FastifyReply === "undefined" ? Object : FastifyReply,
     String,
     String
   ]),
