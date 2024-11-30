@@ -1,50 +1,50 @@
 {
-  "name": "bun-http-framework-benchmark",
-  "scripts": {
-    "benchmark": "bun bench.ts",
-    "kill-port": "kill-port 3000",
-    "ts-node": "ts-node"
-  },
-  "devDependencies": {
-    "@hono/node-server": "^1.12.0",
-    "@types/bun": "^1.1.6",
-    "@types/express": "^4.17.21",
-    "@types/kill-port": "^2.0.3",
-    "@types/koa": "^2.15.0",
-    "@types/koa-bodyparser": "^4.3.12",
-    "@types/koa-router": "^7.4.8"
-  },
-  "dependencies": {
-    "@bit-js/byte": "^1.6.1",
-    "@elysiajs/fn": "^0.6.1",
-    "@hapi/hapi": "^21.3.10",
-    "@nbit/bun": "^0.13.4",
-    "@nestjs/common": "^10.3.10",
-    "@nestjs/core": "^10.3.10",
-    "@nestjs/platform-express": "^10.3.10",
-    "@oakserver/oak": "^14.1.0",
-    "bunrest": "^1.3.8",
-    "elysia": "1.1.18",
-    "express": "^4.19.2",
-    "fastify": "^4.28.1",
-    "h3": "^1.12.0",
-    "hono": "^4.5.3",
-    "hyper-express": "^6.16.4",
-    "kill-port": "^2.0.1",
-    "koa": "^2.15.3",
-    "koa-bodyparser": "^4.4.1",
-    "koa-router": "^12.0.1",
-    "nhttp-land": "^1.3.26",
-    "reflect-metadata": "^0.2.2",
-    "rxjs": "^7.8.1",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.5.4",
-    "ultimate-express": "^1.2.5",
-    "vixeny": "^0.1.47",
-    "wobe": "^1.1.7"
-  },
-  "module": "index.ts",
-  "peerDependencies": {
-    "typescript": "^5.0.0"
-  }
+	"name": "bun-http-framework-benchmark",
+	"scripts": {
+		"benchmark": "bun bench.ts",
+		"kill-port": "kill-port 3000",
+		"ts-node": "ts-node"
+	},
+	"devDependencies": {
+		"@hono/node-server": "^1.12.0",
+		"@types/bun": "^1.1.6",
+		"@types/express": "^4.17.21",
+		"@types/kill-port": "^2.0.3",
+		"@types/koa": "^2.15.0",
+		"@types/koa-bodyparser": "^4.3.12",
+		"@types/koa-router": "^7.4.8"
+	},
+	"dependencies": {
+		"@elysiajs/fn": "^0.6.1",
+		"@hapi/hapi": "^21.3.10",
+		"@mapl/app": "^0.1.6",
+		"@nbit/bun": "^0.13.4",
+		"@nestjs/common": "^10.3.10",
+		"@nestjs/core": "^10.3.10",
+		"@nestjs/platform-express": "^10.3.10",
+		"@oakserver/oak": "^14.1.0",
+		"bunrest": "^1.3.8",
+		"elysia": "1.1.18",
+		"express": "^4.19.2",
+		"fastify": "^4.28.1",
+		"h3": "^1.12.0",
+		"hono": "^4.5.3",
+		"hyper-express": "^6.16.4",
+		"kill-port": "^2.0.1",
+		"koa": "^2.15.3",
+		"koa-bodyparser": "^4.4.1",
+		"koa-router": "^12.0.1",
+		"nhttp-land": "^1.3.26",
+		"reflect-metadata": "^0.2.2",
+		"rxjs": "^7.8.1",
+		"ts-node": "^10.9.2",
+		"typescript": "^5.5.4",
+		"ultimate-express": "^1.2.5",
+		"vixeny": "^0.1.47",
+		"wobe": "^1.1.7"
+	},
+	"module": "index.ts",
+	"peerDependencies": {
+		"typescript": "^5.0.0"
+	}
 }
