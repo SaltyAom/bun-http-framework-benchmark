@@ -1,6 +1,6 @@
 bombardier --fasthttp -c 500 -d 10s http://127.0.0.1:3000/
-Reqs/sec    137581.65,137581.65
+Reqs/sec     63238.15,63238.15
 bombardier --fasthttp -c 500 -d 10s http://127.0.0.1:3000/id/1?name=bun
-Reqs/sec    129470.13,129470.13
+Reqs/sec     60528.44,60528.44
 bombardier --fasthttp -c 500 -d 10s -m POST -H 'Content-Type:application/json' -f ./scripts/body.json http://127.0.0.1:3000/json
-Reqs/sec    106427.01,106427.01
+Reqs/sec     33276.88,33276.88

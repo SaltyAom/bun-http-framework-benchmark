@@ -2,6 +2,16 @@ const fastify = require("fastify");
 
 const server = fastify()
   .get("/", (req, res) => "Hi")
+  .get(
+    "/id/:id",
+    (
+      req,
+      res
+    ) => {
+      res.header("x-powered-by", "benchmark");
+      return `${req.params.id} ${req.query.name}`;
+    }
+  )
   .post(
     "/json",
     {
@@ -20,16 +30,7 @@ const server = fastify()
     },
     (req, res) => req.body
   )
-  .get(
-    "/id/:id",
-    (
-      req,
-      res
-    ) => {
-      res.header("x-powered-by", "benchmark");
-      return `${req.params.id} ${req.query.name}`;
-    }
-  );
+
 
 server.listen({ port: 3000 }, function (err) {
   if (err) {
