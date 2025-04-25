@@ -12,9 +12,31 @@ function toResponse(json: unknown) {
 // Simulate the maximum performance you can get with Bun.serve
 // We should appreciate how frameworks make all these stuff easier :) - Reve
 Bun.serve({
-    static: {
-        '/': new Response('Hi', { headers: { 'content-type': 'text/plain;charset=utf8' } })
-    },
+	static: {
+		'/': new Response('Hi', {
+			headers: { 'content-type': 'text/plain;charset=utf8' }
+		})
+	},
+	routes: {
+		'/id/:id': {
+			GET(request: Request) {
+				const url = request.url,
+					s = url.indexOf('/', 11),
+					qi = url.indexOf('?', s + 1)
+
+				const nameIdx = url.indexOf('name=', qi + 1)
+				const nameEndIdx = url.indexOf('&', nameIdx + 1)
+				return new Response(
+					`${request.params.id} ${
+						nameEndIdx === -1
+							? url.substring(nameIdx + 5)
+							: url.substring(nameIdx + 5, nameEndIdx)
+					}`,
+					queryHeaders
+				)
+			}
+		}
+	},
 	fetch(req): Response | Promise<Response> {
 		const url = req.url
 

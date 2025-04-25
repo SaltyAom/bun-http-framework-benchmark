@@ -8,6 +8,6 @@ const app = new Elysia()
 		return `${c.params.id} ${c.query.name}`
 	})
 	.post('/json', (c) => c.body, {
-		type: 'json'
+		parse: 'json'
 	})
 	.listen(3000)
