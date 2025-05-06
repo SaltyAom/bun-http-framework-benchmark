@@ -9,7 +9,7 @@ import {
 import killPort from 'kill-port'
 import { $, pathToFileURL } from 'bun'
 
-const whitelists = <string[]>['bun/elysia']
+const whitelists = <string[]>[]
 
 // ? Not working
 const blacklists = [
@@ -34,7 +34,10 @@ const blacklists = [
 	// Crash
 	'bun/fastify',
 	// failed to parse body in benchmark
-	'bun/byte'
+	'bun/byte',
+	// doesn't run
+	'bun/vixeny',
+	'node/elysia'
 ] as const
 
 const time = 10

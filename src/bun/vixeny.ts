@@ -1,7 +1,6 @@
 import { wrap } from 'vixeny'
 
-
-export default {
+Bun.serve({
 	fetch: wrap()()
 		.petitionWithoutCTX({
 			path: '/',
@@ -35,4 +34,4 @@ export default {
 			f: async (f) => JSON.stringify(await f.req.json())
 		})
 		.compose()
-}
+})
