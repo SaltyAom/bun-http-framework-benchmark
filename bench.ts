@@ -1,13 +1,12 @@
 import {
-	readdirSync,
-	mkdirSync,
 	existsSync,
 	lstatSync,
+	mkdirSync,
+	readdirSync,
 	readFileSync,
 	writeFileSync
 } from 'fs'
 import killPort from 'kill-port'
-import { $, pathToFileURL } from 'bun'
 
 const whitelists = <string[]>[]
 
@@ -17,8 +16,6 @@ const blacklists = [
 	'node/adonis/index',
 	// Not setting content-type header for some reason
 	'node/nest/index',
-	// 'Not booting up in test'
-	'node/hapi',
 	// Body: Result not match
 	'bun/xirelta',
 	// Crash
@@ -50,7 +47,7 @@ const commands = [
 
 const runtimeCommand = {
 	node: 'node',
-	deno: 'deno run --allow-net --allow-env',
+	// deno: 'deno run --allow-net --allow-env',
 	bun: 'bun'
 } as const
 
@@ -154,7 +151,7 @@ const spawn = (target: string, title = true) => {
 		: `src/${runtime}/${framework}.js`
 
 	const server = Bun.spawn({
-		cmd: [...runtimeCommand[runtime].split(" "), file],
+		cmd: [...runtimeCommand[runtime].split(' '), file],
 		env: {
 			...Bun.env,
 			NODE_ENV: 'production'
