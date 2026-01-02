@@ -1,8 +1,9 @@
 const express = require('express')
+
+const app = express();
 app.set('x-powered-by', false);
 
-express()
-	.get('/', (req, res) => {
+app.get('/', (req, res) => {
 		res.setHeader('content-type', 'text/plain').send('Hi')
 	})
 	.post('/json', express.json(), ({ body }, res) => {
