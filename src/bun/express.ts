@@ -1,6 +1,9 @@
 import express from 'express'
 
-express()
+const app = express();
+app.set('x-powered-by', false);
+
+app
 	.get('/', (req, res) => {
 		res.setHeader('content-type', 'text/plain').send('Hi')
 	})
