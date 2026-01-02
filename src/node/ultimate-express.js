@@ -2,6 +2,7 @@ const uExpress = require('ultimate-express')
 
 const app = uExpress()
 app.set("etag", false)
+app.set("x-powered-by", false)
 
 app.get('/', (req, res) => {
 	res.setHeader('content-type', 'text/plain').send('Hi')
