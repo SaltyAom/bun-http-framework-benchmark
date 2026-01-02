@@ -2,6 +2,7 @@ const express = require('express')
 
 const app = express();
 app.set('x-powered-by', false);
+app.set('etag', false);
 
 app.get('/', (req, res) => {
 		res.setHeader('content-type', 'text/plain').send('Hi')
