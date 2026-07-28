@@ -1,0 +1,4 @@
+[submodule "repos/effect"]
+	path = repos/effect
+	url = https://github.com/Effect-TS/effect.git
+	branch = main
