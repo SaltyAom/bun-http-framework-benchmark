@@ -1,0 +1,11 @@
+{
+  "effect": "4.0.0-beta.102",
+  "@effect/platform-bun": "4.0.0-beta.102",
+  "@effect/platform-node": "4.0.0-beta.102",
+  "typescript": "7.0.2",
+  "source_oracle": {
+    "path": "repos/effect",
+    "tag": "effect@4.0.0-beta.102",
+    "commit": "de2a9a69099993087e57c64df58537c765ac0224"
+  }
+}

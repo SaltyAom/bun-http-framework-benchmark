@@ -1,0 +1,4 @@
+interface:
+  display_name: "Effect v4"
+  short_description: "Build and review exact-beta Effect v4 code"
+  default_prompt: "Use $effect-v4 to update the benchmark Effect HTTP implementation against its pinned beta."
