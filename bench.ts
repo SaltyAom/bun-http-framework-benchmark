@@ -322,10 +322,18 @@ export const validateServer = async (index: Response) => {
 	if (!query.headers.get('X-Powered-By')?.includes('benchmark'))
 		throw new Error('Query: X-Powered-By not match')
 
+	const multiQuery = await fetch(`${baseUrl}/id/1?name=alice&id=1`)
+	if ((await multiQuery.text()) !== '1 alice')
+		throw new Error('Query: Multi-param result not match')
+
+	const missingQuery = await fetch(`${baseUrl}/id/1?id=1`)
+	if ((await missingQuery.text()) !== '1 ')
+		throw new Error('Query: Missing-param result not match')
+
 	const body = await fetch(`${baseUrl}/json`, {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
-		body: JSON.stringify({ hello: 'world' })
+		body: '{ "hello" : "world" }'
 	})
 
 	if ((await body.text()) !== JSON.stringify({ hello: 'world' }))
