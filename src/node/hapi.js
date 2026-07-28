@@ -1,4 +1,6 @@
 const Hapi = require("@hapi/hapi")
+const { createReadStream } = require('node:fs')
+const { extraRoutes } = require('../extra-routes.mjs')
 
 const init = async () => {
 	const server = Hapi.server({
@@ -6,11 +8,22 @@ const init = async () => {
 		host: "localhost"
 	})
 
+	for (const route of extraRoutes) {
+		server.route({ method: 'GET', path: route, handler: () => 'ok' })
+		server.route({ method: 'POST', path: `${route}/submit`, handler: () => 'ok' })
+	}
+
 	server.route([
 		{
 			method: "GET",
 			path: "/",
 			handler: (request, h) => "Hi"
+		},
+		{
+			method: 'GET',
+			path: '/video',
+			handler: (_request, h) =>
+				h.response(createReadStream('public/kyuukurarin.mp4')).type('video/mp4')
 		},
 		{
 			method: "POST",

@@ -1,8 +1,22 @@
 import { Application, Router } from "@oak/oak"
+import { extraRoutes } from '../extra-routes.mjs'
 
 const router = new Router()
-	.get("/", (context) => {
+for (const route of extraRoutes) {
+	router.get(route, (context) => {
+		context.response.body = 'ok'
+	})
+	router.post(`${route}/submit`, (context) => {
+		context.response.body = 'ok'
+	})
+}
+
+router.get("/", (context) => {
 		context.response.body = "Hi"
+	})
+	.get('/video', async (context) => {
+		context.response.headers.set('content-type', 'video/mp4')
+		context.response.body = (await Deno.open('public/kyuukurarin.mp4')).readable
 	})
 	.get("/id/:id", (context) => {
 		context.response.headers.append("x-powered-by", "benchmark")

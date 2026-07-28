@@ -1,3 +1,8 @@
+import {
+	matchesExtraPostRoute,
+	matchesExtraRoute
+} from '../extra-routes.mjs'
+
 const jsonHeaders = { headers: [['Content-Type', 'application/json']] },
 	queryHeaders = { headers: [['X-Powered-By', 'benchmark']] },
 	notFound = new Response(null, { status: 404 }),
@@ -42,12 +47,20 @@ Bun.serve({
 
 		const pathIndex = url.indexOf('/', 12) + 1
 		const queryIndex = url.indexOf('?', pathIndex)
-		const path =
-			queryIndex === -1
-				? url.substring(pathIndex)
-				: url.substring(pathIndex, queryIndex)
+	const path =
+		queryIndex === -1
+			? url.substring(pathIndex)
+			: url.substring(pathIndex, queryIndex)
+	if (req.method === 'GET' && matchesExtraRoute(`/${path}`))
+		return new Response('ok')
+	if (req.method === 'POST' && matchesExtraPostRoute(`/${path}`))
+		return new Response('ok')
+	if (req.method === 'GET' && path === 'video')
+		return new Response(Bun.file('public/kyuukurarin.mp4'), {
+			headers: { 'content-type': 'video/mp4' }
+		})
 
-		if (path.length === 0)
+	if (path.length === 0)
 			return req.method === 'GET' ? hiRes.clone() : notFound
 
 		switch (path.charCodeAt(0)) {

@@ -1,7 +1,17 @@
 const fastify = require("fastify");
+const { createReadStream } = require('node:fs')
+const { extraRoutes } = require('../extra-routes.mjs')
 
 const server = fastify()
-  .get("/", (req, res) => "Hi")
+for (const route of extraRoutes) {
+  server.get(route, () => 'ok').post(`${route}/submit`, () => 'ok')
+}
+
+server.get("/", (req, res) => "Hi")
+  .get('/video', (_req, res) => {
+    res.type('video/mp4')
+    return createReadStream('public/kyuukurarin.mp4')
+  })
   .get(
     "/id/:id",
     (

@@ -1,4 +1,6 @@
 const { createServer } = require('http')
+const { createReadStream } = require('node:fs')
+const { extraRoutes } = require('../extra-routes.mjs')
 const {
 	createApp,
 	createRouter,
@@ -6,12 +8,18 @@ const {
 	toNodeListener,
 	getQuery,
 	setResponseHeader,
-	readBody
+	readBody,
+	sendStream
 } = require('h3')
 
 const app = createApp()
 
 const router = createRouter()
+
+for (const route of extraRoutes) {
+	router.get(route, eventHandler(() => 'ok'))
+	router.post(`${route}/submit`, eventHandler(() => 'ok'))
+}
 
 router.get(
 	'/',
@@ -19,6 +27,14 @@ router.get(
 		setResponseHeader(event, 'content-type', 'text/plain')
 
 		return 'Hi'
+	})
+)
+
+router.get(
+	'/video',
+	eventHandler((event) => {
+		setResponseHeader(event, 'content-type', 'video/mp4')
+		return sendStream(event, createReadStream('public/kyuukurarin.mp4'))
 	})
 )
 

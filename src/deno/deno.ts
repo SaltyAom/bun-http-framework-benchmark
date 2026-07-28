@@ -1,4 +1,9 @@
 // @ts-nocheck
+import {
+	matchesExtraPostRoute,
+	matchesExtraRoute
+} from '../extra-routes.mjs'
+
 const jsonHeaders = { headers: [['Content-Type', 'application/json']] },
 	queryHeaders = { headers: [['X-Powered-By', 'benchmark']] },
 	notFound = new Response(null, { status: 404 }),
@@ -21,6 +26,17 @@ Deno.serve({ port: 3000 }, (req) => {
 		queryIndex === -1
 			? url.substring(pathIndex)
 			: url.substring(pathIndex, queryIndex)
+	if (req.method === 'GET' && matchesExtraRoute(`/${path}`))
+		return new Response('ok')
+	if (req.method === 'POST' && matchesExtraPostRoute(`/${path}`))
+		return new Response('ok')
+	if (req.method === 'GET' && path === 'video')
+		return Deno.open('public/kyuukurarin.mp4').then(
+			(file) =>
+				new Response(file.readable, {
+					headers: { 'content-type': 'video/mp4' }
+				})
+		)
 
 	if (path.length === 0)
 		return req.method === 'GET' ? hiRes.clone() : notFound

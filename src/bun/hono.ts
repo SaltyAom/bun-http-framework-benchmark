@@ -1,9 +1,16 @@
 import { Hono } from 'hono'
-import { RegExpRouter } from 'hono/router/reg-exp-router'
+import { extraRoutes } from '../extra-routes.mjs'
 
-const app = new Hono({ router: new RegExpRouter() })
+const app = new Hono()
+for (const route of extraRoutes) {
+    app.get(route, (c) => c.text('ok'))
+        .post(`${route}/submit`, (c) => c.text('ok'))
+}
 
 app.get('/', (c) => c.text('Hi'))
+    .get('/video', () => new Response(Bun.file('public/kyuukurarin.mp4'), {
+        headers: { 'content-type': 'video/mp4' }
+    }))
     .post('/json', (c) => c.req.json().then(c.json))
     .get('/id/:id', (c) => {
         const id = c.req.param('id')

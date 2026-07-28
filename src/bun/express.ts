@@ -1,9 +1,20 @@
 import express from 'express'
+import { createReadStream } from 'node:fs'
+import { extraRoutes } from '../extra-routes.mjs'
 
-express()
-	.use(express.json())
+const app = express().use(express.json())
+for (const route of extraRoutes) {
+	app.get(route, (_req, res) => res.send('ok'))
+	app.post(`${route}/submit`, (_req, res) => res.send('ok'))
+}
+
+app
 	.get('/', (req, res) => {
 		res.setHeader('content-type', 'text/plain').send('Hi')
+	})
+	.get('/video', (_req, res) => {
+		res.setHeader('content-type', 'video/mp4')
+		createReadStream('public/kyuukurarin.mp4').pipe(res)
 	})
 	.post('/json', ({ body }, res) => {
 		res.json(body)
