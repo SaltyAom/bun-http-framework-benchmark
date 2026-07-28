@@ -52,16 +52,12 @@ Deno.serve({ port: 3000 }, (req) => {
 				if (queryIndex === -1 || path.indexOf('/', 3) !== -1)
 					return notFound
 
-				const nameQueryIdx = url.indexOf('name=', queryIndex + 1)
-				if (nameQueryIdx === -1) return notFound
-
-				const nameQueryEndIdx = url.indexOf('&', nameQueryIdx + 1)
+				const name =
+					new URLSearchParams(url.substring(queryIndex + 1)).get(
+						'name'
+					) ?? ''
 				return new Response(
-					`${path.substring(3, queryIndex)} ${
-						nameQueryEndIdx === -1
-							? url.substring(nameQueryIdx + 5)
-							: url.substring(nameQueryIdx + 5, nameQueryEndIdx)
-					}`,
+					`${path.substring(3, queryIndex)} ${name}`,
 					queryHeaders
 				)
 			}

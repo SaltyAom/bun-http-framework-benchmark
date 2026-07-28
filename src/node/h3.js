@@ -46,7 +46,7 @@ router.get(
 		setResponseHeader(event, 'content-type', 'text/plain')
 		setResponseHeader(event, 'x-powered-by', 'benchmark')
 
-		return `${event.context.params.id} ${query.name}`
+		return `${event.context.params.id} ${query.name ?? ''}`
 	})
 )
 

@@ -27,7 +27,7 @@ router
         ctx.body = createReadStream('public/kyuukurarin.mp4')
     })
     .get('/id/:id', (ctx) => {
-        ctx.body = `${ctx.params.id} ${ctx.query.name}`
+        ctx.body = `${ctx.params.id} ${ctx.query.name ?? ''}`
         ctx.set('x-powered-by', 'benchmark')
     })
     .post('/json', (ctx) => {

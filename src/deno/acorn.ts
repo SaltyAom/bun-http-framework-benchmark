@@ -14,7 +14,7 @@ app.get('/video', async () =>
 	})
 )
 app.get('/id/:id', async (ctx) => {
-	return new Response(`${ctx.params.id} ${(await ctx.queryParams())?.name}`, {
+	return new Response(`${ctx.params.id} ${(await ctx.queryParams())?.name ?? ''}`, {
 		headers: {
 			'x-powered-by': 'benchmark'
 		}

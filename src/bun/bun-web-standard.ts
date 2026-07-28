@@ -28,7 +28,7 @@ Bun.serve({
 
 					if (!rest)
 						return new Response(
-							`${id} ${url.searchParams.get('name')}`,
+							`${id} ${url.searchParams.get('name') ?? ''}`,
 							{
 								headers: {
 									'x-powered-by': 'benchmark'

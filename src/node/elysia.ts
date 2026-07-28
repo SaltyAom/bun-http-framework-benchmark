@@ -12,7 +12,7 @@ app.get('/', () => 'Hi')
 	.get('/id/:id', (c) => {
 		c.set.headers['x-powered-by'] = 'benchmark'
 
-		return `${c.params.id} ${c.query.name}`
+		return `${c.params.id} ${c.query.name ?? ''}`
 	})
 	.post(
 		'/json',

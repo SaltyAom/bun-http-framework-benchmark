@@ -14,7 +14,7 @@ app.get('/', (c) => c.text('Hi'))
     .post('/json', (c) => c.req.json().then(c.json))
     .get('/id/:id', (c) => {
         const id = c.req.param('id')
-        const name = c.req.query('name')
+        const name = c.req.query('name') ?? ''
 
         c.header('x-powered-by', 'benchmark')
 
