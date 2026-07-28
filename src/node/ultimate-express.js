@@ -4,6 +4,7 @@ const { extraRoutes } = require('../extra-routes.mjs')
 
 const app = uExpress()
 app.set("etag", false)
+app.set("x-powered-by", false)
 
 for (const route of extraRoutes) {
 	app.get(route, (_req, res) => res.send('ok'))
