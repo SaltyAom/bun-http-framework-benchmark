@@ -18,7 +18,7 @@ export const effectRouter = HttpRouter.addAll([
 		'GET',
 		'/video',
 		HttpServerResponse.file('public/kyuukurarin.mp4', {
-			contentType: 'video/mp4'
+			headers: { 'content-type': 'video/mp4' }
 		})
 	),
 	HttpRouter.route(
