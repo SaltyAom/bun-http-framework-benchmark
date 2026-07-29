@@ -17,7 +17,7 @@ Route_1.default.get('/video', ({ response }) => {
 });
 Route_1.default.get('/id/:id', ({ params, request, response }) => {
     response.header('x-powered-by', 'benchmark');
-    return `${params.id} ${request.qs().name}`;
+    return `${params.id} ${request.qs().name ?? ''}`;
 });
 Route_1.default.post('/json', ({ request }) => request.body());
 //# sourceMappingURL=routes.js.map

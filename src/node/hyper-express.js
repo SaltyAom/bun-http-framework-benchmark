@@ -24,7 +24,7 @@ app.get('/id/:id', (req, res) => {
 	res.header('x-powered-by', 'benchmark')
 	res.header('content-type', 'text/plain')
 
-	res.send(`${req.path_parameters.id} ${req.query_parameters.name}`)
+	res.send(`${req.path_parameters.id} ${req.query_parameters.name ?? ''}`)
 })
 
 app.post('/json', async (req, res) => {

@@ -28,7 +28,7 @@ app.post('/json', uExpress.json(), ({ body }, res) => {
 app.get('/id/:id', ({ params: { id }, query: { name } }, res) => {
 	res.setHeader('x-powered-by', 'benchmark')
 		.setHeader('content-type', 'text/plain')
-		.send(`${id} ${name}`)
+		.send(`${id} ${name ?? ''}`)
 })
 
 app.listen(3000, () => {})

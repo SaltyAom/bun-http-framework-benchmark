@@ -22,7 +22,7 @@ router.get("/", (context) => {
 		context.response.headers.append("x-powered-by", "benchmark")
 		context.response.body = `${
 			context.params.id
-		} ${context.request.url.searchParams.get("name")}`
+		} ${context.request.url.searchParams.get("name") ?? ""}`
 	})
 	.post("/json", async (context) => {
 		context.response.body = await context.request.body.json()

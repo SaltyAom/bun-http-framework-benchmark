@@ -35,6 +35,6 @@ Route.get('/video', ({ response }) => {
 Route.get('/id/:id', ({ params, request, response }) => {
   response.header('x-powered-by', 'benchmark')
 
-  return `${params.id} ${request.qs().name}`
+  return `${params.id} ${request.qs().name ?? ''}`
 })
 Route.post('/json', ({ request }) => request.body())

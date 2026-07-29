@@ -19,7 +19,7 @@ server.get("/", (req, res) => "Hi")
       res
     ) => {
       res.header("x-powered-by", "benchmark");
-      return `${req.params.id} ${req.query.name}`;
+      return `${req.params.id} ${req.query.name ?? ''}`;
     }
   )
   .post(

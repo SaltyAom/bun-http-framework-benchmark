@@ -25,7 +25,7 @@ Deno.serve({ port: 3000 }, async (request) => {
 
                 if (!rest)
                     return new Response(
-                        `${id} ${url.searchParams.get('name')}`,
+                        `${id} ${url.searchParams.get('name') ?? ''}`,
                         {
                             headers: {
                                 'x-powered-by': 'benchmark'

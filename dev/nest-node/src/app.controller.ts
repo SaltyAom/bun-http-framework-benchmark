@@ -34,7 +34,7 @@ export class AppController {
   @Header('content-type', 'text/plain')
   @Header('x-powered-by', 'benchmark')
   getCompose(@Param('id') id: string, @Query('name') name: string) {
-    return `${id} ${name}`;
+    return `${id} ${name ?? ''}`;
   }
 
   @Post('/json')

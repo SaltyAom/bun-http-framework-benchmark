@@ -30,7 +30,7 @@ let AppController = class AppController {
         });
     }
     getCompose(id, name) {
-        return `${id} ${name}`;
+        return `${id} ${name ?? ''}`;
     }
     postMirror(body) {
         return body;
