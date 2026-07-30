@@ -1,4 +1,4 @@
-import { H3 } from 'h3'
+import { H3, serve } from 'npm:h3@^2.0.1-rc.26'
 import { extraRoutes } from '../extra-routes.mjs'
 
 const app = new H3()
@@ -13,9 +13,9 @@ app.get('/', () => 'Hi')
 
 app.get(
 	'/video',
-	((event) => {
+	(async (event) => {
 		event.res.headers.set('content-type', 'video/mp4')
-		return Bun.file('public/kyuukurarin.mp4').stream()
+		return (await Deno.open('public/kyuukurarin.mp4')).readable
 	})
 )
 
@@ -29,4 +29,4 @@ app.get(
 
 app.post('/json', ((event) => event.req.json()))
 
-Bun.serve({ port: 3000, fetch: app.fetch })
+serve(app, { port: 3000 })

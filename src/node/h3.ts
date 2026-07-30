@@ -1,5 +1,6 @@
-import { H3 } from 'h3'
+import { H3, serve } from 'h3'
 import { extraRoutes } from '../extra-routes.mjs'
+import { createReadStream } from 'node:fs'
 
 const app = new H3()
 
@@ -15,7 +16,7 @@ app.get(
 	'/video',
 	((event) => {
 		event.res.headers.set('content-type', 'video/mp4')
-		return Bun.file('public/kyuukurarin.mp4').stream()
+		return createReadStream('public/kyuukurarin.mp4')
 	})
 )
 
@@ -29,4 +30,4 @@ app.get(
 
 app.post('/json', ((event) => event.req.json()))
 
-Bun.serve({ port: 3000, fetch: app.fetch })
+serve(app, { port: 3000 })
