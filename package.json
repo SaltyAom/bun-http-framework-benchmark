@@ -15,6 +15,8 @@
     "@nestjs/common": "^11.1.28",
     "@nestjs/core": "^11.1.28",
     "@nestjs/platform-express": "^11.1.28",
+    "@nifrajs/core": "2.8.2",
+    "@nifrajs/node": "2.8.2",
     "@oakserver/oak": "^14.1.0",
     "effect": "4.0.0-beta.102",
     "elysia": "2.0.0-exp.60",
