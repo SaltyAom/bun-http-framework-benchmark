@@ -20,6 +20,7 @@
     "elysia": "2.0.0-exp.60",
     "express": "^5.2.1",
     "fastify": "^5.10.0",
+    "fulmine.js": "^5.0.0",
     "h3": "^2.0.1-rc.26",
     "hono": "^4.12.32",
     "hyper-express": "^7.0.2",
