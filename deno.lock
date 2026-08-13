@@ -28,7 +28,8 @@
     "jsr:@std/path@0.223": "0.223.0",
     "jsr:@valibot/valibot@0.36": "0.36.0",
     "npm:buffer@6": "6.0.3",
-    "npm:elysia@*": "1.4.29_@sinclair+typebox@0.34.52_exact-mirror@0.2.7__@sinclair+typebox@0.34.52_file-type@22.0.1_openapi-types@12.1.3",
+    "npm:diesel-core@^3.0.1": "3.0.1_typescript@5.9.3",
+    "npm:elysia@*": "1.4.29_typescript@5.9.3",
     "npm:h3@^2.0.1-rc.26": "2.0.1-rc.26",
     "npm:hyperid@^3.2.0": "3.2.0",
     "npm:path-to-regexp@6.2.1": "6.2.1",
@@ -239,7 +240,14 @@
         "gopd"
       ]
     },
-    "elysia@1.4.29_@sinclair+typebox@0.34.52_exact-mirror@0.2.7__@sinclair+typebox@0.34.52_file-type@22.0.1_openapi-types@12.1.3": {
+    "diesel-core@3.0.1_typescript@5.9.3": {
+      "integrity": "sha512-GFcDijo4JOFUqKXUVun2s2bSpdTMd0HPD/S1w0EIaWJqiJAuf95TBmbXHSNWPTpCLdIMHFVXaBbVC1T4wHRvDg==",
+      "dependencies": [
+        "peepal-router",
+        "typescript"
+      ]
+    },
+    "elysia@1.4.29_typescript@5.9.3": {
       "integrity": "sha512-GwMRGGwSdjfPt+w3LA0fqTuYJtS8uVRJicvoar98/HrO5qdFKDc9CwjIb6Kja+v39lkY+58hr2JvdR9jQzlUuA==",
       "dependencies": [
         "@sinclair/typebox",
@@ -248,7 +256,11 @@
         "fast-decode-uri-component",
         "file-type",
         "memoirist",
-        "openapi-types"
+        "openapi-types",
+        "typescript"
+      ],
+      "optionalPeers": [
+        "typescript"
       ]
     },
     "es-define-property@1.0.0": {
@@ -355,6 +367,12 @@
     "path-to-regexp@7.1.0": {
       "integrity": "sha512-ZToe+MbUF4lBqk6dV8GKot4DKfzrxXsplOddH8zN3YK+qw9/McvP7+4ICjZvOne0jQhN4eJwHsX6tT0Ns19fvw=="
     },
+    "peepal-router@0.5.1_typescript@5.9.3": {
+      "integrity": "sha512-Iusjz6ClNsOi4zH7orKA2v/k4UML1AA92x0OQYzut9xqgUyA+QLnbaviPojUw8w2lHkf7nreOkznrk/cV7hb+w==",
+      "dependencies": [
+        "typescript"
+      ]
+    },
     "qs@6.13.0": {
       "integrity": "sha512-+38qI9SOr8tfZ4QmJNplMUxqjbe7LKvvZgWdExBOmd+egZTtjLB67Gu0HRX3u/XOq7UU2Nx6nsjvS16Z9uwfpg==",
       "dependencies": [
@@ -410,6 +428,10 @@
         "@tokenizer/token",
         "ieee754"
       ]
+    },
+    "typescript@5.9.3": {
+      "integrity": "sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw==",
+      "bin": true
     },
     "uint8array-extras@1.5.0": {
       "integrity": "sha512-rvKSBiC5zqCCiDZ9kAOszZcDvdAHwwIKJG33Ykj43OKcWsnmcBRL09YTU4nOeHZ8Y2a7l1MgTd08SBe9A8Qj6A=="
@@ -983,6 +1005,7 @@
         "npm:@types/koa-bodyparser@^4.3.13",
         "npm:@types/koa-router@^7.4.9",
         "npm:@types/koa@^3.0.3",
+        "npm:diesel-core@^3.0.1",
         "npm:effect@4.0.0-beta.102",
         "npm:elysia@2.0.0-beta.4",
         "npm:express@^5.2.1",
