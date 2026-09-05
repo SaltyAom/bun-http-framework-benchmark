@@ -976,6 +976,8 @@
         "npm:@nestjs/common@^11.1.28",
         "npm:@nestjs/core@^11.1.28",
         "npm:@nestjs/platform-express@^11.1.28",
+        "npm:@nifrajs/core@3.3.0",
+        "npm:@nifrajs/node@3.3.0",
         "npm:@oakserver/oak@^14.1.0",
         "npm:@types/bun@^1.3.14",
         "npm:@types/express@^5.0.6",
