@@ -2,14 +2,21 @@ import { existsSync } from 'fs'
 import { aot } from 'elysia/plugin/aot/bun'
 
 const target = Bun.argv[2]
-if (!target) throw new Error('Usage: bun scripts/build-framework.ts <runtime/framework>')
+if (!target)
+	throw new Error('Usage: bun scripts/build-framework.ts <runtime/framework>')
 
 if (
 	target === 'node/adonis/index' &&
 	!existsSync('src/node/adonis/node_modules/@adonisjs/core')
 ) {
 	const install = Bun.spawn({
-		cmd: ['bun', 'install', '--cwd', 'src/node/adonis', '--frozen-lockfile'],
+		cmd: [
+			'bun',
+			'install',
+			'--cwd',
+			'src/node/adonis',
+			'--frozen-lockfile'
+		],
 		stdout: 'inherit',
 		stderr: 'inherit'
 	})
@@ -43,7 +50,9 @@ const result = await Bun.build({
 		'class-validator',
 		'phc-argon2',
 		'phc-bcrypt',
-		'uWebSockets.js'
+		'uWebSockets.js',
+		'zod',
+		'@asteasolutions/zod-to-openapi'
 	],
 	plugins: isElysiaAot
 		? [aot(entry, { target: runtime as 'bun' | 'node' })]
