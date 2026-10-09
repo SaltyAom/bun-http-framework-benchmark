@@ -984,7 +984,7 @@
         "npm:@types/koa-router@^7.4.9",
         "npm:@types/koa@^3.0.3",
         "npm:effect@4.0.2",
-        "npm:elysia@^2.0.0-beta.27",
+        "npm:elysia@2.0.0-beta.29",
         "npm:express@^5.3.0",
         "npm:fastify@^5.12.5",
         "npm:h3@^2.0.2",
