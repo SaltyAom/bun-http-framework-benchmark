@@ -1,6 +1,7 @@
 import {
 	existsSync,
 	mkdirSync,
+	readFileSync,
 	readdirSync,
 	rmSync,
 	statSync,
@@ -17,8 +18,7 @@ const blacklists = [
 	'bun/bagel',
 	'bun/bunrest',
 	'bun/colston',
-	'deno/byte',
-	'bun/fastify'
+	'deno/byte'
 ] as const
 
 const duration = 10
@@ -128,9 +128,13 @@ export const discoverFrameworks = () =>
 export const parseFrameworks = (args: string[], available: string[]) => {
 	const requested = args.filter((arg) => arg !== '--interactive')
 	if (args.includes('--interactive') && requested.length)
-		throw new Error('--interactive cannot be combined with framework arguments')
+		throw new Error(
+			'--interactive cannot be combined with framework arguments'
+		)
 
-	const unknown = requested.filter((framework) => !available.includes(framework))
+	const unknown = requested.filter(
+		(framework) => !available.includes(framework)
+	)
 	if (unknown.length)
 		throw new Error(`Unknown framework: ${unknown.join(', ')}`)
 
@@ -237,10 +241,7 @@ export const startServer = (target: string, quiet = false) => {
 	const source = existsSync(`src/${runtime}/${framework}.ts`)
 		? `src/${runtime}/${framework}.ts`
 		: `src/${runtime}/${framework}.js`
-	const file =
-		runtime === 'deno'
-			? source
-			: builtFile(target)
+	const file = runtime === 'deno' ? source : builtFile(target)
 	const startedAt = performance.now()
 	const server = Bun.spawn({
 		cmd: [...runtimeCommand[runtime], file],
@@ -335,7 +336,8 @@ export const validateServer = async (index: Response) => {
 		throw new Error('Body: Content-Type not match')
 
 	const video = await fetch(`${baseUrl}/video`, { headers: videoHeaders })
-	if (video.status !== 200) throw new Error(`Video: Expected 200, got ${video.status}`)
+	if (video.status !== 200)
+		throw new Error(`Video: Expected 200, got ${video.status}`)
 
 	if (!video.headers.get('Content-Type')?.includes('video/mp4'))
 		throw new Error('Video: Content-Type not match')
@@ -460,6 +462,21 @@ const formatMemoryPair = (before: number | null, after: number | null) =>
 		? 'n/a'
 		: `${(before / 1024 / 1024).toFixed(1)} / ${(after / 1024 / 1024).toFixed(1)} MB`
 
+export const renderReadme = (
+	template: string,
+	values: { results: string; uname: string }
+) => {
+	for (const name of ['results', 'uname'] as const) {
+		const token = `{{${name}}}`
+		if (template.split(token).length !== 2)
+			throw new Error(`README.template.md must contain exactly one ${token}`)
+	}
+
+	return template.replace(/\{\{(results|uname)\}\}/g, (_, name: string) =>
+		name === 'results' ? values.results : values.uname
+	)
+}
+
 export const renderResults = (results: BenchmarkResult[]) => {
 	const headers = [
 		'Framework',
@@ -522,12 +539,20 @@ const main = async () => {
 				frameworks: requested.length
 					? requested
 					: whitelists.length
-					? whitelists.filter((framework) =>
-							discovered.includes(framework)
-						)
-					: discovered,
+						? whitelists.filter((framework) =>
+								discovered.includes(framework)
+							)
+						: discovered,
 				rps: 0
 			}
+	const template = readFileSync('README.template.md', 'utf8')
+	renderReadme(template, { results: '', uname: '' })
+	const system = Bun.spawnSync(['uname', '-a'])
+	const uname = system.stdout.toString().trim()
+	if (system.exitCode !== 0 || !uname)
+		throw new Error(
+			`uname -a failed: ${system.stderr.toString().trim() || 'no system information returned'}`
+		)
 	await ensurePortFree()
 
 	console.log(`\n${options.frameworks.length} frameworks`)
@@ -551,6 +576,12 @@ const main = async () => {
 
 	const markdown = renderResults(results)
 	writeFileSync('results/results.md', markdown)
+	if (results.length)
+		writeFileSync(
+			'README.md',
+			renderReadme(template, { results: markdown, uname })
+		)
+	else console.warn('No benchmark results. README.md was preserved.')
 	console.log(`\n${markdown}`)
 }
 
