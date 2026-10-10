@@ -114,28 +114,6 @@ $ uname -a
 
 ## Results
 
-To view the results as bouncing balls, serve this repository from its root:
-
-```sh
-python3 -m http.server 8765 --bind 127.0.0.1
-```
-
-Open [the visual comparison](http://127.0.0.1:8765/visual/). It reads
-`results/results.md` on each page load. Choose a benchmark and a runtime preset,
-or exclude individual frameworks with the checkboxes. Adjust speed from 0.25×
-to 64×, pause the motion, or restart every ball at the left edge. Ball speed stays
-proportional to throughput across selections. Reduced motion starts paused.
-The Node HTTP preset excludes `uws`, `hyper-express`, and `ultimate-express`.
-Benchmark, speed, selection, and pause options survive refresh in this browser
-for the same origin. Saved custom selections keep each runtime separate.
-The vertical memory chart below the balls follows the same framework selection.
-Choose Both, Before, or After with Show. This choice also survives refresh.
-Sort it by Before, After (the default), or Name. Before and After put the lowest
-memory usage first. The memory sort also survives refresh and leaves ball order unchanged.
-Its paired bars show server RSS after startup validation and after all benchmark
-workloads, with a fixed scale across selections. These samples describe the full
-run and do not change with the chosen route. Scroll horizontally to see more frameworks.
-
 These results are measured in req/s:
 
 {{results}}

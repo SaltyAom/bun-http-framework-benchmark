@@ -107,11 +107,6 @@ Their shared path list lives in `src/extra-routes.mjs` and every handler returns
 
 ## Test machine specification
 
-- Intel Core i7-13700K, DDR5 32GB 5600MHz
-- Bun 1.4.2
-- Node 26.1.0
-- Deno 2.9.4
-
 ```
 $ uname -a
 Linux seia 7.0.11-1-cachyos #1 SMP PREEMPT_DYNAMIC Wed, 03 Jun 2026 22:05:15 +0000 x86_64 GNU/Linux
@@ -119,59 +114,38 @@ Linux seia 7.0.11-1-cachyos #1 SMP PREEMPT_DYNAMIC Wed, 03 Jun 2026 22:05:15 +00
 
 ## Results
 
-To view the results as bouncing balls, serve this repository from its root:
-
-```sh
-python3 -m http.server 8765 --bind 127.0.0.1
-```
-
-Open [the visual comparison](http://127.0.0.1:8765/visual/). It reads
-`results/results.md` on each page load. Choose a benchmark and a runtime preset,
-or exclude individual frameworks with the checkboxes. Adjust speed from 0.25×
-to 64×, pause the motion, or restart every ball at the left edge. Ball speed stays
-proportional to throughput across selections. Reduced motion starts paused.
-The Node HTTP preset excludes `uws`, `hyper-express`, and `ultimate-express`.
-Benchmark, speed, selection, and pause options survive refresh in this browser
-for the same origin. Saved custom selections keep each runtime separate.
-The vertical memory chart below the balls follows the same framework selection.
-Choose Both, Before, or After with Show. This choice also survives refresh.
-Sort it by Before, After (the default), or Name. Before and After put the lowest
-memory usage first. The memory sort also survives refresh and leaves ball order unchanged.
-Its paired bars show server RSS after startup validation and after all benchmark
-workloads, with a fixed scale across selections. These samples describe the full
-run and do not change with the chosen route. Scroll horizontally to see more frameworks.
-
 These results are measured in req/s:
 
 | Framework         | Runtime | Average     | Ping       | Query      | Body       | Video    | Bundle Size | Startup  | Memory Before/After |
 | ----------------- | ------- | ----------: | ---------: | ---------: | ---------: | -------: | ----------: | -------: | ------------------: |
-| uws               | node    | 267,539.538 | 427,506.83 | 411,801.95 | 230,413.43 |   435.94 |      2.3 KB |  20.1 ms |     88.1 / 157.5 MB |
-| elysia-aot        | bun     |  214,292.24 | 406,697.05 | 234,341.51 | 214,486.37 | 1,644.03 |    136.3 KB |  14.9 ms |      41.5 / 47.7 MB |
-| elysia            | bun     | 211,479.165 | 401,797.83 | 228,541.11 | 213,956.63 | 1,621.09 |    186.8 KB |  19.4 ms |      42.2 / 53.5 MB |
-| h3                | bun     |  175,002.33 | 273,486.49 | 220,878.32 | 204,062.24 | 1,582.27 |     31.1 KB |   8.3 ms |      38.6 / 55.0 MB |
-| bun               | bun     | 172,688.678 | 228,215.23 | 250,148.42 |    210,719 | 1,672.06 |      2.3 KB |   4.0 ms |      26.8 / 38.6 MB |
-| hono              | bun     | 170,921.795 | 275,035.51 | 223,641.03 |  183,408.6 | 1,602.04 |     19.7 KB |   6.9 ms |      38.6 / 55.0 MB |
-| ultimate-express  | node    | 170,538.755 |  426,490.8 | 119,311.01 | 135,912.21 |      441 |    583.5 KB |  52.1 ms |    121.3 / 255.1 MB |
-| hono              | deno    | 169,209.773 | 273,599.16 |  189,177.8 | 213,638.82 |   423.31 |         n/a |  50.7 ms |     66.6 / 101.0 MB |
-| deno              | deno    | 169,107.425 |  237,435.7 |  204,791.3 | 233,778.87 |   423.83 |         n/a |  13.6 ms |      58.8 / 87.9 MB |
-| bun-web-standard  | bun     | 161,900.825 | 229,175.62 | 199,031.23 | 217,750.76 | 1,645.69 |      1.7 KB |   4.2 ms |      32.3 / 45.9 MB |
-| deno-web-standard | deno    | 161,369.318 | 230,415.46 | 179,503.32 | 235,131.45 |   427.04 |         n/a |  13.9 ms |      58.8 / 88.8 MB |
-| hyper-express     | node    | 141,213.188 |  227,541.2 | 188,591.08 | 148,339.19 |   381.28 |    247.2 KB |  37.9 ms |     94.9 / 218.3 MB |
-| h3                | deno    | 131,389.895 | 201,342.34 | 155,474.32 | 168,317.99 |   424.93 |         n/a |  31.1 ms |     73.9 / 160.7 MB |
-| effect            | bun     | 123,653.338 | 204,687.35 | 164,655.54 |  123,638.7 | 1,631.76 |    221.8 KB |  43.4 ms |      52.9 / 81.4 MB |
-| fastify           | node    | 102,489.217 | 152,361.85 | 143,803.26 | 113,434.09 |   357.67 |    556.8 KB |  92.7 ms |    110.6 / 226.5 MB |
-| h3                | node    |  99,251.775 | 150,208.82 | 131,830.13 | 114,612.41 |   355.74 |     50.4 KB |  58.1 ms |    101.5 / 202.7 MB |
-| elysia            | node    |  95,765.988 | 147,038.23 | 123,805.77 | 111,997.91 |   222.04 |    212.2 KB |  53.0 ms |    109.4 / 178.1 MB |
-| elysia-aot        | node    |  94,701.065 | 144,243.12 | 123,152.37 | 111,177.84 |   230.93 |    153.4 KB |  64.3 ms |    109.3 / 197.0 MB |
-| hono              | node    |  93,065.377 | 147,588.11 | 118,830.48 | 105,616.09 |   226.83 |     52.8 KB |  52.8 ms |    114.5 / 226.0 MB |
-| effect            | node    |  88,971.698 | 144,773.42 | 121,939.74 |  88,811.15 |   362.48 |    281.7 KB |  68.4 ms |    109.9 / 190.5 MB |
-| express           | bun     |  63,314.903 |     95,290 |  88,116.25 |  69,548.58 |   304.78 |    836.2 KB |  42.5 ms |     69.0 / 183.9 MB |
-| koa               | node    |   44,275.58 |  66,311.56 |  61,621.43 |  48,835.77 |   333.56 |    729.6 KB |  53.9 ms |    111.6 / 217.4 MB |
-| express           | node    |  43,925.568 |  66,430.54 |  59,207.56 |  49,716.05 |   348.12 |    616.3 KB |  48.7 ms |    104.3 / 238.4 MB |
-| adonis            | node    |   37,953.88 |  51,327.47 |  47,327.07 |  52,834.61 |   326.37 |      1.2 MB | 160.7 ms |    122.6 / 216.8 MB |
-| nest              | node    |  33,531.098 |  50,529.64 |  46,320.41 |  36,935.41 |   338.93 |      1.2 MB |  89.9 ms |    135.4 / 221.7 MB |
-| oak               | deno    |   24,275.09 |  35,525.34 |  34,640.89 |  26,687.44 |   246.69 |         n/a |  53.3 ms |    103.1 / 199.8 MB |
-| acorn             | deno    |  10,310.233 |  13,344.05 |  13,731.82 |  13,891.18 |   273.88 |         n/a |  77.1 ms |    106.3 / 230.8 MB |
+| uws               | node    | 267,311.582 | 427,899.11 | 409,892.79 | 231,035.02 |   419.41 |      2.3 KB |  20.0 ms |     70.8 / 139.9 MB |
+| elysia-aot        | bun     |  214,518.67 | 409,673.06 | 234,387.61 | 212,373.44 | 1,640.57 |    136.3 KB |  16.0 ms |      36.3 / 48.7 MB |
+| elysia            | bun     | 212,598.372 |  408,136.5 |  226,959.6 |  213,631.8 | 1,665.59 |    186.8 KB |  19.6 ms |      37.3 / 48.4 MB |
+| h3                | bun     | 172,978.673 | 268,455.21 | 219,564.22 | 202,299.58 | 1,595.68 |     31.1 KB |   7.3 ms |      33.6 / 50.0 MB |
+| bun               | bun     | 172,879.358 |  232,912.2 | 245,937.47 | 210,980.87 | 1,686.89 |      2.3 KB |   4.0 ms |      26.7 / 38.4 MB |
+| hono              | bun     |  169,752.09 |  271,679.6 | 221,518.09 | 184,179.03 | 1,631.64 |     19.7 KB |   7.4 ms |      33.5 / 44.3 MB |
+| ultimate-express  | node    | 168,817.505 |  424,303.7 | 118,309.22 | 132,197.69 |   459.41 |    583.5 KB |  54.1 ms |    107.0 / 240.8 MB |
+| hono              | deno    | 168,727.828 | 273,089.68 | 192,674.87 | 208,728.09 |   418.67 |         n/a |  41.6 ms |      66.2 / 98.6 MB |
+| deno              | deno    | 167,972.283 | 237,237.03 | 202,167.34 | 232,064.26 |    420.5 |         n/a |  13.2 ms |      58.5 / 89.2 MB |
+| bun-web-standard  | bun     | 162,686.943 | 231,235.21 |  199,156.8 | 218,736.32 | 1,619.44 |      1.7 KB |   3.8 ms |      27.1 / 41.7 MB |
+| deno-web-standard | deno    | 161,145.583 | 232,952.03 | 176,955.08 | 234,253.33 |   421.89 |         n/a |  14.4 ms |      58.8 / 86.4 MB |
+| hyper-express     | node    | 138,848.412 | 226,731.93 | 181,959.05 | 146,334.69 |   367.98 |    247.2 KB |  39.2 ms |     77.9 / 207.3 MB |
+| h3                | deno    | 129,564.015 | 200,966.71 | 149,816.45 | 167,046.48 |   426.42 |         n/a |  29.3 ms |     73.8 / 163.0 MB |
+| effect            | bun     | 123,353.122 | 201,211.96 | 164,772.49 | 125,838.59 | 1,589.45 |    221.8 KB |  32.5 ms |      48.8 / 73.6 MB |
+| fastify           | bun     | 122,655.538 | 187,286.97 | 171,025.02 | 132,017.52 |   292.64 |    556.8 KB |  76.8 ms |     74.9 / 193.8 MB |
+| fastify           | node    | 103,292.998 | 155,273.66 | 143,072.85 | 114,475.25 |   350.23 |    556.8 KB |  69.7 ms |     95.7 / 205.0 MB |
+| h3                | node    |  98,758.288 | 149,801.48 | 133,825.29 | 111,055.35 |   351.03 |     50.4 KB |  45.5 ms |     85.3 / 190.1 MB |
+| hono              | node    |  93,107.478 | 146,046.63 | 121,489.54 | 104,659.13 |   234.61 |     52.8 KB |  48.9 ms |     97.0 / 220.6 MB |
+| elysia-aot        | node    |  92,923.678 | 144,966.13 | 120,779.71 | 105,726.96 |   221.91 |    153.4 KB |  63.0 ms |     91.5 / 182.8 MB |
+| elysia            | node    |  92,489.338 | 143,690.09 | 119,227.17 | 106,817.31 |   222.78 |    212.2 KB |  58.6 ms |     93.0 / 181.3 MB |
+| effect            | node    |   88,635.68 | 144,825.52 | 119,671.74 |  89,680.71 |   364.75 |    281.7 KB |  53.5 ms |     93.0 / 177.6 MB |
+| express           | bun     |  63,217.945 |  95,984.74 |  89,301.15 |  67,289.15 |   296.74 |    836.2 KB |  42.5 ms |     64.9 / 152.4 MB |
+| koa               | node    |  44,591.625 |  68,962.39 |  62,198.63 |  46,871.56 |   333.92 |    729.6 KB |  51.7 ms |     96.1 / 192.2 MB |
+| express           | node    |  42,293.953 |  64,589.19 |  57,320.85 |  46,922.84 |   342.93 |    616.3 KB |  44.2 ms |     87.2 / 208.8 MB |
+| adonis            | node    |  37,642.445 |  52,057.13 |   47,217.1 |  50,969.25 |    326.3 |      1.2 MB | 351.8 ms |    124.4 / 167.8 MB |
+| nest              | node    |   31,939.89 |  49,322.92 |  43,493.67 |  34,609.05 |   333.92 |      1.2 MB | 116.5 ms |    118.7 / 224.3 MB |
+| oak               | deno    |  24,449.013 |   35,570.6 |  35,004.12 |  26,977.52 |   243.81 |         n/a |  60.2 ms |    103.3 / 195.1 MB |
+| acorn             | deno    |   10,078.76 |  13,000.19 |  13,536.68 |  13,512.71 |   265.46 |         n/a |  77.2 ms |    106.4 / 237.5 MB |
 
 #### Note
 1. uws, hyperexpress and ultimate-express bundle size is not accurate because uwebsocket is a native binary that can't be compiled to single bundle, and bundle size is vary based on operating system and CPU architecture
