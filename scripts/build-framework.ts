@@ -1,26 +1,14 @@
 import { existsSync } from 'fs'
 import { aot } from 'elysia/plugin/aot/bun'
+import { esmTargets } from '../bench'
 
 const target = Bun.argv[2]
 if (!target) throw new Error('Usage: bun scripts/build-framework.ts <runtime/framework>')
 
-if (
-	target === 'node/adonis/index' &&
-	!existsSync('src/node/adonis/node_modules/@adonisjs/core')
-) {
-	const install = Bun.spawn({
-		cmd: ['bun', 'install', '--cwd', 'src/node/adonis', '--frozen-lockfile'],
-		stdout: 'inherit',
-		stderr: 'inherit'
-	})
-	if ((await install.exited) !== 0)
-		throw new Error('Adonis dependencies failed to install')
-}
-
 let [runtime, framework, index] = target.split('/')
 if (runtime !== 'bun' && runtime !== 'node')
 	throw new Error(`Bun.build does not support the ${runtime} runtime`)
-const isEffectV4 = target === 'node/effect'
+const isEsm = esmTargets.includes(target)
 const isElysiaAot = framework === 'elysia-aot'
 if (isElysiaAot) framework = 'elysia'
 else if (index) framework += '/index'
@@ -31,9 +19,9 @@ const entry = existsSync(`src/${runtime}/${framework}.ts`)
 const result = await Bun.build({
 	entrypoints: [entry],
 	outdir: `dist/${target}`,
-	naming: isEffectV4 ? 'index.mjs' : 'index.js',
+	naming: isEsm ? 'index.mjs' : 'index.js',
 	target: runtime,
-	format: runtime === 'node' && !isEffectV4 ? 'cjs' : 'esm',
+	format: runtime === 'node' && !isEsm ? 'cjs' : 'esm',
 	minify: true,
 	external: [
 		'@nestjs/microservices',
@@ -43,7 +31,9 @@ const result = await Bun.build({
 		'class-validator',
 		'phc-argon2',
 		'phc-bcrypt',
-		'uWebSockets.js'
+		'pino-pretty',
+		'uWebSockets.js',
+		'youch'
 	],
 	plugins: isElysiaAot
 		? [aot(entry, { target: runtime as 'bun' | 'node' })]
