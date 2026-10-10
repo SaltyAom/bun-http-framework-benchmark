@@ -223,8 +223,11 @@ export const ensurePortFree = async () => {
 	}
 }
 
+// Node targets are bundled as CJS unless they need ESM (e.g. top-level await)
+export const esmTargets = ['node/effect', 'node/adonis']
+
 const builtFile = (target: string) =>
-	`dist/${target}/index.${target === 'node/effect' ? 'mjs' : 'js'}`
+	`dist/${target}/index.${esmTargets.includes(target) ? 'mjs' : 'js'}`
 
 export const startServer = (target: string, quiet = false) => {
 	let [runtime, framework, index] = target.split('/') as [
@@ -246,16 +249,7 @@ export const startServer = (target: string, quiet = false) => {
 		cmd: [...runtimeCommand[runtime], file],
 		env: {
 			...Bun.env,
-			NODE_ENV: 'production',
-			...(target === 'node/adonis/index'
-				? {
-						HOST: '127.0.0.1',
-						PORT: '3000',
-						APP_KEY: 'benchmark-key-0123456789abcdef',
-						APP_NAME: 'benchmark',
-						DRIVE_DISK: 'local'
-					}
-				: {})
+			NODE_ENV: 'production'
 		},
 		stdout: quiet ? 'ignore' : 'inherit',
 		stderr: 'inherit'

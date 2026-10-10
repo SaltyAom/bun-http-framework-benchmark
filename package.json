@@ -7,6 +7,12 @@
     "verify": "bun scripts/verify-frameworks.ts"
   },
   "dependencies": {
+    "@adonisjs/application": "^9.1.0",
+    "@adonisjs/bodyparser": "^11.0.4",
+    "@adonisjs/encryption": "^6.0.2",
+    "@adonisjs/events": "^10.2.0",
+    "@adonisjs/http-server": "^9.3.1",
+    "@adonisjs/logger": "^7.1.1",
     "@effect/platform-bun": "4.0.2",
     "@effect/platform-node": "4.0.2",
     "@elysia/node": "^2.0.0-beta.2",
