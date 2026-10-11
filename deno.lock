@@ -29,7 +29,7 @@
     "jsr:@valibot/valibot@0.36": "0.36.0",
     "npm:buffer@6": "6.0.3",
     "npm:elysia@*": "1.4.29_@sinclair+typebox@0.34.52_exact-mirror@0.2.7__@sinclair+typebox@0.34.52_file-type@22.0.1_openapi-types@12.1.3",
-    "npm:elysia@2.0.0-exp.60": "2.0.0-exp.60",
+    "npm:h3@^2.0.1-rc.26": "2.0.1-rc.26",
     "npm:hyperid@^3.2.0": "3.2.0",
     "npm:path-to-regexp@6.2.1": "6.2.1",
     "npm:path-to-regexp@^7.1.0": "7.1.0",
@@ -239,9 +239,6 @@
         "gopd"
       ]
     },
-    "deuri@3.0.0": {
-      "integrity": "sha512-3rbQr245VesQGHyzUlWmpv3WihImbLT5NBe/mrgsgEvc7aWTYEpDhER8Z3RsdiDSYw1kxQo0kU9fpociUu77/w=="
-    },
     "elysia@1.4.29_@sinclair+typebox@0.34.52_exact-mirror@0.2.7__@sinclair+typebox@0.34.52_file-type@22.0.1_openapi-types@12.1.3": {
       "integrity": "sha512-GwMRGGwSdjfPt+w3LA0fqTuYJtS8uVRJicvoar98/HrO5qdFKDc9CwjIb6Kja+v39lkY+58hr2JvdR9jQzlUuA==",
       "dependencies": [
@@ -250,15 +247,8 @@
         "exact-mirror",
         "fast-decode-uri-component",
         "file-type",
-        "memoirist@0.4.0",
+        "memoirist",
         "openapi-types"
-      ]
-    },
-    "elysia@2.0.0-exp.60": {
-      "integrity": "sha512-ZLhaZcuUf7rXm8Uhx6RhIL030oR4sXuvddh4RjzyvcXLI+SXwv9FxL4G2DGZh0TRl3jemTZ2YiTAJqD4DfFI0Q==",
-      "dependencies": [
-        "deuri",
-        "memoirist@1.2.1"
       ]
     },
     "es-define-property@1.0.0": {
@@ -310,6 +300,14 @@
         "get-intrinsic"
       ]
     },
+    "h3@2.0.1-rc.26": {
+      "integrity": "sha512-GDxlvDsKxgjRvG5UBRJYyGJTMWLV30CJ4cV+e7QCTgftDHihrvio1fVPbNembhEr6J4WNm8IWy3fookgyTweLw==",
+      "dependencies": [
+        "rou3",
+        "srvx"
+      ],
+      "bin": true
+    },
     "has-property-descriptors@1.0.2": {
       "integrity": "sha512-55JNKuIW+vq4Ke1BjOTjM2YctQIvCT7GFzHwmfZPGo5wnrgkid0YQtnAleFSqumZm4az3n2BS+erby5ipJdgrg==",
       "dependencies": [
@@ -342,9 +340,6 @@
     "memoirist@0.4.0": {
       "integrity": "sha512-zxTgA0mSYELa66DimuNQDvyLq36AwDlTuVRbnQtB+VuTcKWm5Qc4z3WkSpgsFWHNhexqkIooqpv4hdcqrX5Nmg=="
     },
-    "memoirist@1.2.1": {
-      "integrity": "sha512-UkGIL0FvDTLVusekWWASp/BGtrhDMKjQ0WGafZA98LziMl6UDDjFOnvvpYvTYgvK2hOuxQOTd2vbJKtHv0o6Tg=="
-    },
     "ms@2.1.3": {
       "integrity": "sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA=="
     },
@@ -365,6 +360,9 @@
       "dependencies": [
         "side-channel"
       ]
+    },
+    "rou3@0.9.1": {
+      "integrity": "sha512-z/sSmzvtwMDDnxsPVhfWMuG6F6mbmhFDXoVqLmMfbpDD9qfV3GDmSQpf0+W296/ZDIpW2wcMmBfpVFzcnOi/nA=="
     },
     "safe-buffer@5.2.1": {
       "integrity": "sha512-rp3So07KcdmmKbGvgaNxQSJr7bGVSVk5S9Eq1F+ppbRo70+YeaDxkw5Dd8NPN+GD6bjnYm2VuPuCXmpuYvmCXQ=="
@@ -388,6 +386,10 @@
         "get-intrinsic",
         "object-inspect"
       ]
+    },
+    "srvx@0.12.5": {
+      "integrity": "sha512-IuvtDNQg5EIwv3c6dleyau7u8hCyGQ7D6+V/QM799Aud07z0wCUcurKLTRfyG33C8oUY+UWcVBFkfHMcbtmRLA==",
+      "bin": true
     },
     "string_decoder@1.3.0": {
       "integrity": "sha512-hkRX8U1WjJFd8LsDJ2yQ/wWWxaopEsABU1XfkM8A+j0+85JAGppt16cr1Whg6KIbb4okU6Mql6BOj+uup/wKeA==",
@@ -965,28 +967,28 @@
     ],
     "packageJson": {
       "dependencies": [
-        "npm:@effect/platform-bun@4.0.0-beta.102",
-        "npm:@effect/platform-node@4.0.0-beta.102",
-        "npm:@elysia/node@2.0.0-exp.3",
+        "npm:@effect/platform-bun@4.0.2",
+        "npm:@effect/platform-node@4.0.2",
+        "npm:@elysia/node@^2.0.0-beta.2",
         "npm:@hapi/hapi@^21.4.10",
-        "npm:@hono/node-server@^2.0.12",
+        "npm:@hono/node-server@^2.1.4",
         "npm:@nbit/bun@~0.13.4",
-        "npm:@nestjs/common@^11.1.28",
-        "npm:@nestjs/core@^11.1.28",
-        "npm:@nestjs/platform-express@^11.1.28",
+        "npm:@nestjs/common@^11.2.7",
+        "npm:@nestjs/core@^11.2.7",
+        "npm:@nestjs/platform-express@^11.2.7",
         "npm:@oakserver/oak@^14.1.0",
-        "npm:@types/bun@^1.3.14",
+        "npm:@types/bun@^1.4.2",
         "npm:@types/express@^5.0.6",
         "npm:@types/kill-port@^2.0.3",
         "npm:@types/koa-bodyparser@^4.3.13",
         "npm:@types/koa-router@^7.4.9",
         "npm:@types/koa@^3.0.3",
-        "npm:effect@4.0.0-beta.102",
-        "npm:elysia@2.0.0-exp.60",
-        "npm:express@^5.2.1",
-        "npm:fastify@^5.10.0",
-        "npm:h3@^2.0.1-rc.26",
-        "npm:hono@^4.12.32",
+        "npm:effect@4.0.2",
+        "npm:elysia@2.0.0-beta.29",
+        "npm:express@^5.3.0",
+        "npm:fastify@^5.12.5",
+        "npm:h3@^2.0.2",
+        "npm:hono@^4.13.13",
         "npm:hyper-express@^7.0.2",
         "npm:kill-port@^2.0.1",
         "npm:koa-bodyparser@^4.4.1",
@@ -994,9 +996,9 @@
         "npm:koa@^3.2.1",
         "npm:reflect-metadata@~0.2.2",
         "npm:rxjs@^7.8.2",
-        "npm:typebox@^1.3.8",
+        "npm:typebox@^1.3.36",
         "npm:typescript@^7.0.2",
-        "npm:ultimate-express@^2.2.0"
+        "npm:ultimate-express@^2.2.1"
       ]
     }
   }

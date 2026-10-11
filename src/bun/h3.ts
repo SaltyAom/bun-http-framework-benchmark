@@ -1,61 +1,32 @@
-import {
-    toWebHandler,
-	createApp,
-	createRouter,
-	eventHandler,
-	toNodeListener,
-	getQuery,
-	setResponseHeader,
-	readBody,
-	sendStream
-} from 'h3'
+import { H3 } from 'h3'
 import { extraRoutes } from '../extra-routes.mjs'
 
-const app = createApp()
-const router = createRouter()
+const app = new H3()
 
+const routeHandler = () => 'ok'
 for (const route of extraRoutes) {
-	router.get(route, eventHandler(() => 'ok'))
-	router.post(`${route}/submit`, eventHandler(() => 'ok'))
+	app.get(route, routeHandler)
+	app.post(`${route}/submit`, routeHandler)
 }
 
-router.get(
-	'/',
-	eventHandler((event) => {
-		setResponseHeader(event, 'content-type', 'text/plain')
+app.get('/', () => 'Hi')
 
-		return 'Hi'
-	})
-)
-
-router.get(
+app.get(
 	'/video',
-	eventHandler((event) => {
-		setResponseHeader(event, 'content-type', 'video/mp4')
-		return sendStream(event, Bun.file('public/kyuukurarin.mp4').stream())
+	((event) => {
+		event.res.headers.set('content-type', 'video/mp4')
+		return Bun.file('public/kyuukurarin.mp4').stream()
 	})
 )
 
-router.get(
+app.get(
 	'/id/:id',
-	eventHandler((event) => {
-		const query = getQuery(event)
+	((event) => {
+		const name = event.url.searchParams.get('name') 
+		event.res.headers.set('x-powered-by', 'benchmark')
+		return `${event.context.params?.id} ${name}`
+	}))
 
-		setResponseHeader(event, 'content-type', 'text/plain')
-		setResponseHeader(event, 'x-powered-by', 'benchmark')
+app.post('/json', ((event) => event.req.json()))
 
-		return `${event.context.params?.id} ${query.name}`
-	})
-)
-
-router.post(
-	'/json',
-	eventHandler((event) => readBody(event))
-)
-
-app.use(router)
-
-Bun.serve({
-    port: 3000,
-    fetch: toWebHandler(app) as any
-})
+Bun.serve({ port: 3000, fetch: app.fetch })
