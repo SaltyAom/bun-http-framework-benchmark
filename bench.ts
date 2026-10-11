@@ -13,7 +13,6 @@ import { emitKeypressEvents } from 'node:readline'
 const whitelists: string[] = []
 
 const blacklists = [
-	'node/hapi',
 	'bun/xirelta',
 	'bun/bagel',
 	'bun/bunrest',

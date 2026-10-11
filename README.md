@@ -56,6 +56,8 @@ startup timer begins.
 Effect HTTP v4 beta is included for both Bun and Node using one shared router
 and the official adapter for each runtime.
 
+Hapi targets are included for both Bun and Node with the same route contract.
+
 Elysia AOT variants are included for both Bun and Node.
 
 Deno targets run directly because `Bun.build` has no Deno target.

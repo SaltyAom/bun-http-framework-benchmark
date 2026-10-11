@@ -2,6 +2,7 @@ import { describe, expect, it } from 'bun:test'
 import { readFileSync } from 'fs'
 import {
 	buildBenchmarkArgs,
+	discoverFrameworks,
 	parseFrameworks,
 	parseRps,
 	renderReadme,
@@ -24,6 +25,12 @@ describe('benchmark options', () => {
 		expect(buildBenchmarkArgs(['http://localhost'], 1000)).toContain('-r')
 		expect(buildBenchmarkArgs(['http://localhost'], 0)).not.toContain('-r')
 		expect(buildBenchmarkArgs(['http://localhost'], 0, 10)).toContain('10')
+	})
+
+	it('discovers Hapi on both Bun and Node', () => {
+		expect(discoverFrameworks()).toEqual(
+			expect.arrayContaining(['bun/hapi', 'node/hapi'])
+		)
 	})
 
 	it('selects framework arguments', () => {
