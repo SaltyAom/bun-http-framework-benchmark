@@ -3,7 +3,7 @@ import {
 	HttpRouter,
 	HttpServerRequest,
 	HttpServerResponse
-} from 'effect/unstable/http'
+} from 'effect/http'
 import { extraRoutes } from './extra-routes.mjs'
 
 const ok = HttpServerResponse.text('ok')

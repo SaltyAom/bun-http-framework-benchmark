@@ -1,0 +1,472 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>HTTP benchmark in motion</title>
+		<style>
+			* {
+				box-sizing: border-box;
+			}
+			body {
+				margin: 0;
+				color: #242424;
+				background: #fff;
+				font:
+					15px/1.5 ui-monospace,
+					SFMono-Regular,
+					Consolas,
+					monospace;
+			}
+			main {
+				max-width: 1280px;
+				margin: 48px auto;
+				padding: 0 24px;
+			}
+			h1 {
+				margin: 0 0 8px;
+				font-size: clamp(24px, 3vw, 36px);
+				line-height: 1.2;
+			}
+			p {
+				margin: 8px 0 24px;
+			}
+			.controls {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 16px;
+				align-items: end;
+				margin: 24px 0;
+			}
+			label {
+				display: grid;
+				gap: 4px;
+				font-size: 13px;
+			}
+			select,
+			button {
+				min-height: 42px;
+				border: 1px solid #888;
+				border-radius: 3px;
+				padding: 8px 12px;
+				background: #fff;
+				color: inherit;
+				font: inherit;
+			}
+			button {
+				cursor: pointer;
+			}
+			.speed {
+				min-width: 160px;
+			}
+			.speed input {
+				width: 100%;
+				height: 34px;
+				margin: 0;
+				accent-color: #2456bb;
+			}
+			details {
+				margin: 16px 0;
+			}
+			summary {
+				width: fit-content;
+				cursor: pointer;
+			}
+			#frameworks {
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+				gap: 8px 16px;
+				margin-top: 12px;
+			}
+			#frameworks label {
+				display: flex;
+				align-items: center;
+				gap: 8px;
+				min-height: 48px;
+			}
+			#frameworks input {
+				flex-shrink: 0;
+				width: 18px;
+				height: 18px;
+				accent-color: #2456bb;
+			}
+			:focus-visible {
+				outline: 3px solid #2456bb;
+				outline-offset: 3px;
+			}
+			#field {
+				padding: 12px;
+				border: 5px solid #484848;
+				background: #eee;
+			}
+			.row {
+				display: grid;
+				grid-template-columns: 48px 270px minmax(0, 1fr);
+				align-items: center;
+				gap: 12px;
+				min-height: 64px;
+			}
+			.name {
+				display: grid;
+				grid-template-columns: minmax(0, 1fr) auto;
+				align-items: center;
+				gap: 12px;
+				padding: 8px 12px;
+				color: #fff;
+				background: #444;
+			}
+			.logo {
+				display: grid;
+				place-items: center;
+				width: 48px;
+				height: 48px;
+				flex-shrink: 0;
+				color: #242424;
+				background: #fff;
+				font-size: 15px;
+				font-weight: 600;
+			}
+			.logo img {
+				display: block;
+				width: 48px;
+				height: 48px;
+				object-fit: contain;
+			}
+			.logo .effect-logo {
+				width: 24px;
+				height: 24px;
+			}
+			.row > .logo {
+				position: relative;
+				background: transparent;
+			}
+			.logo .runtime-badge {
+				position: absolute;
+				right: -3px;
+				bottom: -3px;
+				width: 20px;
+				height: 20px;
+				border: 1px solid #bbb;
+				border-radius: 50%;
+				background: #eee;
+				font-size: 9px;
+			}
+			.logo .runtime-badge img {
+				width: 16px;
+				height: 16px;
+			}
+			.row > .logo img[src$='/koa.png'] {
+				mix-blend-mode: multiply;
+			}
+			.framework {
+				min-width: 0;
+				overflow-wrap: anywhere;
+			}
+			.runtime {
+				display: block;
+				color: #ddd;
+				font-size: 11px;
+			}
+			.value {
+				align-self: center;
+				white-space: nowrap;
+				font-size: 12px;
+			}
+			.lane {
+				min-width: 0;
+				height: 40px;
+			}
+			.ball {
+				width: 36px;
+				height: 36px;
+				margin-top: 2px;
+				border-radius: 50%;
+				border: 2px solid #0004;
+				background: var(--color);
+			}
+			#status {
+				margin: 12px 0;
+			}
+			#memory {
+				margin-top: 40px;
+			}
+			h2 {
+				margin: 0 0 8px;
+				font-size: 24px;
+				line-height: 1.3;
+			}
+			.memory-hint {
+				margin-inline-start: auto;
+				padding: 3px 8px;
+				border: 1px solid #ccc;
+				border-radius: 3px;
+				font-size: 12px;
+			}
+			.memory-legend {
+				display: flex;
+				flex-wrap: wrap;
+				align-items: center;
+				gap: 8px 24px;
+				max-width: 100%;
+				font-size: 12px;
+			}
+			.memory-legend span {
+				display: flex;
+				align-items: center;
+				gap: 8px;
+			}
+			.memory-legend span[hidden] {
+				display: none;
+			}
+			.memory-legend i {
+				flex-shrink: 0;
+				width: 14px;
+				height: 14px;
+				background: #2456bb;
+			}
+			.memory-legend .after i {
+				background: #b65d15;
+			}
+			#memory-chart {
+				display: flex;
+				gap: 12px;
+			}
+			#memory-chart[hidden] {
+				display: none;
+			}
+			#memory-axis {
+				position: relative;
+				flex: 0 0 44px;
+				height: 260px;
+				margin-top: 56px;
+				font-size: 12px;
+			}
+			#memory-axis span {
+				position: absolute;
+				right: 0;
+				transform: translateY(50%);
+			}
+			.memory-scroll {
+				min-width: 0;
+				overflow-x: auto;
+			}
+			#memory-groups {
+				display: flex;
+				gap: 12px;
+				width: max-content;
+				min-width: 100%;
+				margin: 0;
+				padding: 56px 40px 0 12px;
+				list-style: none;
+				background: repeating-linear-gradient(
+					to top,
+					#ddd 0 1px,
+					transparent 1px var(--grid-step)
+				);
+				background-size: 100% 260px;
+				background-position: left 56px;
+				background-repeat: no-repeat;
+			}
+			.memory-group {
+				display: flex;
+				flex-direction: column;
+				width: 96px;
+				flex-shrink: 0;
+			}
+			.memory-name {
+				order: 1;
+				min-height: 80px;
+				padding-top: 12px;
+				text-align: center;
+				overflow-wrap: anywhere;
+				font-size: 12px;
+			}
+			.memory-name span {
+				display: block;
+				color: #555;
+				font-size: 11px;
+			}
+			.memory-bars {
+				display: flex;
+				align-items: end;
+				justify-content: center;
+				gap: 8px;
+				height: 260px;
+				flex-shrink: 0;
+				box-shadow: inset 0 -1px #888;
+				font-size: 12px;
+			}
+			.memory-column {
+				position: relative;
+				width: 44px;
+			}
+			.memory-value {
+				position: absolute;
+				bottom: calc(100% + 6px);
+				left: 50%;
+				transform: rotate(-45deg);
+				transform-origin: bottom left;
+				white-space: nowrap;
+				font-size: 10px;
+			}
+			.memory-bar {
+				display: block;
+				width: 16px;
+				height: 100%;
+				margin: 0 auto;
+				background: #2456bb;
+			}
+			.after .memory-bar {
+				background: #b65d15;
+			}
+			.visually-hidden {
+				position: absolute;
+				width: 1px;
+				height: 1px;
+				overflow: hidden;
+				clip-path: inset(50%);
+				white-space: nowrap;
+			}
+			footer {
+				margin-top: 20px;
+				font-size: 12px;
+			}
+			a {
+				color: #2456bb;
+			}
+			@media (max-width: 700px) {
+				main {
+					margin: 24px auto;
+					padding: 0 12px;
+				}
+				#field {
+					padding: 8px;
+					border-width: 3px;
+				}
+				.row {
+					grid-template-columns: 48px 114px minmax(0, 1fr);
+					gap: 8px;
+					min-height: 70px;
+				}
+				.name {
+					grid-template-columns: minmax(0, 1fr);
+					row-gap: 2px;
+					padding: 8px;
+					font-size: 12px;
+				}
+				.value {
+					grid-column: 1 / -1;
+					font-size: 11px;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<main>
+			<h1>HTTP benchmark in motion</h1>
+			<p>
+				Faster throughput, faster ball. Every ball travels the same
+				distance.
+			</p>
+			<div class="controls">
+				<label
+					>Benchmark<select id="metric" disabled>
+						<option>Average</option>
+						<option selected>Ping</option>
+						<option>Query</option>
+						<option>Body</option>
+						<option>Video</option>
+					</select></label
+				>
+				<label
+					>Preset<select id="preset" disabled>
+						<option value="all">All frameworks</option>
+					</select></label
+				>
+				<label class="speed" for="speed"
+					><span
+						>Speed
+						<output id="speed-value" for="speed">1×</output></span
+					><input
+						id="speed"
+						type="range"
+						min="0.25"
+						max="64"
+						step="0.25"
+						value="1"
+						disabled
+				/></label>
+				<button id="pause" type="button" disabled>Pause</button>
+				<button id="restart" type="button" disabled>Restart</button>
+			</div>
+			<details>
+				<summary id="selection">Choose frameworks</summary>
+				<div id="frameworks"></div>
+			</details>
+			<div id="status" role="status">Loading results...</div>
+			<div id="field" aria-label="Throughput comparison"></div>
+			<section id="memory" hidden>
+				<h2 id="memory-heading">Memory before and after</h2>
+				<p id="memory-description">
+					Server RSS in MB before and after the full benchmark run.
+					The scale stays fixed across selections.
+				</p>
+				<div class="controls">
+					<label
+						>Show<select id="memory-view" disabled>
+							<option value="both">Both</option>
+							<option value="before">Before</option>
+							<option value="after">After</option>
+						</select></label
+					>
+					<label
+						>Memory sort<select id="memory-sort" disabled>
+							<option value="before">Before</option>
+							<option value="after" selected>After</option>
+							<option value="name">Name</option>
+						</select></label
+					>
+					<span>Before and After sort from lowest to highest.</span>
+				</div>
+				<div class="memory-legend">
+					<span id="memory-before-legend"
+						><i aria-hidden="true"></i>Before · after startup
+						validation</span
+					>
+					<span id="memory-after-legend" class="after"
+						><i aria-hidden="true"></i>After · after all
+						benchmarks</span
+					>
+					<span class="memory-hint">Lower is better</span>
+				</div>
+				<div id="memory-chart">
+					<div id="memory-axis" aria-hidden="true"></div>
+					<div
+						class="memory-scroll"
+						tabindex="0"
+						role="region"
+						aria-labelledby="memory-heading"
+						aria-describedby="memory-description"
+					>
+						<ul id="memory-groups" role="list"></ul>
+					</div>
+				</div>
+				<p id="memory-empty" hidden>
+					No frameworks selected. Choose frameworks or a runtime
+					preset to show memory usage.
+				</p>
+			</section>
+			<footer>
+				Source <a href="../results/results.md">results/results.md</a>.
+				<a href="./logos/SOURCES.md">Logo sources</a>. Speeds stay
+				comparable when you exclude frameworks. The speed control scales
+				every ball together.<br />
+				Visual concept inspired by
+				<a href="https://benjdd.com/languages/"
+					>Ben Dicken's language benchmark</a
+				>.
+			</footer>
+		</main>
+		<script type="module" src="./visualization.mjs"></script>
+	</body>
+</html>

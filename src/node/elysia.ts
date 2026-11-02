@@ -4,11 +4,12 @@ import { extraRoutes } from '../extra-routes.mjs'
 
 export const app = new Elysia({ adapter: node() })
 const shared = () => 'ok'
+const video = file('public/kyuukurarin.mp4')
 for (const route of extraRoutes)
 	app.get(route, () => shared).post(`${route}/submit`, shared)
 
 app.get('/', () => 'Hi')
-	.get('/video', file('public/kyuukurarin.mp4'))
+	.get('/video', video)
 	.get('/id/:id', (c) => {
 		c.set.headers['x-powered-by'] = 'benchmark'
 
